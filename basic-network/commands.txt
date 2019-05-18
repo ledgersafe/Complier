@@ -1,0 +1,18 @@
+Mount:
+
+sudo mount -t vboxsf ./education education
+
+Start:
+
+./startFabric.sh
+node registerAdmin.js
+node registerUser.js
+node server.js
+
+
+
+Clean:
+
+docker rm -f $(docker ps -aq)
+docker rmi -f $(docker images -a -q)
+rm -r /home/kjm/.hfc-key-store/

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fc2:EFilingBatchXML xmlns:fc2="www.fincen.gov/base" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" TotalAmount="1000" PartyCount="2" ActivityCount="1000" ActivityAttachmentCount="0" AttachmentCount="0" xsi:schemaLocation="www.fincen.gov/base SARXBatchSchema.xsd">
+  <fc2:FormTypeCode>SARX</fc2:FormTypeCode>
+  <fc2:Activity SeqNum="0">
+    <fc2:FilingDateText>20181222</fc2:FilingDateText>
+    <fc2:ActivityAssociation SeqNum="1" />
+    <fc2:Party SeqNum="2">
+      <fc2:ActivityPartyTypeCode>35</fc2:ActivityPartyTypeCode>
+    </fc2:Party>
+    <fc2:Party SeqNum="3">
+      <fc2:ActivityPartyTypeCode>37</fc2:ActivityPartyTypeCode>
+    </fc2:Party>
+    <fc2:Party SeqNum="4">
+      <fc2:ActivityPartyTypeCode>33</fc2:ActivityPartyTypeCode>
+    </fc2:Party>
+    <fc2:Party SeqNum="5">
+      <fc2:ActivityPartyTypeCode>34</fc2:ActivityPartyTypeCode>
+    </fc2:Party>
+    <fc2:Party SeqNum="6">
+      <fc2:ActivityPartyTypeCode>30</fc2:ActivityPartyTypeCode>
+    </fc2:Party>
+    <fc2:Party SeqNum="7">
+      <fc2:ActivityPartyTypeCode>8</fc2:ActivityPartyTypeCode>
+    </fc2:Party>
+    <fc2:SuspiciousActivity SeqNum="9">
+      <fc2:SuspiciousActivityFromDateText>20181222</fc2:SuspiciousActivityFromDateText>
+      <fc2:SuspiciousActivityClassification SeqNum="8">
+        <fc2:SuspiciousActivitySubtypeID>106</fc2:SuspiciousActivitySubtypeID>
+        <fc2:SuspiciousActivityTypeID>1</fc2:SuspiciousActivityTypeID>
+      </fc2:SuspiciousActivityClassification>
+    </fc2:SuspiciousActivity>
+    <fc2:ActivityNarrativeInformation SeqNum="10">
+      <fc2:ActivityNarrativeSequenceNumber>1</fc2:ActivityNarrativeSequenceNumber>
+      <fc2:ActivityNarrativeText>Bud Sale</fc2:ActivityNarrativeText>
+    </fc2:ActivityNarrativeInformation>
+  </fc2:Activity>
+</fc2:EFilingBatchXML>

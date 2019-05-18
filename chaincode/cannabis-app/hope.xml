@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<fc2:EFilingBatchXML xmlns:fc2="www.fincen.gov/base" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" TotalAmount="1000" PartyCount="2" ActivityCount="1000" ActivityAttachmentCount="0" AttachmentCount="0" xsi:schemaLocation="www.fincen.gov/base SARXBatchSchema.xsd">
+  <fc2:FormTypeCode>SARX</fc2:FormTypeCode>
+  <fc2:Activity>
+    <fc2:Party SeqNum="0">35</fc2:Party>
+    <fc2:Party SeqNum="1">37</fc2:Party>
+    <fc2:Party SeqNum="2">33</fc2:Party>
+    <fc2:Party SeqNum="3">34</fc2:Party>
+    <fc2:Party SeqNum="4">30</fc2:Party>
+    <fc2:Party SeqNum="5">8</fc2:Party>
+  </fc2:Activity>
+  <fc2:Activity>
+    <fc2:Party SeqNum="6">35</fc2:Party>
+    <fc2:Party SeqNum="7">37</fc2:Party>
+    <fc2:Party SeqNum="8">33</fc2:Party>
+    <fc2:Party SeqNum="9">34</fc2:Party>
+    <fc2:Party SeqNum="10">30</fc2:Party>
+    <fc2:Party SeqNum="11">8</fc2:Party>
+  </fc2:Activity>
+</fc2:EFilingBatchXML>
