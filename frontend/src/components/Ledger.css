@@ -1,0 +1,10 @@
+.table {
+    max-width: 100%;
+    display: inline-table;
+}
+
+th {
+    text-align: center;
+    font-size: 15px;
+    font-family: Verdana,sans-serif;
+}

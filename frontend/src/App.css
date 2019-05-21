@@ -1,0 +1,45 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #161921;
+  min-height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  font-family: "Arial";
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.subtitle {
+  margin-left: 30%;
+  color: #5b769b;
+}
+
+.query-sec {
+  flex-direction: row;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+
+#specific {
+  color: red;
+}
+
+body{
+  background-color: #1b1f26;
+}
+
+.ui {
+  flex-direction: column;
+}
