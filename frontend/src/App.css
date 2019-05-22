@@ -23,23 +23,11 @@
   color: #5b769b;
 }
 
-.query-sec {
-  flex-direction: row;
-  min-height: 50vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-}
-
-#specific {
-  color: red;
-}
-
 body{
   background-color: #1b1f26;
 }
 
 .ui {
-  flex-direction: column;
+  text-align: left;
+  padding: 15px;
 }

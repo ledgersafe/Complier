@@ -2,6 +2,9 @@ import React from 'react';
 import './App.css';
 import Ledger from './components/Ledger'
 import Product from './components/Product'
+import Record from './components/Record'
+import Holder from './components/Holder'
+import { Col, Row } from 'reactstrap'
 
 function App() {
   return (
@@ -13,11 +16,21 @@ function App() {
         <div className="subtitle">LedgerSafe Demo Application</div>
       </header>
       <div className="ui">
-        <Product />
-      </div>
-      <div className="query-sec">
-        <Ledger style={{color: '#c1b957'}} />
-        <Ledger style={{color: '#69b5e5'}} />
+        <Row>
+            <Col md={4}>
+              <Ledger style={{ color: '#acd854' }} />
+            </Col>
+            <Col md={4}>
+              <Ledger style={{ color: '#69b5e5' }} />
+            </Col>
+            <Col md={2}>
+              <Record />
+            </Col>
+            <Col md={2}>
+              <Product />
+              <Holder />
+            </Col>
+        </Row>
       </div>
     </div>
   );

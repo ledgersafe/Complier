@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './Product.css'
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
+import './Holder.css'
 
 class Product extends Component {
     constructor(props) {
@@ -10,15 +10,19 @@ class Product extends Component {
     render() {
         return (
             <Form>
-                <div className="query">
-                    <h3>Query Specific Cannabis Product</h3>
+                <div className="change">
+                    <h3>Change Cannabis Holder</h3>
                     <FormGroup>
                         <Label>Enter Cannabis ID</Label>
                         <Input id="id" placeholder="Ex. 3" />
                     </FormGroup>
+                    <FormGroup>
+                        <Label>Enter Name of New Holder</Label>
+                        <Input id="id" placeholder="Ex. Barry" />
+                    </FormGroup>
                 </div>
                 <div class="col text-center">
-                    <Button color="primary" block>Query</Button>
+                    <Button color="warning" block>Change</Button>{' '}
                 </div>
             </Form>
         );

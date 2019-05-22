@@ -8,3 +8,12 @@ th {
     font-size: 15px;
     font-family: Verdana,sans-serif;
 }
+
+td {
+    text-align: center;
+    color: white;
+}
+
+.t-id {
+    color: white;
+}
