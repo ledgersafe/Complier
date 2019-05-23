@@ -9,7 +9,11 @@ var util = require("util");
 var os = require("os");
 var port = 4000
 
-var get_all_cannabis = function(req, res) {
+var dummy_get_all_cannabis = async function(req, res){
+
+}
+
+var get_all_cannabis = async function(req, res) {
     console.log("getting all cannabis from database: ");
 
     var fabric_client = new Fabric_Client();
@@ -24,6 +28,7 @@ var get_all_cannabis = function(req, res) {
     var store_path = path.join(os.homedir(), ".hfc-key-store");
     console.log("Store path:" + store_path);
     var tx_id = null;
+    console.log("KEEEENNNNN")
 
     // create the key value store as defined in the fabric-client/config/default.json 'key-value-store' setting
     Fabric_Client.newDefaultKeyValueStore({ path: store_path })
@@ -38,7 +43,7 @@ var get_all_cannabis = function(req, res) {
         });
         crypto_suite.setCryptoKeyStore(crypto_store);
         fabric_client.setCryptoSuite(crypto_suite);
-
+        console.log("HEREEEEE")
         // get the enrolled user from persistence, this user will sign all requests
         return fabric_client.getUserContext("user1", true);
       })
@@ -560,8 +565,8 @@ app.use((req, res, next) => {
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/getall', function (req, res) {
-    get_all_cannabis(req, res).then(function(result){
-        console.log("what is this: ",result)
+    dummy_get_all_cannabis(req, res).then(function(output) {
+        console.log(output);
     });
 });
 
@@ -576,5 +581,10 @@ app.use('/get', function (req, res) {
 app.use('/change', function (req, res) {
     change_holder(req, res);
 });
+
+var callback = function(output){
+    console.log(output)
+    return output;
+}
 
 app.listen(port, () => console.log(`Express app listening on port ${port}!`))
