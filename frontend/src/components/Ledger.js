@@ -5,20 +5,11 @@ import './Ledger.css'
 class Ledger extends Component {
     constructor(props) {
         super(props);
-        this.fillArray = this.fillArray.bind(this);
-    }
-
-    fillArray(outputs) {
-        let array = [];
-        for (let output in outputs) {
-            array.push(output);
-        }
-        return array;
+        this.ledger = this.props.ledger;
     }
 
     render() {
-        console.log("Ledger rendering")
-        let outputArray = this.fillArray(this.props.ledger);
+        console.log("Ledger rendering", this.props.ledger)
         return (
             <Table bordered style={this.props.style}>
                 <thead style={{ backgroundColor: '#ffffff' }}>
@@ -32,10 +23,10 @@ class Ledger extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {outputArray > 0 ? (
-                        outputArray.map((output, i) => {
+                    {this.props.ledger.length > 0 ? (
+                        this.props.ledger.map((output, i) => {
                             return <tr style={{ backgroundColor: '#ffffff' }}>
-                                <th className="t-id" scope="row" row={i}>{output.id}</th>
+                                <th className="t-id" scope="row" row={i}>{i}</th>
                                 <td>{output.timestamp}</td>
                                 <td>{output.holder}</td>
                                 <td>{output.strain}</td>

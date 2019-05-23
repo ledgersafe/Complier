@@ -8,7 +8,7 @@ import { Col, Row } from 'reactstrap'
 import $ from 'jquery'
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       ledger: []
@@ -19,11 +19,11 @@ class App extends Component {
   }
 
   // componentDidMount always executes first before everything else
-  componentDidMount(){
+  componentDidMount() {
     this.getAllCannabis();
   }
 
-  getAllCannabis(){
+  getAllCannabis() {
     $.ajax({
       url: 'http://localhost:4000/getall',
       type: 'POST',
@@ -32,14 +32,30 @@ class App extends Component {
       dataType: 'json',
       xhrFields: { withCredentials: true },
       success: (data) => {
-        this.updateLedger(data.result);
+        if (data.message === 'OK') {
+          console.log('getAllCannabis success!')
+          this.updateLedger(data.result);
+        }
+        else {
+          console.log('ERROR');
+        }
       }
     });
   }
 
   //Changes state of 'ledger', automatically refreshes page
-  updateLedger(result){
-    this.setState({ledger: result});
+  updateLedger(data) {
+    var array = [];
+    for (var i = 0; i < data.length; i++) {
+      parseInt(data[i].Key);
+      data[i].Record.Key = parseInt(data[i].Key);
+      array.push(data[i].Record);
+    }
+    array.sort(function (a, b) {
+      return parseFloat(a.Key) - parseFloat(b.Key);
+    });
+    console.log(array)
+    this.setState({ ledger: array });
   }
 
   render() {
@@ -71,7 +87,7 @@ class App extends Component {
           </Row>
           <Row>
             <Col md={12}>
-              <Ledger ledger={this.state.ledger} style={{ color: '#acd854' }} />
+              <Ledger ledger={this.state.ledger} style={{ color: '#95c13e' }} />
             </Col>
           </Row>
         </div>
