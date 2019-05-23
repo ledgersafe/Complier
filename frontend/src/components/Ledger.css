@@ -1,6 +1,5 @@
 .table {
     max-width: 100%;
-    display: inline-table;
 }
 
 th {
@@ -11,9 +10,9 @@ th {
 
 td {
     text-align: center;
-    color: white;
+    color: black;
 }
 
 .t-id {
-    color: white;
+    color: black;
 }

@@ -10,19 +10,25 @@ class Product extends Component {
     render() {
         return (
             <Form>
-                <div className="change">
-                    <h3>Change Cannabis Holder</h3>
-                    <FormGroup>
-                        <Label>Enter Cannabis ID</Label>
-                        <Input id="id" placeholder="Ex. 3" />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label>Enter Name of New Holder</Label>
-                        <Input id="id" placeholder="Ex. Barry" />
-                    </FormGroup>
-                </div>
-                <div class="col text-center">
-                    <Button color="warning" block>Change</Button>{' '}
+                <div className="form">
+                    <div className="change">
+                        <h3>Sell Assets</h3>
+                        <FormGroup>
+                            <Label>Enter Asset ID</Label>
+                            <Input id="id" placeholder="Ex. 3" />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>Enter Name of New Holder</Label>
+                            <Input id="id" placeholder="Ex. Barry" />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>Enter Amount</Label>
+                            <Input id="id" placeholder="Ex. Barry" />
+                        </FormGroup>
+                    </div>
+                    <div className="col text-center">
+                        <Button color="success" block>Sell</Button>{' '}
+                    </div>
                 </div>
             </Form>
         );

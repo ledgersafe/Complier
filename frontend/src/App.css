@@ -24,10 +24,16 @@
 }
 
 body{
-  background-color: #1b1f26;
+  background-color: white;
 }
 
 .ui {
   text-align: left;
   padding: 15px;
+}
+
+
+.form-control {
+  color: #434b56;
+  background-color: white;
 }

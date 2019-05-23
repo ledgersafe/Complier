@@ -17,10 +17,11 @@ class Ledger extends Component {
     }
 
     render() {
-        let outputArray = this.fillArray(this.props.outputs);
+        console.log("Ledger rendering")
+        let outputArray = this.fillArray(this.props.ledger);
         return (
-            <Table style={this.props.style}>
-                <thead style={{ backgroundColor: '#353a42' }}>
+            <Table bordered style={this.props.style}>
+                <thead style={{ backgroundColor: '#ffffff' }}>
                     <tr>
                         <th>ID</th>
                         <th>Timestamp</th>
@@ -33,7 +34,7 @@ class Ledger extends Component {
                 <tbody>
                     {outputArray > 0 ? (
                         outputArray.map((output, i) => {
-                            return <tr style={{ backgroundColor: '#3e444f' }}>
+                            return <tr style={{ backgroundColor: '#ffffff' }}>
                                 <th className="t-id" scope="row" row={i}>{output.id}</th>
                                 <td>{output.timestamp}</td>
                                 <td>{output.holder}</td>
@@ -43,7 +44,7 @@ class Ledger extends Component {
                             </tr>
                         })
                     ) : (
-                            <tr style={{ backgroundColor: '#3e444f' }}>
+                            <tr style={{ backgroundColor: '#ffffff' }}>
                                 <th className="t-id" scope="row">N/A</th>
                                 <td>N/A</td>
                                 <td>N/A</td>
