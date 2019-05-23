@@ -31,10 +31,6 @@ class App extends Component {
       crossDomain: true,
       dataType: 'json',
       xhrFields: { withCredentials: true },
-      data: {
-        username: this.username,
-        password: this.password
-      },
       success: (data) => {
         this.updateLedger(data.result);
       }
