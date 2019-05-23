@@ -11,7 +11,7 @@ class Ledger extends Component {
     render() {
         console.log("Ledger rendering", this.props.ledger)
         return (
-            <Table bordered style={this.props.style}>
+            <Table responsive bordered style={this.props.style}>
                 <thead style={{ backgroundColor: '#ffffff' }}>
                     <tr>
                         <th>ID</th>
