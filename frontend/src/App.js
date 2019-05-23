@@ -75,7 +75,7 @@ class App extends Component {
           </Row>
           <Row>
             <Col md={12}>
-              <Ledger ledger={this.state.ledger} style={{ color: '#acd854' }} />
+              <Ledger ledger={this.state.ledger} style={{ color: '#95c13e' }} />
             </Col>
           </Row>
         </div>
