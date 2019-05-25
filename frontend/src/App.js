@@ -83,7 +83,7 @@ class App extends Component {
               <Product />
               <Holder />
             </Col> */}
-            <Holder />
+            <Holder update={this.updateLedger}/>
           </Row>
           <Row>
             <Col md={12}>
