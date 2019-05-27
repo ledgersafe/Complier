@@ -85,7 +85,12 @@ class App extends Component {
             <Holder getAllCannabis={this.getAllCannabis}/>
           </Row>
           <Row>
-            <Col md={12}>
+            <Col md={6}>
+              All Assets
+              <Ledger ledger={this.state.ledger} style={{ color: '#95c13e' }} />
+            </Col>
+            <Col md={6}>
+              Asset by Busines
               <Ledger ledger={this.state.ledger} style={{ color: '#95c13e' }} />
             </Col>
           </Row>
