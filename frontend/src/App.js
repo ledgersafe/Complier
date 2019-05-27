@@ -54,7 +54,6 @@ class App extends Component {
     array.sort(function (a, b) {
       return parseFloat(a.Key) - parseFloat(b.Key);
     });
-    console.log(array)
     this.setState({ ledger: array });
   }
 
@@ -83,7 +82,7 @@ class App extends Component {
               <Product />
               <Holder />
             </Col> */}
-            <Holder update={this.updateLedger}/>
+            <Holder getAllCannabis={this.getAllCannabis}/>
           </Row>
           <Row>
             <Col md={12}>

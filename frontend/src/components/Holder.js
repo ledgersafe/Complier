@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom'
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import $ from 'jquery'
 import './Holder.css'
@@ -8,22 +9,29 @@ class Product extends Component {
         super(props);
         this.id = '';
         this.holder = '';
-        this.buttonDoSomething = this.buttonDoSomething.bind(this);
+        this.sellAssets = this.sellAssets.bind(this);
         this.updateHolder = this.updateHolder.bind(this);
         this.updateId = this.updateId.bind(this);
+        this.getAll = this.getAll.bind(this);
     }
 
-    updateHolder({target}){
+    getAll() {
+        this.props.getAllCannabis();
+    }
+
+    updateHolder({ target }) {
         this.holder = target.value
     }
 
-    updateId({target}){
+    updateId({ target }) {
         this.id = target.value
     }
 
-    buttonDoSomething(e, id, holder){
+    sellAssets(e) {
         e.preventDefault();
-        console.log('hello')
+        ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Selling Assets, please wait...</p>";
+        ReactDOM.findDOMNode(this.refs.sold).style.height = "50px";
+        ReactDOM.findDOMNode(this.refs.sold).style.color = "#7a7a7a";
         $.ajax({
             url: 'http://localhost:4000/change',
             type: 'POST',
@@ -36,15 +44,17 @@ class Product extends Component {
                 holder: this.holder
             },
             success: (data) => {
-              if (data.message === 'OK') {
-                console.log('change_holder success!')
-                this.props.updateLedger(data.result);
-              }
-              else {
-                console.log('ERROR');
-              }
+                if (data.message === 'OK') {
+                    console.log('change_holder success!')
+                    ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Assets sold! Transaction ID: "+data.tx_id+"</p>";
+                    ReactDOM.findDOMNode(this.refs.sold).style.color = "#acd854";
+                    this.getAll()
+                }
+                else {
+                    console.log('ERROR');
+                }
             }
-          });
+        });
     }
 
     render() {
@@ -67,7 +77,9 @@ class Product extends Component {
                         </FormGroup>
                     </div>
                     <div className="col text-center">
-                        <Button color="success" block onClick={(e) => this.buttonDoSomething(e, )}>Sell</Button>{' '}
+                        <Button color="success" block onClick={(e) => this.sellAssets(e)}>Sell</Button>{' '}
+                    </div>
+                    <div ref="sold" class="expandable" id="nav">
                     </div>
                 </div>
             </Form>

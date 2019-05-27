@@ -9,7 +9,7 @@ class Ledger extends Component {
     }
 
     render() {
-        console.log("Ledger rendering", this.props.ledger)
+        console.log("Ledger rendering")
         return (
             <Table responsive bordered style={this.props.style}>
                 <thead style={{ backgroundColor: '#ffffff' }}>
@@ -26,7 +26,7 @@ class Ledger extends Component {
                     {this.props.ledger.length > 0 ? (
                         this.props.ledger.map((output, i) => {
                             return <tr style={{ backgroundColor: '#ffffff' }}>
-                                <th className="t-id" scope="row" row={i}>{i}</th>
+                                <th className="t-id" scope="row" row={i}>{i+1}</th>
                                 <td>{output.timestamp}</td>
                                 <td>{output.holder}</td>
                                 <td>{output.strain}</td>

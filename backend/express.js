@@ -11,6 +11,8 @@ var port = 4000
 // setup the fabric network
 var fabric_client = new Fabric_Client();
 var channel = fabric_client.newChannel("mychannel");
+var order = fabric_client.newOrderer("grpc://localhost:7050");
+channel.addOrderer(order);
 var peer = fabric_client.newPeer("grpc://localhost:7051");
 channel.addPeer(peer);
 
@@ -150,8 +152,6 @@ var add_cannabis = function (req, res) {
     var holder = array[4];
     var grower = array[5];
 
-    var order = fabric_client.newOrderer("grpc://localhost:7050");
-    channel.addOrderer(order);
 
     var member_user = null;
     var store_path = path.join(os.homedir(), ".hfc-key-store");
@@ -406,9 +406,6 @@ var change_holder = function (req, res) {
     var key = array[0];
     var holder = array[1];
 
-    var order = fabric_client.newOrderer("grpc://localhost:7050");
-    channel.addOrderer(order);
-
     var member_user = null;
     var store_path = path.join(os.homedir(), ".hfc-key-store");
     console.log("Store path:" + store_path);
@@ -596,9 +593,6 @@ var dummy_change_holder = async function (req, res) {
     var key = req.body.id;
     var holder = req.body.holder;
 
-    var order = fabric_client.newOrderer("grpc://localhost:7050");
-    channel.addOrderer(order);
-
     var member_user = null;
     var store_path = path.join(os.homedir(), ".hfc-key-store");
     console.log("Store path:" + store_path);
@@ -618,7 +612,7 @@ var dummy_change_holder = async function (req, res) {
     fabric_client.setCryptoSuite(crypto_suite);
 
     // get the enrolled user from persistence, this user will sign all requests
-    const user_from_store =  await fabric_client.getUserContext("user1", true);
+    const user_from_store = await fabric_client.getUserContext("user1", true);
     if (user_from_store && user_from_store.isEnrolled()) {
         console.log("Successfully loaded user1 from persistence");
         member_user = user_from_store;
@@ -731,7 +725,7 @@ var dummy_change_holder = async function (req, res) {
         });
         promises.push(txPromise);
 
-        results = Promise.all(promises);
+        results = await Promise.all(promises);
         } else {
             console.error(
                 "Failed to send Proposal or receive valid response. Response null or status is not 200. exiting..."
@@ -801,15 +795,13 @@ app.use('/get', function (req, res) {
 });
 
 app.use('/change', function (req, res) {
-    var c = dummy_change_holder(req, res);
-    console.log(c);
-    // dummy_change_holder(req, res).then(function (result) {
-    //     if (result) {
-    //         res.status(200).json({ message: 'OK', result: result })
-    //     } else {
-    //         res.status(200).json({ message: 'NOK', result: result })
-    //     }
-    // });
+    dummy_change_holder(req, res).then(function (tx_id) {
+        if (tx_id) {
+            res.status(200).json({ message: 'OK', tx_id: tx_id })
+        } else {
+            res.status(200).json({ message: 'NOK', tx_id: tx_id })
+        }
+    });
 });
 
 app.listen(port, () => console.log(`Express app listening on port ${port}!`))
