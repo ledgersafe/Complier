@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Ledger from './components/Ledger'
+import BizLedger from './components/BizLedger'
 import Product from './components/Product'
 import Record from './components/Record'
 import Holder from './components/Holder'
@@ -11,11 +12,13 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ledger: []
+      ledger: [],
+      bizledger: []
     }
 
     this.getAllCannabis = this.getAllCannabis.bind(this);
     this.updateLedger = this.updateLedger.bind(this);
+    this.bizQuery = this.bizQuery.bind(this);
   }
 
   // componentDidMount always executes first before everything else
@@ -57,6 +60,12 @@ class App extends Component {
     this.setState({ ledger: array });
   }
 
+  bizQuery(data) {
+    var array = [data];
+    console.log("ARRAY: ", array)
+    this.setState({ bizledger: array });
+  }
+
   render() {
     console.log("App rendering")
     return (
@@ -90,8 +99,8 @@ class App extends Component {
               <Ledger ledger={this.state.ledger} style={{ color: '#95c13e' }} />
             </Col>
             <Col md={6}>
-              Asset by Busines
-              <Ledger ledger={this.state.ledger} style={{ color: '#95c13e' }} />
+              <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery}/>
+              <BizLedger ledger={this.state.bizledger} style={{ color: '#95c13e' }} />
             </Col>
           </Row>
         </div>

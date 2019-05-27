@@ -25,6 +25,7 @@ var dummy_get_all_cannabis = async function (req, res) {
         var store_path = path.join(os.homedir(), ".hfc-key-store");
         console.log("Store path:" + store_path);
         var tx_id = null;
+    
 
         const state_store = await Fabric_Client.newDefaultKeyValueStore({ path: store_path });
         // assign the store to the fabric client
@@ -158,7 +159,7 @@ var add_cannabis = async function (req, res) {
             );
 
             // build up the request for the orderer to have the transaction committed
-            var request = {
+            var orequest = {
                 proposalResponses: proposalResponses,
                 proposal: proposal
             };
@@ -169,7 +170,7 @@ var add_cannabis = async function (req, res) {
             var transaction_id_string = tx_id.getTransactionID(); //Get the transaction ID string to be used by the event processing
             var promises = [];
 
-            var sendPromise = channel.sendTransaction(request);
+            var sendPromise = channel.sendTransaction(orequest);
             promises.push(sendPromise); //we want the send transaction first, so that we know where to check status
 
             // get an eventhub once the fabric client has a user assigned. The user
@@ -264,8 +265,8 @@ var add_cannabis = async function (req, res) {
 
 var getBusiness = async function (req, res) {
     try {
-        var key = req.params.id;
-
+        var key = req.body.id;
+        console.log("KEY: ", req.body.id)
         //
         var member_user = null;
         var store_path = path.join(os.homedir(), ".hfc-key-store");
@@ -301,7 +302,7 @@ var getBusiness = async function (req, res) {
             fcn: "queryCannabis",
             args: [key]
         };
-
+        console.log("Before CC Call")
         // send the query proposal to the peer
         const query_responses = await channel.queryByChaincode(request);
         console.log("Query has completed, checking results");
@@ -309,19 +310,19 @@ var getBusiness = async function (req, res) {
         if (query_responses && query_responses.length == 1) {
             if (query_responses[0] instanceof Error) {
                 console.error("error from query = ", query_responses[0]);
-                res.send("Could not locate Cannabis");
             } else {
                 console.log("Response is ", query_responses[0].toString());
-                res.send(query_responses[0].toString());
+                // res.json(JSON.parse(query_responses[0].toString()));
+                return JSON.parse(query_responses[0].toString());
+                console.log("Returned")
             }
         } else {
             console.log("No payloads were returned from query");
-            res.send("Could not locate cannabis");
         }
     }
-    catch(err) {
-                console.error("Failed to query successfully :: " + err);
-                res.send("Could not locate cannabis");
+    catch (error) {
+        console.error('dummy failed, ', error);
+        process.exit(1);
     }
 }
 
@@ -404,6 +405,7 @@ var dummy_change_holder = async function (req, res) {
             proposalResponses: proposalResponses,
             proposal: proposal
         };
+    
 
         // set the transaction listener and set a timeout of 30 sec
         // if the transaction did not get committed within the timeout period,
@@ -530,7 +532,7 @@ app.use('/add', function (req, res) {
     add_cannabis(req, res);
 });
 
-app.use('/getbusiness', function (req, res) {
+app.use('/querybusiness', function (req, res) {
     getBusiness(req, res).then(function (tx_id) {
         if (tx_id) {
             res.status(200).json({ message: 'OK', tx_id: tx_id })
