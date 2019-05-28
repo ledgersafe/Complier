@@ -11,6 +11,8 @@ class Ledger extends Component {
     render() {
         console.log("Ledger rendering")
         return (
+            <div id="ledtable">
+            <h3 style={this.props.style}>All Assets</h3>
             <Table responsive bordered style={this.props.style}>
                 <thead style={{ backgroundColor: '#ffffff' }}>
                     <tr>
@@ -47,6 +49,7 @@ class Ledger extends Component {
                     }
                 </tbody>
             </Table>
+            </div>
         );
     }
 }

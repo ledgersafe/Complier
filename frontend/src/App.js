@@ -13,7 +13,7 @@ class App extends Component {
     super(props);
     this.state = {
       ledger: [],
-      bizledger: []
+      biz: ''
     }
 
     this.getAllCannabis = this.getAllCannabis.bind(this);
@@ -62,9 +62,8 @@ class App extends Component {
   }
 
   bizQuery(data) {
-    var array = [data];
-    console.log("ARRAY: ", array)
-    this.setState({ bizledger: array });
+    console.log('calling bizQuery')
+    this.setState({ bid: data })
   }
 
   render() {
@@ -92,16 +91,19 @@ class App extends Component {
               <Product />
               <Holder />
             </Col> */}
-            <Holder getAllCannabis={this.getAllCannabis}/>
+            <Col md={6}>
+              <Holder getAllCannabis={this.getAllCannabis} />
+            </Col>
+            <Col md={6}>
+              <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
+            </Col>
           </Row>
           <Row>
             <Col md={6}>
-              All Assets
               <Ledger ledger={this.state.ledger} style={{ color: '#95c13e' }} />
             </Col>
             <Col md={6}>
-              <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery}/>
-              <BizLedger ledger={this.state.bizledger} style={{ color: '#95c13e' }} />
+              <BizLedger bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} />
             </Col>
           </Row>
         </div>

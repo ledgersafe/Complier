@@ -51,7 +51,8 @@ class Product extends Component {
                 success: (data) => {
                     if (data.message === 'OK') {
                         console.log('change_holder success!')
-                        ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Assets sold! Transaction ID: "+data.tx_id+"</p>";
+                        console.log(data)
+                        ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Sold! Transaction ID: "+data.tx_id+"</p>";
                         ReactDOM.findDOMNode(this.refs.sold).style.color = "#acd854";
                         this.getAll()
                     }
