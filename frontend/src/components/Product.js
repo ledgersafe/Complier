@@ -61,7 +61,7 @@ class Product extends Component {
 
     render() {
         return (
-            <Form>
+            <Form onSubmit={e => { e.preventDefault(); }}>
                 <div className="query">
                     <h3>Query Specific Business</h3>
                     <FormGroup>

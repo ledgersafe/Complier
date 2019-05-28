@@ -28,7 +28,7 @@ class BizLedger extends Component {
                         <tr>
                             <th>ID</th>
                             <th>Timestamp</th>
-                            <th>Holder</th>
+                            <th>Business</th>
                             <th>Strain</th>
                             <th>Thc %</th>
                             <th>Grower</th>
@@ -40,7 +40,7 @@ class BizLedger extends Component {
                                 return <tr style={{ backgroundColor: '#ffffff' }}>
                                     <th className="b-id" scope="row" row={i}>{output.index + 1}</th>
                                     <td>{output.info.timestamp}</td>
-                                    <td>{output.info.holder}</td>
+                                    <td>{output.info.holder.charAt(0).toUpperCase()  + output.info.holder.slice(1).toLowerCase()}</td>
                                     <td>{output.info.strain}</td>
                                     <td>{output.info.thc}</td>
                                     <td>{output.info.grower}</td>

@@ -18,7 +18,7 @@ class Ledger extends Component {
                     <tr>
                         <th>ID</th>
                         <th>Timestamp</th>
-                        <th>Holder</th>
+                        <th>Business</th>
                         <th>Strain</th>
                         <th>Thc %</th>
                         <th>Grower</th>
@@ -30,7 +30,7 @@ class Ledger extends Component {
                             return <tr style={{ backgroundColor: '#ffffff' }}>
                                 <th className="t-id" scope="row" row={i}>{i+1}</th>
                                 <td>{output.timestamp}</td>
-                                <td>{output.holder}</td>
+                                <td>{output.holder.charAt(0).toUpperCase()  + output.holder.slice(1).toLowerCase()}</td>
                                 <td>{output.strain}</td>
                                 <td>{output.thc}</td>
                                 <td>{output.grower}</td>
