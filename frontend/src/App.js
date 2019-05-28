@@ -57,6 +57,7 @@ class App extends Component {
     array.sort(function (a, b) {
       return parseFloat(a.Key) - parseFloat(b.Key);
     });
+    console.log("ARRAY: ", array)
     this.setState({ ledger: array });
   }
 

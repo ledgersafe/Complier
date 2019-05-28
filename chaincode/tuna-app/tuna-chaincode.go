@@ -34,10 +34,9 @@ Structure tags are used by encoding/json library
 type Cannabis struct {
 	Grower    string `json:"grower"`
 	Timestamp string `json:"timestamp"`
-	//Location  string `json:"location"`
-	Strain string `json:"strain"`
-	THC    string `json:"thc"`
-	Holder string `json:"holder"`
+	Strain    string `json:"strain"`
+	THC       string `json:"thc"`
+	Holder    string `json:"holder"`
 }
 
 /*

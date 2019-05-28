@@ -1,7 +1,7 @@
 {
   "name": "cannabis-app",
   "version": "1.0.0",
-  "description": "Hyperledger Fabric MOOC Sample Application",
+  "description": "Hyperledger Fabric LedgerSafe Application",
   "main": "server.js",
   "dependencies": {
     "fabric-ca-client": "^1.0.2",
@@ -16,10 +16,7 @@
   "keywords": [
     "Hyperledger",
     "Fabric",
-    "Oceans",
-    "Tuna",
-    "Fishing",
-    "Sample",
-    "Application"
+    "Application",
+    "LedgerSafe"
   ]
 }

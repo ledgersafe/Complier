@@ -34,8 +34,9 @@ Structure tags are used by encoding/json library
 type Cannabis struct {
 	Grower    string `json:"grower"`
 	Timestamp string `json:"timestamp"`
-	Location  string `json:"location"`
 	Holder    string `json:"holder"`
+	Strain    string `json:"strain"`
+	THC       string `json:"thc"`
 }
 
 /*
@@ -89,6 +90,60 @@ func (s *SmartContract) queryCannabis(APIstub shim.ChaincodeStubInterface, args 
 		return shim.Error("Could not locate cannabis")
 	}
 	return shim.Success(cannabisAsBytes)
+}
+
+/*
+ * The queryBusiness method *
+Used to view the records of one particular business
+It takes one argument -- the key for the business in question
+*/
+func (s *SmartContract) queryBusiness(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	startKey := "0"
+	endKey := "999"
+
+	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	defer resultsIterator.Close()
+
+	// buffer is a JSON array containing QueryResults
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+		fmt.Printf("Holder: %s", string(queryResponse.Value.holder))
+		// Add comma before array members,suppress it for the first array member
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"Record\":")
+		// Record is a JSON object, so we write as-is
+		buffer.WriteString(string(queryResponse.Value))
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+	buffer.WriteString("]")
+
+	fmt.Printf("- queryBusiness:\n%s\n", buffer.String())
+
+	return shim.Success(buffer.Bytes())
+
 }
 
 /*
