@@ -17,8 +17,6 @@ channel.addPeer(peer);
 
 
 module.exports = {
-
-
     queryAll: async function (req, res) {
         try {
             console.log("getting all cannabis from database: ");
