@@ -280,16 +280,6 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// app.use('/getall', function (req, res) {
-//     dummy_get_all_cannabis(req, res).then(function (result) {
-//         if (result) {
-//             res.status(200).json({ message: 'OK', result: result })
-//         } else {
-//             res.status(200).json({ message: 'NOK', result: result })
-//         }
-//     });
-// });
-
 app.use('/getall', function (req, res) {
     getAll.queryAll(req, res).then(function (result) {
         if (result) {
@@ -313,16 +303,6 @@ app.use('/querybusiness', function (req, res) {
         }
     });
 });
-
-// app.use('/change', function (req, res) {
-//     dummy_change_holder(req, res).then(function (tx_id) {
-//         if (tx_id) {
-//             res.status(200).json({ message: 'OK', tx_id: tx_id })
-//         } else {
-//             res.status(200).json({ message: 'NOK', tx_id: tx_id })
-//         }
-//     });
-// });
 
 app.use('/change', function (req, res) {
     sell.b2bTransaction(req, res).then(function (tx_id) {

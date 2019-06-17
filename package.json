@@ -1,0 +1,26 @@
+{
+  "name": "LedgerSafe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd frontend/src && npm start",
+    "server": "cd backend/ && node express.js",
+    "build-hlf": "cd cannabis-app/ && ./startFabric.sh",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ledgersafe/ledgersafeid.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ledgersafe/ledgersafeid/issues"
+  },
+  "homepage": "https://github.com/ledgersafe/ledgersafeidreadme",
+  "dependencies": {
+    "concurrently": "^4.1.0"
+  }
+}
