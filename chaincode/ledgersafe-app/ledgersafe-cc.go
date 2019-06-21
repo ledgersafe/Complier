@@ -187,7 +187,7 @@ func (s *SmartContract) b2cTransaction(APIstub shim.ChaincodeStubInterface, args
 	// **TODO**
 	// Check Owner of Current Assett
 	// Exchange Value from args[1] to Owner of Assett
-	
+
 	//Instead of changing Hodler move cannabis object into a Customer List 
 	cannabis.Holder = args[1]
 
