@@ -50,7 +50,6 @@ type newCannabis struct {
 	Amount      string `json:"amount"`
 	Currency    string `json:"currency"`
 	Date        string `json:"date"`
-	Narrative   string `json:"narrative"`
 }
 
 /*
@@ -196,9 +195,9 @@ Will add test data (10 cannabis catches)to our network
 */
 func (s *SmartContract) newInitLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	newcannabis := []newCannabis{
-		Cannabis{Grower: "Farm 1", Strain: "67.0006", THC: "-70.5476", Timestamp: "1504054225", 
-				Holder: "Miriam", SubjectName: "Miriam", PartyID: "MM", Amount: "1000.00", Currency: "USD",
-				Date: "10152019"}
+		newCannabis{Grower: "Farm 1", Strain: "67.0006", THC: "-70.5476", Timestamp: "1504054225",
+			Holder: "Miriam", SubjectName: "Miriam", PartyID: "MM", Amount: "1000.00", Currency: "USD",
+			Date: "10152019"},
 	}
 
 	i := 0
