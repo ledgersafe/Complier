@@ -272,7 +272,7 @@ var getBusiness = async function (req, res) {
 
 var change_holder = async function (req, res) {
     try {
-    console.log("changing holder of cannabis catch: ");
+    console.log("changing holder of cannabis asset: ");
 
     //var array = req.params.holder.split("-");
     var key = req.body.id;

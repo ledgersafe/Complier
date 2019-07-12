@@ -39,6 +39,20 @@ type Cannabis struct {
 	THC       string `json:"thc"`
 }
 
+type newCannabis struct {
+	Grower              string `json:"grower"`
+	Timestamp           string `json:"timestamp"`
+	Holder              string `json:"holder"`
+	Strain              string `json:"strain"`
+	THC                 string `json:"thc"`
+	SubjectName         string `json:"subjectname"`
+	PartyIdentification string `json:"partyid"`
+	Amount              string `json:"amount"`
+	Currency            string `json:"currency"`
+	Date                string `json:"date"`
+	Narrative           string `json:"narrative"`
+}
+
 /*
  * The Init method *
  called when the Smart Contract "cannabis-chaincode" is instantiated by the network
