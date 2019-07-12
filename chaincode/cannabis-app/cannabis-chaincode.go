@@ -191,6 +191,29 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 }
 
 /*
+ * The newInitLedger method *
+Will add test data (10 cannabis catches)to our network
+*/
+func (s *SmartContract) newInitLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
+	newcannabis := []newCannabis{
+		Cannabis{Grower: "Farm 1", Strain: "67.0006", THC: "-70.5476", Timestamp: "1504054225", 
+				Holder: "Miriam", SubjectName: "Miriam", PartyID: "MM", Amount: "1000.00", Currency: "USD",
+				Date: "10152019"}
+	}
+
+	i := 0
+	for i < len(newcannabis) {
+		fmt.Println("i is ", i)
+		cannabisAsBytes, _ := json.Marshal(newcannabis[i])
+		APIstub.PutState(strconv.Itoa(i+1), cannabisAsBytes)
+		fmt.Println("Added", newcannabis[i])
+		i = i + 1
+	}
+
+	return shim.Success(nil)
+}
+
+/*
  * The recordCannabis method *
 Fisherman like Sarah would use to record each of her cannabis catches.
 This method takes in five arguments (attributes to be saved in the ledger).
