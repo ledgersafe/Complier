@@ -40,17 +40,17 @@ type Cannabis struct {
 }
 
 type newCannabis struct {
-	Grower              string `json:"grower"`
-	Timestamp           string `json:"timestamp"`
-	Holder              string `json:"holder"`
-	Strain              string `json:"strain"`
-	THC                 string `json:"thc"`
-	SubjectName         string `json:"subjectname"`
-	PartyIdentification string `json:"partyid"`
-	Amount              string `json:"amount"`
-	Currency            string `json:"currency"`
-	Date                string `json:"date"`
-	Narrative           string `json:"narrative"`
+	Grower      string `json:"grower"`
+	Timestamp   string `json:"timestamp"`
+	Holder      string `json:"holder"`
+	Strain      string `json:"strain"`
+	THC         string `json:"thc"`
+	SubjectName string `json:"subjectname"`
+	PartyID     string `json:"partyid"`
+	Amount      string `json:"amount"`
+	Currency    string `json:"currency"`
+	Date        string `json:"date"`
+	Narrative   string `json:"narrative"`
 }
 
 /*
@@ -166,7 +166,7 @@ Will add test data (10 cannabis catches)to our network
 */
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	cannabis := []Cannabis{
-		Cannabis{Grower: "Farm 1", Strain: "67.0006", THC: "-70.5476", Timestamp: "1504054225", Holder: "Miriam"},
+		Cannabis{Grower: "Farm 1", Strain: "67.0006", THC: "-70.5476", Timestamp: "1504054225", Holder: "Miriam", SubjectName: "Miriam", PartyID: "MM"},
 		Cannabis{Grower: "SF Farm", Strain: "62.0006", THC: "-70.5476", Timestamp: "1504057825", Holder: "Dave"},
 		Cannabis{Grower: "Farm 3", Strain: "63.0006", THC: "-70.5476", Timestamp: "1493517025", Holder: "Igor"},
 		Cannabis{Grower: "Humbolt County Farms", Strain: "64.0006", THC: "-30.5476", Timestamp: "1496105425", Holder: "Amalea"},
