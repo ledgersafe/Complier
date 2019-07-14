@@ -1,18 +1,4 @@
 var express = require("express"); // call express
-var app = express(); // define our app using express
-var bodyParser = require("body-parser");
-var http = require("http");
-var fs = require("fs");
-var Fabric_Client = require("fabric-client");
-var path = require("path");
-var util = require("util");
-var os = require("os");
-var port = 4000
-// setup the fabric network
-var fabric_client = new Fabric_Client();
-var channel = fabric_client.newChannel("mychannel");
-var peer = fabric_client.newPeer("grpc://localhost:7051");
-channel.addPeer(peer);
 
 const routerTo_queryAll = express.Router();
 
@@ -153,4 +139,5 @@ module.exports = function router() {
             process.exit(1);
         }
     });
-}
+    return routerTo_queryAll;
+};
