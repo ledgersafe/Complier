@@ -69,7 +69,7 @@ class Product extends Component {
                         <Input id="bid" placeholder="Enter Business" onChange={this.updateBid} />
                     </FormGroup>
                 </div>
-                <div class="col text-center">
+                <div className="col text-center">
                     <Button color="primary" block onClick={(e) => this.queryBusiness(e)}>Query</Button>
                 </div>
             </Form>

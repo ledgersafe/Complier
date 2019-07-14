@@ -24,12 +24,13 @@ class App extends Component {
 
   // componentDidMount always executes first before everything else
   componentDidMount() {
+    console.log('component did mount')
     this.getAllCannabis();
   }
 
   getAllCannabis() {
     $.ajax({
-      url: 'http://localhost:4000/getall',
+      url: 'http://localhost:4000/queryAll',
       type: 'POST',
       contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
       crossDomain: true,

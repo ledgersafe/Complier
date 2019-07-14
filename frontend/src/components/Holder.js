@@ -95,7 +95,7 @@ class Product extends Component {
                     <div className="col text-center">
                         <Button color="success" block onClick={(e) => this.sellAssets(e)}>Sell</Button>{' '}
                     </div>
-                    <div ref="sold" class="expandable" id="nav">
+                    <div ref="sold" className="expandable" id="nav">
                     </div>
                 </div>
             </Form>
