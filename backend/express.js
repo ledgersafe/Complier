@@ -17,7 +17,7 @@ var peer = fabric_client.newPeer("grpc://localhost:7051");
 channel.addPeer(peer);
 
 // Helper Functions
-const routerTo_queryAll = require('./queryAll.js')
+const routerTo_queryAll = require('./queryAll.js')()
 var sell = require('./b2bTransaction.js')
 
 var add_cannabis = async function (req, res) {
@@ -66,13 +66,13 @@ var add_cannabis = async function (req, res) {
         tx_id = fabric_client.newTransactionID();
         console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-        // recordCannabis - requires 5 args, ID, vessel, location, timestamp,holder - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel'],
+        // recordCannabis - requires 5 args, ID, vessel, location, timestamp,holder, amount - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel', '100.00'],
         // send proposal to endorser
         const request = {
             //targets : --- letting this default to the peers assigned to the channel
             chaincodeId: "cannabis-app",
             fcn: "recordCannabis",
-            args: [key, grower, strain, thc, timestamp, holder],
+            args: [key, grower, strain, thc, timestamp, holder, amount],
             chainId: "mychannel",
             txId: tx_id
         };
@@ -310,7 +310,7 @@ var change_holder = async function (req, res) {
     tx_id = fabric_client.newTransactionID();
     console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-    // changeCannabisHolder - requires 2 args , ex: args: ['1', 'Barry'],
+    // changeCannabisHolder - requires 3 args , ex: args: ['1', 'Barry', '100.00'],
     // send proposal to endorser
     var request = {
         //targets : --- letting this default to the peers assigned to the channel

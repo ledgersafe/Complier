@@ -22,18 +22,20 @@ class Ledger extends Component {
                         <th>Strain</th>
                         <th>Thc %</th>
                         <th>Grower</th>
+                        <th>Amount</th>
                     </tr>
                 </thead>
                 <tbody>
                     {this.props.ledger.length > 0 ? (
                         this.props.ledger.map((output, i) => {
-                            return <tr style={{ backgroundColor: '#ffffff' }}>
+                            return <tr key={i} style={{ backgroundColor: '#ffffff' }}>
                                 <th className="t-id" scope="row" row={i}>{i+1}</th>
                                 <td>{output.timestamp}</td>
                                 <td>{output.holder.charAt(0).toUpperCase()  + output.holder.slice(1).toLowerCase()}</td>
                                 <td>{output.strain}</td>
                                 <td>{output.thc}</td>
                                 <td>{output.grower}</td>
+                                <td>{output.amount}</td>
                             </tr>
                         })
                     ) : (
@@ -43,6 +45,7 @@ class Ledger extends Component {
                                 <td>N/A</td>
                                 <td>N/A</td>
                                 <td>N/A</td>
+                                <td>N/A</td>   
                                 <td>N/A</td>
                             </tr>
                         )

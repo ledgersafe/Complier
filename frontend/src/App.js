@@ -14,7 +14,8 @@ class App extends Component {
     super(props);
     this.state = {
       ledger: [],
-      biz: ''
+      biz: '',
+      bid: ''
     }
 
     this.getAllCannabis = this.getAllCannabis.bind(this);
