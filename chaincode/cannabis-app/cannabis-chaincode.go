@@ -50,7 +50,6 @@ type newCannabis struct {
 	Amount      string `json:"amount"`
 	Currency    string `json:"currency"`
 	Date        string `json:"date"`
-	Narrative   string `json:"narrative"`
 }
 
 /*
@@ -184,6 +183,29 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 		cannabisAsBytes, _ := json.Marshal(cannabis[i])
 		APIstub.PutState(strconv.Itoa(i+1), cannabisAsBytes)
 		fmt.Println("Added", cannabis[i])
+		i = i + 1
+	}
+
+	return shim.Success(nil)
+}
+
+/*
+ * The newInitLedger method *
+Will add test data (10 cannabis catches)to our network
+*/
+func (s *SmartContract) newInitLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
+	newcannabis := []newCannabis{
+		newCannabis{Grower: "Farm 1", Strain: "67.0006", THC: "-70.5476", Timestamp: "1504054225",
+			Holder: "Miriam", SubjectName: "Miriam", PartyID: "MM", Amount: "1000.00", Currency: "USD",
+			Date: "10152019"},
+	}
+
+	i := 0
+	for i < len(newcannabis) {
+		fmt.Println("i is ", i)
+		cannabisAsBytes, _ := json.Marshal(newcannabis[i])
+		APIstub.PutState(strconv.Itoa(i+1), cannabisAsBytes)
+		fmt.Println("Added", newcannabis[i])
 		i = i + 1
 	}
 
