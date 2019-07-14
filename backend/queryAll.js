@@ -14,10 +14,11 @@ var channel = fabric_client.newChannel("mychannel");
 var peer = fabric_client.newPeer("grpc://localhost:7051");
 channel.addPeer(peer);
 
+const routerTo_queryAll = express.Router();
 
-
-module.exports = {
-    queryAll: async function (req, res) {
+module.exports = function router() {
+    routerTo_queryAll.route('/')
+    .get((req, res) => {
         try {
             console.log("getting all cannabis from database: ");
 
@@ -74,5 +75,12 @@ module.exports = {
             console.error('dummy failed, ', error);
             process.exit(1);
         }
-    }
-}
+    }.then(function (result) {
+        if (result) {
+            console.log('queryAll.js success')
+            res.status(200).json({ message: 'OK', result: result })
+        } else {
+            console.log('queryAll.js failure')
+            res.status(200).json({ message: 'NOK', result: result })
+        }
+    });}

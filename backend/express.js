@@ -17,7 +17,7 @@ var peer = fabric_client.newPeer("grpc://localhost:7051");
 channel.addPeer(peer);
 
 // Helper Functions
-var getAll = require('./queryAll.js')
+const routerTo_queryAll = require('./queryAll.js')
 var sell = require('./b2bTransaction.js')
 
 var add_cannabis = async function (req, res) {
@@ -462,15 +462,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/getall', function (req, res) {
-    getAll.queryAll(req, res).then(function (result) {
-        if (result) {
-            res.status(200).json({ message: 'OK', result: result })
-        } else {
-            res.status(200).json({ message: 'NOK', result: result })
-        }
-    });
-});
+app.use('/queryAll', routerTo_queryAll);
 
 app.use('/add', function (req, res) {
     add_cannabis(req, res);
