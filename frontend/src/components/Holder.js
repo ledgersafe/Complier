@@ -9,9 +9,11 @@ class Product extends Component {
         super(props);
         this.id = '';
         this.holder = '';
+        this.amount = '';
         this.sellAssets = this.sellAssets.bind(this);
         this.updateHolder = this.updateHolder.bind(this);
         this.updateId = this.updateId.bind(this);
+        this.updateAmount = this.updateAmount.bind(this);
         this.getAll = this.getAll.bind(this);
     }
 
@@ -25,6 +27,10 @@ class Product extends Component {
 
     updateId({ target }) {
         this.id = target.value
+    }
+
+    updateAmount({ target }) {
+        this.amount = target.value
     }
 
     sellAssets(e) {
@@ -46,7 +52,8 @@ class Product extends Component {
                 xhrFields: { withCredentials: true },
                 data: {
                     id: this.id,
-                    holder: this.holder
+                    holder: this.holder,
+                    amount: this.amount
                 },
                 success: (data) => {
                     if (data.message === 'OK') {
@@ -82,7 +89,7 @@ class Product extends Component {
                         </FormGroup>
                         <FormGroup>
                             <Label>Enter Amount</Label>
-                            <Input id="amount" placeholder="Ex. 500" />
+                            <Input id="amount" placeholder="Ex. 500" onChange={this.updateAmount} />
                         </FormGroup>
                     </div>
                     <div className="col text-center">

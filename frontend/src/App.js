@@ -7,6 +7,7 @@ import Record from './components/Record'
 import Holder from './components/Holder'
 import { Col, Row } from 'reactstrap'
 import $ from 'jquery'
+import LS from './static/LS.png'
 
 class App extends Component {
   constructor(props) {
@@ -71,6 +72,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
+          <img src={LS} alt='LedgerSafe' height='100' width='100'/>
           <div className="title">
             Hyperledger Fabric Cannabis Application
         </div>
@@ -91,18 +93,18 @@ class App extends Component {
               <Product />
               <Holder />
             </Col> */}
-            <Col md={6}>
+            <Col md={6} id='column'>
               <Holder getAllCannabis={this.getAllCannabis} />
             </Col>
-            <Col md={6}>
+            <Col md={6} id='column'>
               <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
             </Col>
           </Row>
           <Row>
-            <Col md={6}>
+            <Col md={6} id='column'>
               <Ledger ledger={this.state.ledger} style={{ color: '#95c13e' }} />
             </Col>
-            <Col md={6}>
+            <Col md={6} id='column'>
               <BizLedger bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} />
             </Col>
           </Row>

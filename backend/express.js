@@ -277,6 +277,7 @@ var change_holder = async function (req, res) {
     //var array = req.params.holder.split("-");
     var key = req.body.id;
     var holder = req.body.holder;
+    var amount = req.body.amount;
 
     var member_user = null;
     var store_path = path.join(os.homedir(), ".hfc-key-store");
@@ -315,7 +316,7 @@ var change_holder = async function (req, res) {
         //targets : --- letting this default to the peers assigned to the channel
         chaincodeId: "cannabis-app",
         fcn: "changeCannabisHolder",
-        args: [key, holder],
+        args: [key, holder, amount],
         chainId: "mychannel",
         txId: tx_id
     };

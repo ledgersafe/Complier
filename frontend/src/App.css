@@ -9,7 +9,8 @@
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  font-size: calc(10px + 2vmin);
+  /* font-size: calc(10px + 2vmin); */
+  font-size: 30px;
   color: white;
   font-family: "Arial";
 }
@@ -19,7 +20,7 @@
 }
 
 .subtitle {
-  margin-left: 30%;
+  margin-left: 10%;
   color: #5b769b;
 }
 
