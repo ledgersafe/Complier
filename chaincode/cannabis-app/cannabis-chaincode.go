@@ -136,7 +136,7 @@ func (s *SmartContract) queryBusiness(APIstub shim.ChaincodeStubInterface, args 
 		if err != nil {
 			return shim.Error(err.Error())
 		}
-		fmt.Printf("Holder: %s", string(queryResponse.Value.holder))
+		fmt.Printf("Holder: %s", string(queryResponse.Value))
 		// Add comma before array members,suppress it for the first array member
 		if bArrayMemberAlreadyWritten == true {
 			buffer.WriteString(",")
