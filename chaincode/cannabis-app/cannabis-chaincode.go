@@ -290,8 +290,8 @@ This function takes in 2 arguments, cannabis id and new holder name.
 */
 func (s *SmartContract) changeCannabisHolder(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	if len(args) != 2 {
-		return shim.Error("Incorrect number of arguments. Expecting 2")
+	if len(args) != 3 {
+		return shim.Error("Incorrect number of arguments. Expecting 3")
 	}
 
 	cannabisAsBytes, _ := APIstub.GetState(args[0])
@@ -304,9 +304,11 @@ func (s *SmartContract) changeCannabisHolder(APIstub shim.ChaincodeStubInterface
 
 	fmt.Printf("Current Holder:", cannabis.Holder)
 	fmt.Printf("New Holder: ", args[1])
+	fmt.Printf("New Amount: ", args[2])
 	// Normally check that the specified argument is a valid holder of cannabis
 	// we are skipping this check for this example
 	cannabis.Holder = args[1]
+	cannabis.Amount = args[2]
 
 	cannabisAsBytes, _ = json.Marshal(cannabis)
 	err := APIstub.PutState(args[0], cannabisAsBytes)
