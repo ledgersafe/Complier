@@ -50,7 +50,7 @@ type newCannabis struct {
 	PartyID     string `json:"partyid"`
 	Amount      string `json:"amount"`
 	Currency    string `json:"currency"`
-	Date        string `json:"date"`
+	Date        string `json:"date"`discord
 }
 
 /*
@@ -318,6 +318,72 @@ func (s *SmartContract) changeCannabisHolder(APIstub shim.ChaincodeStubInterface
 
 	return shim.Success(nil)
 }
+
+
+/*
+//////////////////////////////////// New Functions ///////////////////////////////////////////////////////
+*/
+
+// ============================================================================================================================
+// Get history of asset
+//
+// Shows Off GetHistoryForKey() - reading complete history of a key/value
+//
+// Inputs - Array of strings
+//  0
+//  id
+//  "m01490985296352SjAyM"
+// ============================================================================================================================
+func getHistory(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	type AuditHistory struct {
+		TxId    string   `json:"txId"`
+		Value   Cannabis   `json:"value"`
+	}
+	var history []AuditHistory;
+	var cannabis Cannabis
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	assetId := args[0]
+	fmt.Printf("- start getHistoryForMarble: %s\n", assetId)
+
+	// Get History
+	resultsIterator, err := stub.GetHistoryForKey(assetId)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	defer resultsIterator.Close()
+
+	for resultsIterator.HasNext() {
+		historyData, err := resultsIterator.Next()
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+
+		var tx AuditHistory
+		tx.TxId = historyData.TxId                     //copy transaction id over
+		json.Unmarshal(historyData.Value, &cannabis)     //un stringify it aka JSON.parse()
+		if historyData.Value == nil {                  //marble has been deleted
+			var cannabis Cannabis
+			tx.Value = emptyCannabis                 //copy nil marble
+		} else {
+			json.Unmarshal(historyData.Value, &marble) //un stringify it aka JSON.parse()
+			tx.Value = cannabis                      //copy marble over
+		}
+		history = append(history, tx)              //add this tx to the list
+	}
+	fmt.Printf("- getHistoryForMarble returning:\n%s", history)
+
+	//change to array of bytes
+	historyAsBytes, _ := json.Marshal(history)     //convert to array of bytes
+	return shim.Success(historyAsBytes)
+}
+
+/*
+//////////////////////////////////// End of New Functions ///////////////////////////////////////////////////////
+*/
 
 /*
  * main function *
