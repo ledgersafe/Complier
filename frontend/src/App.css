@@ -33,6 +33,13 @@ body{
   padding: 15px;
 }
 
+ul{
+  overflow:hidden; 
+  overflow-y:scroll; 
+  height:100vh;
+  padding-left: 0px;
+  background-color: #161921;
+}
 
 .form-control {
   color: #434b56;

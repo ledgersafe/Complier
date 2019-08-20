@@ -54,6 +54,7 @@ class BizLedger extends Component {
                                     <td>N/A</td>
                                     <td>N/A</td>
                                     <td>N/A</td>
+                                    <td>N/A</td>
                                 </tr>
                             )
                         }

@@ -8,6 +8,7 @@ import Holder from './components/Holder'
 import { Col, Row } from 'reactstrap'
 import $ from 'jquery'
 import LS from './static/LS.png'
+import HistoryBlock from './components/HistoryBlock'
 
 class App extends Component {
   constructor(props) {
@@ -74,7 +75,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={LS} alt='LedgerSafe' height='100' width='100'/>
+          <img src={LS} alt='LedgerSafe' height='100' width='100' />
           <div className="title">
             Hyperledger Fabric Cannabis Application
         </div>
@@ -82,32 +83,45 @@ class App extends Component {
         </header>
         <div className="ui">
           <Row>
-            {/* <Col md={4}>
-              <Ledger style={{ color: '#acd854' }} />
-            </Col>
-            <Col md={4}>
-              <Ledger style={{ color: '#69b5e5' }} />
-            </Col>
             <Col md={2}>
-              <Record />
+              <h3>Transaction History</h3>
+              <ul>
+              <HistoryBlock />
+              <HistoryBlock />
+              <HistoryBlock />
+              <HistoryBlock />
+              <HistoryBlock />
+              <HistoryBlock />
+              <HistoryBlock />
+              <HistoryBlock />
+              <HistoryBlock />     <HistoryBlock />
+              <HistoryBlock />
+              <HistoryBlock />
+              <HistoryBlock />
+              <HistoryBlock />
+              <HistoryBlock />
+              <HistoryBlock />
+              <HistoryBlock />
+
+              </ul>
             </Col>
-            <Col md={2}>
-              <Product />
-              <Holder />
-            </Col> */}
-            <Col md={6} id='column'>
-              <Holder getAllCannabis={this.getAllCannabis} />
-            </Col>
-            <Col md={6} id='column'>
-              <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
-            </Col>
-          </Row>
-          <Row>
-            <Col md={6} id='column'>
-              <Ledger ledger={this.state.ledger} style={{ color: '#95c13e' }} />
-            </Col>
-            <Col md={6} id='column'>
-              <BizLedger bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} />
+            <Col md={10}>
+              <Row>
+                <Col md={6} id='column'>
+                  <Holder getAllCannabis={this.getAllCannabis} />
+                </Col>
+                <Col md={6} id='column'>
+                  <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
+                </Col>
+              </Row>
+              <Row>
+                <Col md={6} id='column'>
+                  <Ledger ledger={this.state.ledger} style={{ color: '#95c13e' }} />
+                </Col>
+                <Col md={6} id='column'>
+                  <BizLedger bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} />
+                </Col>
+              </Row>
             </Col>
           </Row>
         </div>

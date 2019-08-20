@@ -321,6 +321,7 @@ var change_holder = async function (req, res) {
         txId: tx_id
     };
 
+    console.log("Request: ", request);
     // send the transaction proposal to the peers
     var results = await channel.sendTransactionProposal(request);
     var proposalResponses = results[0];
