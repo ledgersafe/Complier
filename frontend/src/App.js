@@ -34,8 +34,15 @@ class App extends Component {
     this.getAllCannabis();
   }
 
-  updateSidebarHistory(){
-
+  updateSidebarHistory(history){
+    console.log(history);
+    let list = []
+    for(let x in history) {
+      var tx = history[x]
+      console.log("Transaction: ", tx)
+      list.unshift({txId: tx.TxId, holder: tx.Value.holder, amount: tx.Value.amount, timestamp: tx.Timestamp})
+    }
+    this.setState({ history: list })
   }
 
   updateSelectedAssetID(value) {
@@ -79,7 +86,7 @@ class App extends Component {
         if (data.message === 'OK') {
           console.log('getHistory success!')
           console.log(data.history);
-          //this.updateSidebarHistory(data.history);
+          this.updateSidebarHistory(data.history);
         }
         else {
           console.log('getHistory ERROR');
@@ -124,7 +131,13 @@ class App extends Component {
             <Col md={2}>
               <h3>Transaction History</h3>
               <ul>
-
+                {
+                  this.state.history.length > 0 ? (
+                    this.state.history.map((output, i) => {
+                      return <HistoryBlock key={i} timestamp={output.timestamp} amount={output.amount} holder={output.holder} txId={output.txId}/>
+                    })
+                  ) : null
+                }
               </ul>
             </Col>
             <Col md={10}>

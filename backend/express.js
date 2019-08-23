@@ -310,7 +310,7 @@ var get_history = async function (req, res) {
             chaincodeId: "cannabis-app",
             fcn: "getHistory",
             chainId: "mychannel",
-            args: ["1"],   
+            args: [assetID],   
             txId: tx_id
         }
         console.log("Before GetHistory Call")
