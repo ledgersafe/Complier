@@ -15,19 +15,29 @@ class App extends Component {
     super(props);
     this.state = {
       ledger: [],
+      history: [],
       biz: '',
-      bid: ''
+      bid: '',
     }
+    this.selectedAssetID = null;
 
     this.getAllCannabis = this.getAllCannabis.bind(this);
     this.updateLedger = this.updateLedger.bind(this);
     this.bizQuery = this.bizQuery.bind(this);
+    this.getHistory = this.getHistory.bind(this);
+    this.updateSelectedAssetID = this.updateSelectedAssetID.bind(this);
   }
 
   // componentDidMount always executes first before everything else
   componentDidMount() {
     console.log('component did mount')
     this.getAllCannabis();
+  }
+
+  updateSelectedAssetID(value) {
+    this.selectedAssetID = value;
+    console.log(value)
+    this.getHistory();
   }
 
   getAllCannabis() {
@@ -44,7 +54,29 @@ class App extends Component {
           this.updateLedger(data.result);
         }
         else {
-          console.log('ERROR');
+          console.log('getAllCannabis ERROR');
+        }
+      }
+    });
+  }
+
+  getHistory() {
+    let assetID = this.selectedAssetID;
+    $.ajax({
+      url: 'http://localhost:4000/getHistory',
+      type: 'GET',
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+      crossDomain: true,
+      dataType: 'json',
+      xhrFields: { withCredentials: true },
+      data: { assetID },
+      success: (data) => {
+        if (data.message === 'OK') {
+          console.log('getHistory success!')
+          this.updateHistory(data.history);
+        }
+        else {
+          console.log('getHistory ERROR');
         }
       }
     });
@@ -86,39 +118,23 @@ class App extends Component {
             <Col md={2}>
               <h3>Transaction History</h3>
               <ul>
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />     <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
 
               </ul>
             </Col>
             <Col md={10}>
               <Row>
-                <Col md={6} id='column'>
+                <Col md={3} id='column'>
                   <Holder getAllCannabis={this.getAllCannabis} />
                 </Col>
-                <Col md={6} id='column'>
-                  <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
+                <Col md={9} id='column'>
+                  <Ledger ledger={this.state.ledger} style={{ color: '#95c13e' }} updateSelectedAssetID={this.updateSelectedAssetID}/>
                 </Col>
               </Row>
               <Row>
-                <Col md={6} id='column'>
-                  <Ledger ledger={this.state.ledger} style={{ color: '#95c13e' }} />
+                <Col md={3} id='column'>
+                  <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
                 </Col>
-                <Col md={6} id='column'>
+                <Col md={9} id='column'>
                   <BizLedger bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} />
                 </Col>
               </Row>

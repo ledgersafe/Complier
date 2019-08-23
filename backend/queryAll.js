@@ -55,7 +55,7 @@ module.exports = function router() {
             };
 
             const query_responses = await channel.queryByChaincode(request);
-            console.log("Query has completed, checking results");
+            console.log("Query has completed, checking results in queryAll.js");
             // query_responses could have more than one  results if there multiple peers were used as targets
             if (query_responses && query_responses.length == 1) {
                 if (query_responses[0] instanceof Error) {

@@ -62,7 +62,7 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path })
     return channel.queryByChaincode(request);
   })
   .then(query_responses => {
-    console.log("Query has completed, checking results");
+    console.log("Query has completed, checking results in queryAllCannabis");
     // query_responses could have more than one  results if there multiple peers were used as targets
     if (query_responses && query_responses.length == 1) {
       if (query_responses[0] instanceof Error) {

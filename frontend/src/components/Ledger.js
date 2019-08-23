@@ -29,7 +29,7 @@ class Ledger extends Component {
                     {this.props.ledger.length > 0 ? (
                         this.props.ledger.map((output, i) => {
                             return <tr key={i} style={{ backgroundColor: '#ffffff' }}>
-                                <th className="t-id" scope="row" row={i}>{i+1}</th>
+                                <th className="t-id" scope="row" row={i} onClick={() => this.props.updateSelectedAssetID(i+1)}>{i+1}</th>
                                 <td>{output.timestamp}</td>
                                 <td>{output.holder.charAt(0).toUpperCase()  + output.holder.slice(1).toLowerCase()}</td>
                                 <td>{output.strain}</td>

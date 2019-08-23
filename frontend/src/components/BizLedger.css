@@ -1,6 +1,5 @@
 .table {
     max-width: 100%;
-    margin-top: 10px;
 }
 
 th {
@@ -16,4 +15,9 @@ td {
 
 .b-id {
     color: #7a7a7a;
+}
+
+tbody {
+    overflow-y:scroll;
+    max-height: 100px;
 }
