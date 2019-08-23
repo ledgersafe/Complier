@@ -369,12 +369,14 @@ func (s *SmartContract) getHistory(stub shim.ChaincodeStubInterface, args []stri
 	}
 	defer resultsIterator.Close()
 
+	fmt.Println("Got Result Iterator")
+	fmt.Println(resultsIterator)
 	for resultsIterator.HasNext() {
 		historyData, err := resultsIterator.Next()
 		if err != nil {
 			return shim.Error(err.Error())
 		}
-
+		fmt.Println(historyData)
 		var tx AuditHistory
 		tx.TxID = historyData.TxId                   //copy transaction id over
 		json.Unmarshal(historyData.Value, &cannabis) //un stringify it aka JSON.parse()
@@ -391,6 +393,9 @@ func (s *SmartContract) getHistory(stub shim.ChaincodeStubInterface, args []stri
 
 	//change to array of bytes
 	historyAsBytes, _ := json.Marshal(history) //convert to array of bytes
+	var h
+	h = json.Unmarshal(historyAsBytes, &h) //un stringify it aka JSON.parse()
+	return h
 	return shim.Success(historyAsBytes)
 }
 

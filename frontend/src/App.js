@@ -26,12 +26,17 @@ class App extends Component {
     this.bizQuery = this.bizQuery.bind(this);
     this.getHistory = this.getHistory.bind(this);
     this.updateSelectedAssetID = this.updateSelectedAssetID.bind(this);
+    this.updateSidebarHistory = this.updateSidebarHistory.bind(this);
   }
 
   // componentDidMount always executes first before everything else
   componentDidMount() {
     console.log('component did mount')
     this.getAllCannabis();
+  }
+
+  updateSidebarHistory(){
+
   }
 
   updateSelectedAssetID(value) {
@@ -61,7 +66,8 @@ class App extends Component {
   }
 
   getHistory() {
-    let assetID = this.selectedAssetID;
+    let assetId = this.selectedAssetID;
+    console.log('calling getHistory ajax', assetId)
     $.ajax({
       url: 'http://localhost:4000/getHistory',
       type: 'GET',
@@ -69,11 +75,12 @@ class App extends Component {
       crossDomain: true,
       dataType: 'json',
       xhrFields: { withCredentials: true },
-      data: { assetID },
+      data: { assetID : assetId },
       success: (data) => {
         if (data.message === 'OK') {
           console.log('getHistory success!')
-          this.updateHistory(data.history);
+          console.log(data.history);
+          // this.updateSidebarHistory(data.history);
         }
         else {
           console.log('getHistory ERROR');

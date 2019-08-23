@@ -22,3 +22,6 @@ yarn-error.log*
 
 
 .vs-code/
+
+
+node_modules
