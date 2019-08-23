@@ -20,7 +20,6 @@ class App extends Component {
       bid: '',
     }
     this.selectedAssetID = null;
-
     this.getAllCannabis = this.getAllCannabis.bind(this);
     this.updateLedger = this.updateLedger.bind(this);
     this.bizQuery = this.bizQuery.bind(this);
@@ -70,17 +69,17 @@ class App extends Component {
     console.log('calling getHistory ajax', assetId)
     $.ajax({
       url: 'http://localhost:4000/getHistory',
-      type: 'GET',
+      type: 'POST',
       contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
       crossDomain: true,
       dataType: 'json',
       xhrFields: { withCredentials: true },
-      data: { assetID : assetId },
+      data: { assetID : this.selectedAssetID },
       success: (data) => {
         if (data.message === 'OK') {
           console.log('getHistory success!')
           console.log(data.history);
-          // this.updateSidebarHistory(data.history);
+          //this.updateSidebarHistory(data.history);
         }
         else {
           console.log('getHistory ERROR');
