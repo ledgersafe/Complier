@@ -1,12 +1,14 @@
 import { Card, Button, CardSubtitle, CardTitle, CardText, CardGroup, CardBody, Col, Row, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import './HistoryBlock.css'
 import React, { Component } from "react";
+import ReactDOM from 'react-dom'
 
 class HistoryBlock extends Component {
+
     render() {
         console.log("rendering")
         return (
-            <CardGroup style={{ padding: '10px' }}>
+                <CardGroup style={{ padding: '10px'}}>
                 <Card body inverse color="primary">
                     <CardBody>
                         <CardTitle>Transaction ID: {this.props.txId}</CardTitle>

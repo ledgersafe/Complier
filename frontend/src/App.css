@@ -5,6 +5,7 @@
 .App-header {
   background-color: #161921;
   min-height: 10vh;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,6 +14,7 @@
   font-size: 30px;
   color: white;
   font-family: "Arial";
+  z-index: 2;
 }
 
 .App-link {
@@ -30,7 +32,7 @@ body{
 
 .ui {
   text-align: left;
-  padding: 15px;
+  padding-left: 15px;
 }
 
 ul{
@@ -41,7 +43,16 @@ ul{
   background-color: #161921;
 }
 
+#txList {
+  background-color: #111;
+  transition: 0.5s;
+}
+
 .form-control {
   color: #434b56;
   background-color: white;
+}
+
+#transactionTitle {
+  transition: all 0.5s;
 }
