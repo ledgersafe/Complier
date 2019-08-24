@@ -8,7 +8,7 @@ import Holder from './components/Holder'
 import { Col, Row } from 'reactstrap'
 import $ from 'jquery'
 import LS from './static/LS.png'
-import HistoryBlock from './components/HistoryBlock'
+import Sidebar from './components/Sidebar'
 
 class App extends Component {
   constructor(props) {
@@ -128,19 +128,8 @@ class App extends Component {
         </header>
         <div className="ui">
           <Row>
-            <Col md={2}>
-              <h3>Transaction History</h3>
-              <ul>
-                {
-                  this.state.history.length > 0 ? (
-                    this.state.history.map((output, i) => {
-                      return <HistoryBlock key={i} timestamp={output.timestamp} amount={output.amount} holder={output.holder} txId={output.txId}/>
-                    })
-                  ) : null
-                }
-              </ul>
-            </Col>
-            <Col md={10}>
+            <Sidebar history={this.state.history}/>
+            <Col md={12}>
               <Row>
                 <Col md={3} id='column'>
                   <Holder getAllCannabis={this.getAllCannabis} />
