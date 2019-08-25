@@ -1,11 +1,11 @@
 .sidebar {
     height: 100%;
-    width: 50px;
+    width: 0;
     position: relative;
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: #2C2F33;
     overflow-x: hidden;
     transition: 0.5s;
   }

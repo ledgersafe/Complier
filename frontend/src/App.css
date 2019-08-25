@@ -33,18 +33,17 @@ body{
 .ui {
   text-align: left;
   padding-left: 15px;
+  padding-bottom: 15px;
+  padding-right: 15px;
 }
 
 ul{
   overflow:hidden; 
   overflow-y:scroll; 
   height:100vh;
-  padding-left: 0px;
-  background-color: #161921;
 }
 
 #txList {
-  background-color: #111;
   transition: 0.5s;
 }
 
@@ -55,4 +54,6 @@ ul{
 
 #transactionTitle {
   transition: all 0.5s;
+  color: white;
+  text-align: center;
 }

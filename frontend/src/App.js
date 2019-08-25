@@ -35,8 +35,8 @@ class App extends Component {
   componentDidMount() {
     var _ = this;
     console.log('component did mount', this.state.collapsible)
-    $(window).keypress(function (e) {
-      if (e.which === 32) {
+    $(window).keydown(function (e) {
+      if (e.which === 27) {
         _.updateCollapsible()
       }
     });
@@ -48,7 +48,7 @@ class App extends Component {
     for (let x in history) {
       var tx = history[x]
       console.log("Transaction: ", tx)
-      list.unshift({ txId: tx.TxId, holder: tx.value.holder, amount: tx.value.amount, timestamp: tx.Timestamp })
+      list.unshift({ txId: tx.txId, holder: tx.value.holder, amount: tx.value.amount, timestamp: tx.Timestamp })
     }
     console.log("history", list)
     this.setState({ history: list })
@@ -127,14 +127,14 @@ class App extends Component {
 
   updateCollapsible() {
     if (!this.state.collapsible) {
-      document.getElementById("mySidebar").style.width = "170px";
-      document.getElementById("main").style.marginLeft = "60px";
-      document.getElementById("txList").style.right = "-40px";
+      document.getElementById("mySidebar").style.width = "185px";
+      document.getElementById("main").style.marginLeft = "10px";
+      document.getElementById("txHistory").style.right = "-100px";
     }
     else {
-      document.getElementById("mySidebar").style.width = "50px";
-      document.getElementById("main").style.marginLeft = "-60px";
-      document.getElementById("txList").style.right = "40px";
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft = "-190px";
+      document.getElementById("txHistory").style.right = "100px";
     }
     this.setState({ collapsible: !this.state.collapsible })
   }
@@ -155,36 +155,49 @@ class App extends Component {
             <Col md={1}>
               <Row>
                 <div id="mySidebar" className="sidebar">
-                  <Button onClick={this.updateCollapsible} style={{ float: 'right' }}>Click</Button>
-                    <h3 id='transactionTitle'>Transaction History</h3>
-                  <ul id='txList'>
-                    {
-                      this.state.history.map((output, i) => {
-                        return <HistoryBlock isOpen={this.state.collapsible} key={i} timestamp={output.timestamp} amount={output.amount} holder={output.holder} txId={output.txId} />
-                      })
-                    }
-                  </ul>
+                  <div id="txHistory">
+                    <h4 id='transactionTitle'>History<br></br>Asset ID: {this.selectedAssetID}</h4>
+                    <ul id='txList' style={{ paddingLeft: "0" }}>
+                      {
+                        this.state.history.map((output, i) => {
+                          return <HistoryBlock isOpen={this.state.collapsible} key={i} timestamp={output.timestamp} amount={output.amount} holder={output.holder} txId={output.txId} />
+                        })
+                      }
+                    </ul>
+                  </div>
                 </div>
               </Row>
             </Col>
-            <Col md={11} style={{ padding: '15px' }}>
-              <div id="main" style={{marginLeft: '-60px'}}>
-              <Row>
-                <Col md={3} id='column'>
-                  <Holder getAllCannabis={this.getAllCannabis} updateSelectedAssetID={this.updateSelectedAssetID} />
-                </Col>
-                <Col md={9} id='column'>
-                  <Ledger ledger={this.state.ledger} style={{ color: '#95c13e' }} updateSelectedAssetID={this.updateSelectedAssetID} />
-                </Col>
-              </Row>
-              <Row>
-                <Col md={3} id='column'>
-                  <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
-                </Col>
-                <Col md={9} id='column'>
-                  <BizLedger bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} />
-                </Col>
-              </Row>
+            <Col md={11}>
+              <div id="main" style={{ marginLeft: '-190px' }}>
+                <Row>
+                  <Col md={1}>
+                    <Button color="primary" title="Click or press ESC to view Asset History"
+                      onClick={this.updateCollapsible}
+                      style={{ float: 'right' }}>
+                      <span role="img"
+                        aria-label={this.props.label ? this.props.label : ""}
+                        aria-hidden={this.props.label ? "false" : "true"}>
+                        🔍
+                                      </span>
+                    </Button>
+                  </Col>
+                  <Col md={2} id='column' style={{ marginTop: "20px" }}>
+                    <Holder getAllCannabis={this.getAllCannabis} updateSelectedAssetID={this.updateSelectedAssetID} />
+                  </Col>
+                  <Col md={9} id='column'>
+                    <Ledger isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} ledger={this.state.ledger} style={{ color: '#95c13e' }} updateSelectedAssetID={this.updateSelectedAssetID} />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={1}></Col>
+                  <Col md={2} id='column' style={{ marginTop: "20px" }}>
+                    <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
+                  </Col>
+                  <Col md={9} id='column'>
+                    <BizLedger bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} />
+                  </Col>
+                </Row>
               </div>
             </Col>
           </Row>
