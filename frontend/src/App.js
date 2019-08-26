@@ -49,7 +49,7 @@ class App extends Component {
     for (let x in history) {
       var tx = history[x]
       console.log("Transaction: ", tx)
-      list.unshift({ txId: tx.txId, holder: tx.value.holder, amount: tx.value.amount, timestamp: tx.Timestamp })
+      list.unshift({ txId: tx.TxId, holder: tx.Value.holder, amount: tx.Value.amount, timestamp: tx.Timestamp })
     }
     console.log("history", list)
     this.setState({ history: list })
@@ -152,6 +152,7 @@ class App extends Component {
                 <p>Asset ID: {this.selectedAssetID}</p>
                 {
                   this.state.history.map((output, i) => {
+                    console.log("OUTPUT: ", output)
                     return <li><HistoryBlock isOpen={this.state.collapsible} i={this.state.history.length - i} timestamp={output.timestamp} amount={output.amount} holder={output.holder} txId={output.txId} /></li>
                   })
                 }

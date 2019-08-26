@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom'
 class HistoryBlock extends Component {
     constructor(props){
         super(props);
-        // this.timestamp = this.props.timestamp.slice(0, -9);
+        this.timestamp = this.props.timestamp.slice(0, -9);
     }
 
     componentDidUpdate() {
@@ -25,8 +25,8 @@ class HistoryBlock extends Component {
                 <CardGroup style={{ padding: '10px'}}>
                 <Card body inverse style={{backgroundColor: '#2C2F33', color: "white" }}>
                     <CardBody id="details">
-                        <CardTitle style={{textAlign: 'center'}}>TX: {this.props.i}</CardTitle>
-                        <CardSubtitle>Transaction ID: {this.props.txId.substring(0, 5)}...</CardSubtitle>
+                        <CardTitle style={{textAlign: 'center'}}><b>TX: {this.props.i}</b></CardTitle>
+                        <CardSubtitle>Transaction ID: {this.props.txId.slice(0,5)}...</CardSubtitle>
                         <CardSubtitle>Holder: {this.props.holder}</CardSubtitle>
                         <CardSubtitle>Amount: {this.props.amount}</CardSubtitle>
                         <CardSubtitle>Time: {this.props.timestamp}</CardSubtitle>
