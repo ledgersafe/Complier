@@ -160,7 +160,7 @@ class App extends Component {
                     <ul id='txList' style={{ paddingLeft: "0" }}>
                       {
                         this.state.history.map((output, i) => {
-                          return <HistoryBlock isOpen={this.state.collapsible} key={i} timestamp={output.timestamp} amount={output.amount} holder={output.holder} txId={output.txId} />
+                          return <HistoryBlock isOpen={this.state.collapsible} i={this.state.history.length - i} timestamp={output.timestamp} amount={output.amount} holder={output.holder} txId={output.txId} />
                         })
                       }
                     </ul>
@@ -174,7 +174,7 @@ class App extends Component {
                   <Col md={1}>
                     <Button color="primary" title="Click or press ESC to view Asset History"
                       onClick={this.updateCollapsible}
-                      style={{ float: 'right' }}>
+                      style={{ float: 'right', marginTop: '50vh' }}>
                       <span role="img"
                         aria-label={this.props.label ? this.props.label : ""}
                         aria-hidden={this.props.label ? "false" : "true"}>
@@ -182,19 +182,19 @@ class App extends Component {
                                       </span>
                     </Button>
                   </Col>
-                  <Col md={2} id='column' style={{ marginTop: "20px" }}>
+                  <Col md={2} id='column'>
                     <Holder getAllCannabis={this.getAllCannabis} updateSelectedAssetID={this.updateSelectedAssetID} />
                   </Col>
-                  <Col md={9} id='column'>
+                  <Col md={9}>
                     <Ledger isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} ledger={this.state.ledger} style={{ color: '#95c13e' }} updateSelectedAssetID={this.updateSelectedAssetID} />
                   </Col>
                 </Row>
                 <Row>
                   <Col md={1}></Col>
-                  <Col md={2} id='column' style={{ marginTop: "20px" }}>
+                  <Col md={2} id='column'>
                     <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
                   </Col>
-                  <Col md={9} id='column'>
+                  <Col md={9}>
                     <BizLedger bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} />
                   </Col>
                 </Row>
