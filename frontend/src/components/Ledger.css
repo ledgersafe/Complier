@@ -20,3 +20,8 @@ td {
 #ledtable {
     margin-top: 20px;
 }
+
+tbody {
+    overflow-y:scroll;
+    max-height: 100px;
+}

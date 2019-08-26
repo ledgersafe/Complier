@@ -5,29 +5,60 @@ import BizLedger from './components/BizLedger'
 import Product from './components/Product'
 import Record from './components/Record'
 import Holder from './components/Holder'
-import { Col, Row } from 'reactstrap'
+import { Col, Row, Button } from 'reactstrap'
 import $ from 'jquery'
 import LS from './static/LS.png'
 import HistoryBlock from './components/HistoryBlock'
+import './components/Sidebar.css'
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       ledger: [],
+      history: [],
       biz: '',
-      bid: ''
+      bid: '',
+      collapsible: false
     }
-
+    this.selectedAssetID = null;
     this.getAllCannabis = this.getAllCannabis.bind(this);
     this.updateLedger = this.updateLedger.bind(this);
     this.bizQuery = this.bizQuery.bind(this);
+    this.getHistory = this.getHistory.bind(this);
+    this.updateSelectedAssetID = this.updateSelectedAssetID.bind(this);
+    this.updateSidebarHistory = this.updateSidebarHistory.bind(this);
+    this.updateCollapsible = this.updateCollapsible.bind(this)
   }
 
   // componentDidMount always executes first before everything else
   componentDidMount() {
-    console.log('component did mount')
+    var _ = this;
+    console.log('component did mount', this.state.collapsible)
+    $(window).keydown(function (e) {
+      if (e.which === 27) {
+        _.updateCollapsible()
+      }
+    });
     this.getAllCannabis();
+  }
+
+  updateSidebarHistory(history) {
+    let list = []
+    for (let x in history) {
+      var tx = history[x]
+      console.log("Transaction: ", tx)
+      list.unshift({ txId: tx.txId, holder: tx.value.holder, amount: tx.value.amount, timestamp: tx.Timestamp })
+    }
+    console.log("history", list)
+    this.setState({ history: list })
+    console.log("sidebar history", this.state.history);
+  }
+
+  updateSelectedAssetID(value) {
+    this.selectedAssetID = value;
+    console.log(value)
+    this.getHistory();
   }
 
   getAllCannabis() {
@@ -44,7 +75,31 @@ class App extends Component {
           this.updateLedger(data.result);
         }
         else {
-          console.log('ERROR');
+          console.log('getAllCannabis ERROR');
+        }
+      }
+    });
+  }
+
+  getHistory() {
+    let assetId = this.selectedAssetID;
+    console.log('calling getHistory ajax', assetId)
+    $.ajax({
+      url: 'http://localhost:4000/getHistory',
+      type: 'POST',
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+      crossDomain: true,
+      dataType: 'json',
+      xhrFields: { withCredentials: true },
+      data: { assetID: this.selectedAssetID },
+      success: (data) => {
+        if (data.message === 'OK') {
+          console.log('getHistory success!')
+          console.log(data.history);
+          this.updateSidebarHistory(data.history);
+        }
+        else {
+          console.log('getHistory ERROR');
         }
       }
     });
@@ -70,6 +125,20 @@ class App extends Component {
     this.setState({ bid: data })
   }
 
+  updateCollapsible() {
+    if (!this.state.collapsible) {
+      document.getElementById("mySidebar").style.width = "185px";
+      document.getElementById("main").style.marginLeft = "10px";
+      document.getElementById("txHistory").style.right = "-100px";
+    }
+    else {
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft = "-190px";
+      document.getElementById("txHistory").style.right = "100px";
+    }
+    this.setState({ collapsible: !this.state.collapsible })
+  }
+
   render() {
     console.log("App rendering")
     return (
@@ -83,45 +152,53 @@ class App extends Component {
         </header>
         <div className="ui">
           <Row>
-            <Col md={2}>
-              <h3>Transaction History</h3>
-              <ul>
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />     <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-              <HistoryBlock />
-
-              </ul>
+            <Col md={1}>
+              <Row>
+                <div id="mySidebar" className="sidebar">
+                  <div id="txHistory">
+                    <h4 id='transactionTitle'>History<br></br>Asset ID: {this.selectedAssetID}</h4>
+                    <ul id='txList' style={{ paddingLeft: "0" }}>
+                      {
+                        this.state.history.map((output, i) => {
+                          return <HistoryBlock isOpen={this.state.collapsible} key={i} timestamp={output.timestamp} amount={output.amount} holder={output.holder} txId={output.txId} />
+                        })
+                      }
+                    </ul>
+                  </div>
+                </div>
+              </Row>
             </Col>
-            <Col md={10}>
-              <Row>
-                <Col md={6} id='column'>
-                  <Holder getAllCannabis={this.getAllCannabis} />
-                </Col>
-                <Col md={6} id='column'>
-                  <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
-                </Col>
-              </Row>
-              <Row>
-                <Col md={6} id='column'>
-                  <Ledger ledger={this.state.ledger} style={{ color: '#95c13e' }} />
-                </Col>
-                <Col md={6} id='column'>
-                  <BizLedger bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} />
-                </Col>
-              </Row>
+            <Col md={11}>
+              <div id="main" style={{ marginLeft: '-190px' }}>
+                <Row>
+                  <Col md={1}>
+                    <Button color="primary" title="Click or press ESC to view Asset History"
+                      onClick={this.updateCollapsible}
+                      style={{ float: 'right' }}>
+                      <span role="img"
+                        aria-label={this.props.label ? this.props.label : ""}
+                        aria-hidden={this.props.label ? "false" : "true"}>
+                        🔍
+                                      </span>
+                    </Button>
+                  </Col>
+                  <Col md={2} id='column' style={{ marginTop: "20px" }}>
+                    <Holder getAllCannabis={this.getAllCannabis} updateSelectedAssetID={this.updateSelectedAssetID} />
+                  </Col>
+                  <Col md={9} id='column'>
+                    <Ledger isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} ledger={this.state.ledger} style={{ color: '#95c13e' }} updateSelectedAssetID={this.updateSelectedAssetID} />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={1}></Col>
+                  <Col md={2} id='column' style={{ marginTop: "20px" }}>
+                    <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
+                  </Col>
+                  <Col md={9} id='column'>
+                    <BizLedger bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} />
+                  </Col>
+                </Row>
+              </div>
             </Col>
           </Row>
         </div>

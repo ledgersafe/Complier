@@ -19,6 +19,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv"
+	"time"
 
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	sc "github.com/hyperledger/fabric/protos/peer"
@@ -351,8 +352,8 @@ func (s *SmartContract) getHistory(stub shim.ChaincodeStubInterface, args []stri
 		TxID  string   `json:"txId"`
 		Value Cannabis `json:"value"`
 	}
-	var history []AuditHistory
-	var cannabis Cannabis
+	//var history []AuditHistory
+	//var cannabis Cannabis
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments. Expecting 1")
@@ -364,34 +365,83 @@ func (s *SmartContract) getHistory(stub shim.ChaincodeStubInterface, args []stri
 	// Get History
 	resultsIterator, err := stub.GetHistoryForKey(key)
 	if err != nil {
-		fmt.Println("ERROR ON ITERATOR")
+		fmt.Println("ERROR ON ITERATOR", err.Error())
 		return shim.Error(err.Error())
 	}
 	defer resultsIterator.Close()
 
+	// fmt.Println(resultsIterator)
+	// for resultsIterator.HasNext() {
+	// 	historyData, err := resultsIterator.Next()
+	// 	if err != nil {
+	// 		return shim.Error(err.Error())
+	// 	}
+	// 	fmt.Println(historyData)
+	// 	var tx AuditHistory
+	// 	tx.TxID = historyData.TxId                   //copy transaction id over
+	// 	json.Unmarshal(historyData.Value, &cannabis) //un stringify it aka JSON.parse()
+	// 	if historyData.Value == nil {                //marble has been deleted
+	// 		var cannabis Cannabis
+	// 		tx.Value = cannabis // nil //emptyCannabis //copy nil marble
+	// 	} else {
+	// 		json.Unmarshal(historyData.Value, &cannabis) //un stringify it aka JSON.parse()
+	// 		tx.Value = cannabis                          //copy marble over
+	// 	}
+	// 	history = append(history, tx) //add this tx to the list
+	// }
+	// fmt.Printf("- getHistoryForMarble returning:\n%s", history)
+
+	// //change to array of bytes
+	// historyAsBytes, _ := json.Marshal(history) //convert to array of bytes
+	// return shim.Success(historyAsBytes)
+
+	// buffer is a JSON array containing historic values for the marble
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+
+	bArrayMemberAlreadyWritten := false
 	for resultsIterator.HasNext() {
-		historyData, err := resultsIterator.Next()
+		response, err := resultsIterator.Next()
 		if err != nil {
 			return shim.Error(err.Error())
 		}
-
-		var tx AuditHistory
-		tx.TxID = historyData.TxId                   //copy transaction id over
-		json.Unmarshal(historyData.Value, &cannabis) //un stringify it aka JSON.parse()
-		if historyData.Value == nil {                //marble has been deleted
-			var cannabis Cannabis
-			tx.Value = cannabis // nil //emptyCannabis //copy nil marble
-		} else {
-			json.Unmarshal(historyData.Value, &cannabis) //un stringify it aka JSON.parse()
-			tx.Value = cannabis                          //copy marble over
+		// Add a comma before array members, suppress it for the first array member
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
 		}
-		history = append(history, tx) //add this tx to the list
-	}
-	fmt.Printf("- getHistoryForMarble returning:\n%s", history)
+		buffer.WriteString("{\"TxId\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(response.TxId)
+		buffer.WriteString("\"")
 
-	//change to array of bytes
-	historyAsBytes, _ := json.Marshal(history) //convert to array of bytes
-	return shim.Success(historyAsBytes)
+		buffer.WriteString(", \"Value\":")
+		// if it was a delete operation on given key, then we need to set the
+		//corresponding value null. Else, we will write the response.Value
+		//as-is (as the Value itself a JSON marble)
+		if response.IsDelete {
+			buffer.WriteString("null")
+		} else {
+			buffer.WriteString(string(response.Value))
+		}
+
+		buffer.WriteString(", \"Timestamp\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String())
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"IsDelete\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(strconv.FormatBool(response.IsDelete))
+		buffer.WriteString("\"")
+
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+	buffer.WriteString("]")
+
+	fmt.Printf("- getHistoryForAsset returning:\n%s\n", buffer.String())
+
+	return shim.Success(buffer.Bytes())
 }
 
 /*

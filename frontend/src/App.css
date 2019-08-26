@@ -5,6 +5,7 @@
 .App-header {
   background-color: #161921;
   min-height: 10vh;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,6 +14,7 @@
   font-size: 30px;
   color: white;
   font-family: "Arial";
+  z-index: 2;
 }
 
 .App-link {
@@ -30,18 +32,28 @@ body{
 
 .ui {
   text-align: left;
-  padding: 15px;
+  padding-left: 15px;
+  padding-bottom: 15px;
+  padding-right: 15px;
 }
 
 ul{
   overflow:hidden; 
   overflow-y:scroll; 
   height:100vh;
-  padding-left: 0px;
-  background-color: #161921;
+}
+
+#txList {
+  transition: 0.5s;
 }
 
 .form-control {
   color: #434b56;
   background-color: white;
+}
+
+#transactionTitle {
+  transition: all 0.5s;
+  color: white;
+  text-align: center;
 }

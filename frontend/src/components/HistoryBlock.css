@@ -41,3 +41,8 @@
     opacity: 1;
     right: 0;
   }
+
+  #details {
+    transition: all 0.1s;
+    visibility: visible;
+  }
