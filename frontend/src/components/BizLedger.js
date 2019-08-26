@@ -25,7 +25,7 @@ class BizLedger extends Component {
                     <thead style={{ backgroundColor: '#ffffff' }}>
                         <tr>
                             <th>ID</th>
-                            <th>Timestamp</th>
+                            <th>History</th>
                             <th>Business</th>
                             <th>Strain</th>
                             <th>Thc %</th>

@@ -32,9 +32,6 @@ body{
 
 .ui {
   text-align: left;
-  padding-left: 15px;
-  padding-bottom: 15px;
-  padding-right: 15px;
 }
 
 ul{
@@ -61,3 +58,40 @@ ul{
 #column {
   margin-top: 20px;
 }
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  min-height: 100vh;
+}
+
+#sidebar.active {
+  margin-left: -250px;
+}
+
+a[data-toggle="collapse"] {
+  position: relative;
+}
+
+.dropdown-toggle::after {
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+/* 
+@media (max-width: 768px) {
+  #sidebar {
+      margin-left: -250px;
+  }
+  #sidebar.active {
+      margin-left: 0;
+  }
+} */

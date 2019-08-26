@@ -41,6 +41,7 @@ class App extends Component {
       }
     });
     this.getAllCannabis();
+    this.updateCollapsible()
   }
 
   updateSidebarHistory(history) {
@@ -126,16 +127,7 @@ class App extends Component {
   }
 
   updateCollapsible() {
-    if (!this.state.collapsible) {
-      document.getElementById("mySidebar").style.width = "185px";
-      document.getElementById("main").style.marginLeft = "10px";
-      document.getElementById("txHistory").style.right = "-100px";
-    }
-    else {
-      document.getElementById("mySidebar").style.width = "0";
-      document.getElementById("main").style.marginLeft = "-190px";
-      document.getElementById("txHistory").style.right = "100px";
-    }
+    document.getElementById('sidebar').classList.toggle('active');
     this.setState({ collapsible: !this.state.collapsible })
   }
 
@@ -151,7 +143,55 @@ class App extends Component {
           <div className="subtitle">LedgerSafe Demo Application</div>
         </header>
         <div className="ui">
-          <Row>
+          <div class="wrapper">
+            <nav id="sidebar" >
+              <div class="sidebar-header">
+                <h3>Transaction History</h3>
+              </div>
+              <ul class="list-unstyled components">
+                <p>Asset ID: {this.selectedAssetID}</p>
+                {
+                  this.state.history.map((output, i) => {
+                    return <li><HistoryBlock isOpen={this.state.collapsible} i={this.state.history.length - i} timestamp={output.timestamp} amount={output.amount} holder={output.holder} txId={output.txId} /></li>
+                  })
+                }
+              </ul>
+            </nav>
+            <div id="content" style={{width: '100%'}}>
+              <div class="container-fluid">
+                <div id="main">
+                  <div class='row'>
+                    <div class='col-3' id='column'>
+                      <Holder getAllCannabis={this.getAllCannabis} updateSelectedAssetID={this.updateSelectedAssetID} />
+                    </div>
+                    <div class='col-9'>
+                      <Ledger isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} ledger={this.state.ledger} style={{ color: '#95c13e' }} updateSelectedAssetID={this.updateSelectedAssetID} />
+                    </div>
+                  </div>
+                  <div class='row' style={{marginTop: '20px'}}>
+                    <Button color="primary" title="Click or press ESC to view Asset History"
+                      onClick={this.updateCollapsible}
+                      style={{ float: 'right' }}>
+                      <span role="img"
+                        aria-label={this.props.label ? this.props.label : ""}
+                        aria-hidden={this.props.label ? "false" : "true"}>
+                        🔍
+                                      </span>
+                    </Button>
+                  </div>
+                  <div class='row'>
+                    <div class='col-3' id='column'>
+                      <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
+                    </div>
+                    <div class='col-9'>
+                    <BizLedger bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {/* <Row>
             <Col md={1}>
               <Row>
                 <div id="mySidebar" className="sidebar">
@@ -200,9 +240,9 @@ class App extends Component {
                 </Row>
               </div>
             </Col>
-          </Row>
-        </div>
+          </Row> */}
       </div>
+      </div >
     )
   }
 }
