@@ -35,7 +35,7 @@ class Product extends Component {
 
     sellAssets(e) {
         e.preventDefault();
-        ReactDOM.findDOMNode(this.refs.sold).style.height = "50px";
+        ReactDOM.findDOMNode(this.refs.sold).style.height = "80px";
         if(!this.id || !this.holder){
         ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Please fill in all fields.</p>";
         ReactDOM.findDOMNode(this.refs.sold).style.color = "#7a7a7a";
@@ -59,10 +59,16 @@ class Product extends Component {
                     if (data.message === 'OK') {
                         console.log('change_holder success!')
                         console.log(data)
-                        ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Sold! <br>Transaction ID: <br>"+data.tx_id+"</p>";
+                        ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Sold!</p>";
                         ReactDOM.findDOMNode(this.refs.sold).style.color = "#acd854";
                         this.getAll()
                         this.props.updateSelectedAssetID(this.id)
+                        this.id = '';
+                        this.holder = '';
+                        this.amount = '';
+                        $('#id').val('');
+                        $('#holder').val('');
+                        $('#amount').val('');
                     }
                     else {
                         ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>An error has occurred.</p>";
@@ -79,7 +85,7 @@ class Product extends Component {
             <Form>
                 <div className="form">
                     <div className="change">
-                        <h3>Sell Assets</h3>
+                        <h3>Sell Asset</h3>
                         <FormGroup>
                             <Label>Enter Asset ID</Label>
                             <Input id="id" placeholder="Ex. 3" onChange={this.updateId} />

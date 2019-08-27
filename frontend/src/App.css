@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: "Arial";
 }
 
 .App-header {
@@ -13,7 +14,6 @@
   /* font-size: calc(10px + 2vmin); */
   font-size: 30px;
   color: white;
-  font-family: "Arial";
   z-index: 2;
 }
 
@@ -36,12 +36,12 @@ body{
 
 ul{
   overflow:hidden; 
-  overflow-y:scroll; 
-  height:100vh;
+  overflow-y:scroll;
 }
 
-#txList {
+#assetList {
   transition: 0.5s;
+  height: 100vh;
 }
 
 .form-control {
@@ -86,6 +86,18 @@ a[data-toggle="collapse"] {
   right: 20px;
   transform: translateY(-50%);
 }
+
+#historyButton {
+  position: fixed;
+  top: 45%;
+  z-index: 2;
+  transition: all 0.3s;
+}
+
+.container-fluid {
+  padding-left: 70px;
+}
+
 /* 
 @media (max-width: 768px) {
   #sidebar {
