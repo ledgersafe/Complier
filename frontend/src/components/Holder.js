@@ -61,14 +61,15 @@ class Product extends Component {
                         console.log(data)
                         ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Sold!</p>";
                         ReactDOM.findDOMNode(this.refs.sold).style.color = "#acd854";
-                        this.getAll()
-                        this.props.updateSelectedAssetID(this.id)
+                        var tempId = this.id;
                         this.id = '';
                         this.holder = '';
                         this.amount = '';
                         $('#id').val('');
                         $('#holder').val('');
                         $('#amount').val('');
+                        this.getAll()
+                        this.props.updateSelectedAssetID(tempId);
                     }
                     else {
                         ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>An error has occurred.</p>";

@@ -50,7 +50,7 @@
     background:#3f454a;
     border:none;
     color:white;
-    cursor: pointer; 
+    cursor: copy;
   }
 
   button.link:hover  {

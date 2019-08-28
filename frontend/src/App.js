@@ -155,11 +155,11 @@ class App extends Component {
             <nav id="sidebar" >
               <div class="sidebar-header">
                 <h3>Transaction History</h3>
-              </div>
-              <ul class="list-unstyled components" id='assetList'>
                 {
                   this.state.history.length === 0 ? null : <p>Asset ID: {this.selectedAssetID}</p>
                 }
+              </div>
+              <ul class="list-unstyled components" id='assetList'>
                 {
                   this.state.history.length > 0 ? (
                     this.state.history.map((output, i) => {
