@@ -49,9 +49,9 @@ class App extends Component {
     for (let x in history) {
       var tx = history[x]
       console.log("Transaction: ", tx)
-      var theDate = new Date(tx.value.timestamp * 1000);
+      var theDate = new Date(tx.Value.timestamp * 1000);
       var t = theDate.toUTCString();
-      list.unshift({ txId: tx.txId, holder: tx.value.holder, amount: tx.value.amount, timestamp: t })
+      list.unshift({ txId: tx.TxId, holder: tx.Value.holder, amount: tx.Value.amount, timestamp: t })
     }
     console.log("history", list)
     this.setState({ history: list })
