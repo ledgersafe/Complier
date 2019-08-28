@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
-import { Table } from 'reactstrap'
+import { Table, Button } from 'reactstrap'
 import './BizLedger.css'
 
 class BizLedger extends Component {
     constructor(props) {
         super(props);
+        this.callForHistory = this.callForHistory.bind(this)
+    }
+
+    callForHistory(key) {
+        this.props.updateSelectedAssetID(key);
+        if (this.props.isOpen) {
+            this.props.updateCollapsible();
+        }
     }
 
     render() {
@@ -40,8 +48,11 @@ class BizLedger extends Component {
                                 queriedLedger.map((output, i) => {
                                     return <tr key={i} style={{ backgroundColor: '#ffffff' }}>
                                         <th className="b-id" scope="row" row={i}>{output.index + 1}</th>
-                                        <td>{output.info.timestamp}</td>
-                                        <td>{output.info.holder.charAt(0).toUpperCase() + output.info.holder.slice(1).toLowerCase()}</td>
+                                        <td>{<Button color="info" onClick={() => this.callForHistory(output.key)}><span role="img"
+                                            aria-label={this.props.label ? this.props.label : ""}
+                                            aria-hidden={this.props.label ? "false" : "true"}>
+                                            🔍
+                                      </span></Button>}</td>                                        <td>{output.info.holder.charAt(0).toUpperCase() + output.info.holder.slice(1).toLowerCase()}</td>
                                         <td>{output.info.strain}</td>
                                         <td>{output.info.thc}</td>
                                         <td>{output.info.grower}</td>

@@ -201,7 +201,7 @@ class App extends Component {
                       <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
                     </div>
                     <div class='col-9'>
-                      <BizLedger bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} />
+                      <BizLedger isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} updateSelectedAssetID={this.updateSelectedAssetID} />
                     </div>
                   </div>
                 </div>
