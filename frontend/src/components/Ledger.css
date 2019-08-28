@@ -1,5 +1,5 @@
 .table {
-    max-width: 100%;
+    max-width: 50%;
 }
 
 th {
@@ -25,3 +25,8 @@ tbody {
     overflow-y:scroll;
     max-height: 100px;
 }
+
+.my-custom-scrollbar {
+    height: 400px;
+    overflow: auto;
+    }

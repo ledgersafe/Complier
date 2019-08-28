@@ -5,7 +5,7 @@ import BizLedger from './components/BizLedger'
 import Product from './components/Product'
 import Record from './components/Record'
 import Holder from './components/Holder'
-import { Col, Row, Button } from 'reactstrap'
+import { Button, Card, CardTitle, CardGroup, CardBody } from 'reactstrap'
 import $ from 'jquery'
 import LS from './static/LS.png'
 import HistoryBlock from './components/HistoryBlock'
@@ -41,6 +41,7 @@ class App extends Component {
       }
     });
     this.getAllCannabis();
+    this.updateCollapsible();
   }
 
   updateSidebarHistory(history) {
@@ -48,7 +49,9 @@ class App extends Component {
     for (let x in history) {
       var tx = history[x]
       console.log("Transaction: ", tx)
-      list.unshift({ txId: tx.txId, holder: tx.value.holder, amount: tx.value.amount, timestamp: tx.Timestamp })
+      var theDate = new Date(tx.Value.timestamp * 1000);
+      var t = theDate.toUTCString();
+      list.unshift({ txId: tx.TxId, holder: tx.Value.holder, amount: tx.Value.amount, timestamp: t })
     }
     console.log("history", list)
     this.setState({ history: list })
@@ -126,15 +129,12 @@ class App extends Component {
   }
 
   updateCollapsible() {
+    document.getElementById('sidebar').classList.toggle('active');
     if (!this.state.collapsible) {
-      document.getElementById("mySidebar").style.width = "185px";
-      document.getElementById("main").style.marginLeft = "10px";
-      document.getElementById("txHistory").style.right = "-100px";
+      document.getElementById('historyButton').style.marginLeft = '0';
     }
     else {
-      document.getElementById("mySidebar").style.width = "0";
-      document.getElementById("main").style.marginLeft = "-190px";
-      document.getElementById("txHistory").style.right = "100px";
+      document.getElementById('historyButton').style.marginLeft = '250px';
     }
     this.setState({ collapsible: !this.state.collapsible })
   }
@@ -151,58 +151,65 @@ class App extends Component {
           <div className="subtitle">LedgerSafe Demo Application</div>
         </header>
         <div className="ui">
-          <Row>
-            <Col md={1}>
-              <Row>
-                <div id="mySidebar" className="sidebar">
-                  <div id="txHistory">
-                    <h4 id='transactionTitle'>History<br></br>Asset ID: {this.selectedAssetID}</h4>
-                    <ul id='txList' style={{ paddingLeft: "0" }}>
-                      {
-                        this.state.history.map((output, i) => {
-                          return <HistoryBlock isOpen={this.state.collapsible} key={i} timestamp={output.timestamp} amount={output.amount} holder={output.holder} txId={output.txId} />
-                        })
-                      }
-                    </ul>
+          <div class="wrapper">
+            <nav id="sidebar" >
+              <div class="sidebar-header">
+                <h3>Transaction History</h3>
+                {
+                  this.state.history.length === 0 ? null : <p>Asset ID: {this.selectedAssetID}</p>
+                }
+              </div>
+              <ul class="list-unstyled components" id='assetList'>
+                {
+                  this.state.history.length > 0 ? (
+                    this.state.history.map((output, i) => {
+                      return <li><HistoryBlock key={i} isOpen={this.state.collapsible} i={this.state.history.length - i} timestamp={output.timestamp} amount={output.amount} holder={output.holder} txId={output.txId} /></li>
+                    })) : (
+                      <CardGroup style={{ padding: '10px' }}>
+                        <Card body inverse style={{ backgroundColor: '#2C2F33', color: "white" }}>
+                          <CardBody id="details">
+                            <CardTitle style={{ textAlign: 'center' }}>There's nothing here, please select an asset to view its transaction history.</CardTitle>
+                          </CardBody>
+                        </Card>
+                      </CardGroup>
+                    )
+                }
+              </ul>
+            </nav>
+            <Button color="primary" title="Click or press ESC to view Asset History" id='historyButton'
+              onClick={this.updateCollapsible}
+              style={{ float: 'right' }}>
+              <span role="img"
+                aria-label={this.props.label ? this.props.label : ""}
+                aria-hidden={this.props.label ? "false" : "true"}>
+                🔍
+                                      </span>
+            </Button>
+            <div id="content" style={{ width: '100%' }}>
+              <div class="container-fluid" id="main">
+                <div>
+                  <div class='row'>
+                    <div class='col-3' id='column'>
+                      <Holder getAllCannabis={this.getAllCannabis} updateSelectedAssetID={this.updateSelectedAssetID} />
+                    </div>
+                    <div class='col-9'>
+                      <Ledger isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} ledger={this.state.ledger} style={{ color: '#95c13e' }} updateSelectedAssetID={this.updateSelectedAssetID} />
+                    </div>
+                  </div>
+                  <div class='row'>
+                    <div class='col-3' id='column'>
+                      <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
+                    </div>
+                    <div class='col-9'>
+                      <BizLedger isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} updateSelectedAssetID={this.updateSelectedAssetID} />
+                    </div>
                   </div>
                 </div>
-              </Row>
-            </Col>
-            <Col md={11}>
-              <div id="main" style={{ marginLeft: '-190px' }}>
-                <Row>
-                  <Col md={1}>
-                    <Button color="primary" title="Click or press ESC to view Asset History"
-                      onClick={this.updateCollapsible}
-                      style={{ float: 'right' }}>
-                      <span role="img"
-                        aria-label={this.props.label ? this.props.label : ""}
-                        aria-hidden={this.props.label ? "false" : "true"}>
-                        🔍
-                                      </span>
-                    </Button>
-                  </Col>
-                  <Col md={2} id='column' style={{ marginTop: "20px" }}>
-                    <Holder getAllCannabis={this.getAllCannabis} updateSelectedAssetID={this.updateSelectedAssetID} />
-                  </Col>
-                  <Col md={9} id='column'>
-                    <Ledger isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} ledger={this.state.ledger} style={{ color: '#95c13e' }} updateSelectedAssetID={this.updateSelectedAssetID} />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md={1}></Col>
-                  <Col md={2} id='column' style={{ marginTop: "20px" }}>
-                    <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
-                  </Col>
-                  <Col md={9} id='column'>
-                    <BizLedger bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} />
-                  </Col>
-                </Row>
               </div>
-            </Col>
-          </Row>
+            </div>
+          </div>
         </div>
-      </div>
+      </div >
     )
   }
 }

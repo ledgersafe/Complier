@@ -27,7 +27,7 @@ class Product extends Component {
         return (
             <Form onSubmit={e => { e.preventDefault(); }}>
                 <div className="query">
-                    <h3>Query Specific Business</h3>
+                    <h3>Query Business</h3>
                     <FormGroup>
                         <Label>Enter Cannabis Business</Label>
                         <Input id="bid" placeholder="Ex. Tegridy" onChange={this.queryBusiness} />

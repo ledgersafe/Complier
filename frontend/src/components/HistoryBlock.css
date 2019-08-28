@@ -1,7 +1,6 @@
 .button {
     border-radius: 4px;
     border: none;
-    color: #FFFFFF;
     text-align: center;
     padding: 20px;
     width: 250px;
@@ -45,4 +44,16 @@
   #details {
     transition: all 0.1s;
     visibility: visible;
+  }
+
+  button.link { 
+    background:#3f454a;
+    border:none;
+    color:white;
+    cursor: copy;
+  }
+
+  button.link:hover  {
+    background:#626b73;
+    transition: all 0.3s;
   }

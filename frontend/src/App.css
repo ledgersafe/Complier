@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: "Arial";
 }
 
 .App-header {
@@ -13,7 +14,6 @@
   /* font-size: calc(10px + 2vmin); */
   font-size: 30px;
   color: white;
-  font-family: "Arial";
   z-index: 2;
 }
 
@@ -32,19 +32,16 @@ body{
 
 .ui {
   text-align: left;
-  padding-left: 15px;
-  padding-bottom: 15px;
-  padding-right: 15px;
 }
 
 ul{
   overflow:hidden; 
-  overflow-y:scroll; 
-  height:100vh;
+  overflow-y:scroll;
 }
 
-#txList {
+#assetList {
   transition: 0.5s;
+  height: 100vh;
 }
 
 .form-control {
@@ -57,3 +54,56 @@ ul{
   color: white;
   text-align: center;
 }
+
+#column {
+  margin-top: 20px;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  min-height: 100vh;
+}
+
+#sidebar.active {
+  margin-left: -250px;
+}
+
+a[data-toggle="collapse"] {
+  position: relative;
+}
+
+.dropdown-toggle::after {
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+
+#historyButton {
+  position: fixed;
+  top: 45%;
+  z-index: 2;
+  transition: all 0.3s;
+}
+
+.container-fluid {
+  padding-left: 70px;
+}
+
+/* 
+@media (max-width: 768px) {
+  #sidebar {
+      margin-left: -250px;
+  }
+  #sidebar.active {
+      margin-left: 0;
+  }
+} */
