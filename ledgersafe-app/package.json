@@ -4,8 +4,8 @@
   "description": "Hyperledger Fabric LedgerSafe Application",
   "main": "server.js",
   "dependencies": {
-    "fabric-ca-client": "^1.0.2",
-    "fabric-client": "^1.0.2",
+    "fabric-ca-client": "latest",
+    "fabric-client": "latest",
     "grpc": "^1.6.0",
     "express": "latest",
     "body-parser": "latest",
