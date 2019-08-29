@@ -33,4 +33,4 @@ docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/g
 
 
 printf "\nTotal execution time : $(($(date +%s) - starttime)) secs ...\n\n"
-printf "\nStart with the registerAdmin.js, then registerUser.js, then server.js\n\n"
+printf "\nStart with the registerAdmin.js, then enrollUser.js, then server.js\n\n"
