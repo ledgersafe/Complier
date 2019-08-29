@@ -26,4 +26,4 @@ yarn-error.log*
 
 node_modules
 
-./cannabis-app/node_modules
+./ledgersafe-app/node_modules

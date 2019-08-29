@@ -60,7 +60,7 @@ var dummy_change_holder = async function (req, res) {
     // send proposal to endorser
     var request = {
         //targets : --- letting this default to the peers assigned to the channel
-        chaincodeId: "cannabis-app",
+        chaincodeId: "ledgersafe-app",
         fcn: "changeCannabisHolder",
         args: [key, holder],
         chainId: "mychannel",

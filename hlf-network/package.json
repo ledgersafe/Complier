@@ -1,5 +1,5 @@
 {
-  "name": "cannabis-app",
+  "name": "ledgersafe-app",
   "version": "1.0.0",
   "description": "Hyperledger Fabric LedgerSafe Application",
   "main": "server.js",

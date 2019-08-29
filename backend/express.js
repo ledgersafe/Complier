@@ -70,7 +70,7 @@ var add_cannabis = async function (req, res) {
         // send proposal to endorser
         const request = {
             //targets : --- letting this default to the peers assigned to the channel
-            chaincodeId: "cannabis-app",
+            chaincodeId: "ledgersafe-app",
             fcn: "recordCannabis",
             args: [key, grower, strain, thc, timestamp, holder, amount],
             chainId: "mychannel",
@@ -241,7 +241,7 @@ var getBusiness = async function (req, res) {
 
         // queryCannabis - requires 1 argument, ex: args: ['4'],
         const request = {
-            chaincodeId: "cannabis-app",
+            chaincodeId: "ledgersafe-app",
             txId: tx_id,
             fcn: "queryCannabis",
             args: [key]
@@ -307,7 +307,7 @@ var get_history = async function (req, res) {
 
         tx_id = fabric_client.newTransactionID();
         const request = {
-            chaincodeId: "cannabis-app",
+            chaincodeId: "ledgersafe-app",
             fcn: "getHistory",
             chainId: "mychannel",
             args: [assetID],   
@@ -379,7 +379,7 @@ var change_holder = async function (req, res) {
         // send proposal to endorser
         var request = {
             //targets : --- letting this default to the peers assigned to the channel
-            chaincodeId: "cannabis-app",
+            chaincodeId: "ledgersafe-app",
             fcn: "changeCannabisHolder",
             args: [key, holder, amount],
             chainId: "mychannel",

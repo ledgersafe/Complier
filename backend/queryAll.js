@@ -48,7 +48,7 @@ module.exports = function router() {
 
             // queryAllCannabis - requires no arguments , ex: args: [''],
             const request = {
-                chaincodeId: "cannabis-app",
+                chaincodeId: "ledgersafe-app",
                 txId: tx_id,
                 fcn: "queryAllCannabis",
                 args: [""]
