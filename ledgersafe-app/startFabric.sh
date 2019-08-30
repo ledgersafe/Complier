@@ -18,19 +18,32 @@ if [ ! -d ~/.hfc-key-store/ ]; then
 fi
 
 # launch network; create channel and join peer to channel
-cd ./network
+cd ../hlf-network
 ./start.sh
 
 # Now launch the CLI container in order to install, instantiate chaincode
 # and prime the ledger with our 10 tuna catches
 docker-compose -f ./docker-compose.yml up -d cli
 
-docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp" cli peer chaincode install -n ledgersafe-app -v 1.0 -p github.com/ledgersafe-app/
-docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp" cli peer chaincode instantiate -o orderer.example.com:7050 -C mychannel -n ledgersafe-app -v 1.0 -c '{"Args":[""]}' -P "OR ('Org1MSP.member','Org2MSP.member')"
+
+echo Installing Chaincode ... 
+docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp" cli peer chaincode install -n cannabis-app -v 1.0 -p github.com/ledgersafe-app/
+
+echo Instantiating Chaincode ...
+docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp" cli peer chaincode instantiate -o orderer.example.com:7050 -C mychannel -n cannabis-app -v 1.0 -c '{"Args":[""]}' -P "OR ('Org1MSP.member','Org2MSP.member')"
 sleep 10
-docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp" cli peer chaincode invoke -o orderer.example.com:7050 -C mychannel -n ledgersafe-app -c '{"function":"initLedger","Args":[""]}'
+
+echo Invoking Chaincode ... 
+docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp" cli peer chaincode invoke -o orderer.example.com:7050 -C mychannel -n cannabis-app -c '{"function":"initLedger","Args":[""]}'
 
 
 
 printf "\nTotal execution time : $(($(date +%s) - starttime)) secs ...\n\n"
-printf "\nStart with the registerAdmin.js, then registerUser.js, then server.js\n\n"
+# printf "\nStart with the registerAdmin.js, then enrollUser.js, then server.js\n\n"
+
+rm -r $HOME/.hfc-key-store
+echo Registering Admin ... 
+cd ..
+node ./ledgersafe-app/registerAdmin.js
+echo enrolling User ... 
+node ./ledgersafe-app/enrollUser.js
