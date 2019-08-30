@@ -20,6 +20,26 @@ channel.addPeer(peer);
 const routerTo_queryAll = require('./queryAll.js')()
 var sell = require('./b2bTransaction.js')
 
+var idArray = [
+    {username: 'DeLorean', name: 'Miriam', role: 'business'},
+    {username: 'CEO', name: 'Ken', role: 'business'},
+    {username: 'CookieMonster', name: 'Rafa', role: 'business'},
+    {username: 'FinCEN', name: 'Danny', role: 'regulator'},
+    {username: 'MasterChef', name: 'Yuan', role: 'regulator'},
+    {username: 'CaptainGeneralKing', name: 'Dave', role: 'regulator'}
+];
+
+var login = async function (req, res) {
+    var username = req.body.username;
+    for(let i = 0; i < idArray.length; i++){
+        console.log(idArray[i])
+        if(idArray[i].username == username){
+            return { user: idArray[i].name, role: idArray[i].role }
+        }
+    }
+    return null;
+}
+
 var add_cannabis = async function (req, res) {
     try {
         console.log("submit recording of a cannabis catch: ");
@@ -563,6 +583,17 @@ app.use('/getHistory', function (req, res) {
             res.status(200).json({ message: 'OK', history: history })
         } else {
             res.status(200).json({ message: 'NOK', history: history })
+        }
+    });
+});
+
+app.use('/login', function (req, res) {
+    login(req, res).then(function (response) {
+        console.log("info", response);
+        if (response) {
+            res.status(200).json({ message: 'OK', response: response })
+        } else {
+            res.status(200).json({ message: 'NOK', response: response })
         }
     });
 });
