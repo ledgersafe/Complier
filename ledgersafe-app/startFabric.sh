@@ -41,9 +41,9 @@ docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/g
 printf "\nTotal execution time : $(($(date +%s) - starttime)) secs ...\n\n"
 # printf "\nStart with the registerAdmin.js, then enrollUser.js, then server.js\n\n"
 
-rm -r $HOME/.hfc-key-store
-echo Registering Admin ... 
-cd ..
-node ./ledgersafe-app/registerAdmin.js
-echo enrolling User ... 
-node ./ledgersafe-app/enrollUser.js
+#rm -r $HOME/.hfc-key-store
+#echo Registering Admin ... 
+#cd ..
+#node ./ledgersafe-app/registerAdmin.js
+#echo enrolling User ... 
+#node ./ledgersafe-app/enrollUser.js
