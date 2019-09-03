@@ -68,14 +68,14 @@ class App extends Component {
     console.log("Entering Query All");
     $.ajax({
       url: 'http://localhost:4000/queryAll',
-      type: 'GET',
+      type: 'POST',
       contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
       crossDomain: true,
       dataType: 'json',
       xhrFields: { withCredentials: true },
       success: (data) => {
         if (data.message === 'OK') {
-          console.log('getAllCannabis success!')
+          console.log('getAllg success!')
           this.updateLedger(data.result);
         }
         else {
