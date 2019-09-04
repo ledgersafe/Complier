@@ -9,7 +9,8 @@
     "client": "cd frontend/src && npm start",
     "server": "cd backend/ && node express.js",
     "build-hlf": "cd ledgersafe-app/ && ./startFabric.sh && cd ..",
-    "start": "concurrently \"npm run server\" \"npm run client\""
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "all": "run-p client server"
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,6 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "concurrently": "^4.1.2"
-  }
+  },
+  "proxy": "http://localhost:4000"
 }
