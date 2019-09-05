@@ -67,7 +67,7 @@ class App extends Component {
   getAllCannabis() {
     console.log("Entering Query All");
     $.ajax({
-      url: 'http://localhost/queryAll',
+      url: 'http://localhost:4000/queryAll',
       type: 'GET',
       contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
       crossDomain: true,
