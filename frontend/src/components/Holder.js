@@ -44,7 +44,7 @@ class Product extends Component {
             ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Selling Assets, please wait...</p>";
             ReactDOM.findDOMNode(this.refs.sold).style.color = "#7a7a7a";
             $.ajax({
-                url: 'http://localhost:4000/change',
+                url: 'http://13.82.210.187/change',
                 type: 'POST',
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 crossDomain: true,
