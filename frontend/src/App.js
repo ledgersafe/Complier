@@ -66,7 +66,7 @@ class App extends Component {
 
   getAllCannabis() {
     $.ajax({
-      url: 'http://13.82.210.187/queryAll',
+      url: 'http://localhost:4000/queryAll',
       type: 'GET',
       contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
       crossDomain: true,
