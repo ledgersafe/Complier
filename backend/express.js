@@ -26,7 +26,7 @@ var idArray = [
     {username: 'CookieMonster', name: 'Rafa', role: 'business'},
     {username: 'FinCEN', name: 'Danny', role: 'regulator'},
     {username: 'MasterChef', name: 'Yuan', role: 'regulator'},
-    {username: 'CaptainGeneralKing', name: 'Dave', role: 'regulator'}
+    {username: 'King', name: 'Dave', role: 'regulator'}
 ];
 
 var login = async function (req, res) {

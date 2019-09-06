@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { Table, Button } from 'reactstrap'
 import './BizLedger.css'
@@ -48,7 +49,7 @@ class BizLedger extends Component {
                                 queriedLedger.map((output, i) => {
                                     return <tr key={i} style={{ backgroundColor: '#ffffff' }}>
                                         <th className="b-id" scope="row" row={i}>{output.index + 1}</th>
-                                        <td>{<Button color="info" onClick={() => this.callForHistory(output.key)}><span role="img"
+                                        <td>{<Button color="info" onClick={() => this.callForHistory(output.info.key)}><span role="img"
                                             aria-label={this.props.label ? this.props.label : ""}
                                             aria-hidden={this.props.label ? "false" : "true"}>
                                             🔍

@@ -51,9 +51,9 @@ class BusinessApp extends Component {
     for (let x in history) {
       var tx = history[x]
       console.log("Transaction: ", tx)
-      var theDate = new Date(tx.Value.timestamp * 1000);
-      var t = theDate.toUTCString();
-      list.unshift({ txId: tx.TxId, holder: tx.Value.holder, amount: tx.Value.amount, timestamp: t })
+      // var theDate = new Date(tx.Value.timestamp * 1000);
+      // var t = theDate.toUTCString();
+      list.unshift({ txId: tx.TxId, holder: tx.value.holder, amount: tx.value.amount, timestamp: tx.Timestamp.split('.')[0] })
     }
     console.log("history", list)
     this.setState({ history: list })
@@ -153,7 +153,7 @@ class BusinessApp extends Component {
         </div>
           <div className="subtitle">LedgerSafe Demo Application</div>
         </header> */}
-        <div className="ui">{this.state.name}
+        <div className="ui">
           <div class="wrapper">
             <nav id="sidebar" >
               <div class="sidebar-header">
