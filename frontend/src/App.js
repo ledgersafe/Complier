@@ -49,9 +49,9 @@ class App extends Component {
     for (let x in history) {
       var tx = history[x]
       console.log("Transaction: ", tx)
-      var theDate = new Date(tx.Value.timestamp * 1000);
-      var t = theDate.toUTCString();
-      list.unshift({ txId: tx.TxId, holder: tx.Value.holder, amount: tx.Value.amount, timestamp: t })
+      // var theDate = new Date(tx.Value.timestamp * 1000);
+      // var t = theDate.toUTCString();
+      list.unshift({ txId: tx.TxId, holder: tx.Value.holder, amount: tx.Value.amount, timestamp: tx.Timestamp.split('.')[0] })
     }
     console.log("history", list)
     this.setState({ history: list })
@@ -147,9 +147,9 @@ class App extends Component {
         <header className="App-header">
           <img src={LS} alt='LedgerSafe' height='100' width='100' />
           <div className="title">
-            Hyperledger Fabric Cannabis Application
-        </div>
-          <div className="subtitle">LedgerSafe Demo Application</div>
+            LedgerSafe Compliance Engine
+          </div>
+          {/* <div className="subtitle"></div> */}
         </header>
         <div className="ui">
           <div class="wrapper">
@@ -194,7 +194,7 @@ class App extends Component {
                       <Holder getAllCannabis={this.getAllCannabis} updateSelectedAssetID={this.updateSelectedAssetID} />
                     </div>
                     <div class='col-9'>
-                      <Ledger isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} ledger={this.state.ledger} style={{ color: '#95c13e' }} updateSelectedAssetID={this.updateSelectedAssetID} />
+                      <Ledger selectedAssetID={this.selectedAssetID} isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} ledger={this.state.ledger} style={{ color: '#95c13e' }} updateSelectedAssetID={this.updateSelectedAssetID} />
                     </div>
                   </div>
                   <div class='row'>
@@ -202,7 +202,7 @@ class App extends Component {
                       <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
                     </div>
                     <div class='col-9'>
-                      <BizLedger isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} updateSelectedAssetID={this.updateSelectedAssetID} />
+                      <BizLedger selectedAssetID={this.selectedAssetID} isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} updateSelectedAssetID={this.updateSelectedAssetID} />
                     </div>
                   </div>
                 </div>
