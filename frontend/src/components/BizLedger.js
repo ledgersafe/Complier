@@ -8,13 +8,14 @@ class BizLedger extends Component {
         this.callForHistory = this.callForHistory.bind(this)
     }
 
+    //if selectedAssetID == null, 
     callForHistory(key) {
         // if (this.props.isOpen) {
         //     this.props.updateCollapsible();
         // }
         // this.props.updateSelectedAssetID(key);
-        if (this.props.isOpen) {
-            if(key === this.props.selectedAssetID){
+        if (!this.props.isOpen) {
+            if(this.props.selectedAssetID !== null && key === this.props.selectedAssetID){
                 this.props.updateCollapsible();
             }
             else{
@@ -22,8 +23,8 @@ class BizLedger extends Component {
             }
         }
         else {
-            this.props.updateCollapsible();
             this.props.updateSelectedAssetID(key);
+            this.props.updateCollapsible();
         }
     }
 

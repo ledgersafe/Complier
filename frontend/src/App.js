@@ -53,14 +53,14 @@ class App extends Component {
       // var t = theDate.toUTCString();
       list.unshift({ txId: tx.TxId, holder: tx.Value.holder, amount: tx.Value.amount, timestamp: tx.Timestamp.split('.')[0] })
     }
-    console.log("history", list)
+    // console.log("history", list)
     this.setState({ history: list })
-    console.log("sidebar history", this.state.history);
+    // console.log("sidebar history", this.state.history);
   }
 
   updateSelectedAssetID(value) {
     this.selectedAssetID = value;
-    console.log(value)
+    // console.log(value)
     this.getHistory();
   }
 
@@ -85,8 +85,8 @@ class App extends Component {
   }
 
   getHistory() {
-    let assetId = this.selectedAssetID;
-    console.log('calling getHistory ajax', assetId)
+    // let assetId = this.selectedAssetID;
+    // console.log('calling getHistory ajax', assetId)
     $.ajax({
       url: 'http://localhost:4000/getHistory',
       type: 'POST',
@@ -98,7 +98,7 @@ class App extends Component {
       success: (data) => {
         if (data.message === 'OK') {
           console.log('getHistory success!')
-          console.log(data.history);
+          // console.log(data.history);
           this.updateSidebarHistory(data.history);
         }
         else {
