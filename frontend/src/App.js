@@ -190,7 +190,7 @@ class App extends Component {
                 <div>
                   <div class='row'>
                     <div class='col-3' id='column'>
-                      <Holder getAllCannabis={this.getAllCannabis} updateSelectedAssetID={this.updateSelectedAssetID} />
+                      <Holder getAllCannabis={this.getAllCannabis} updateSelectedAssetID={this.updateSelectedAssetID} style={{ color: '#95c13e' }} />
                     </div>
                     <div class='col-9'>
                       <Ledger selectedAssetID={this.selectedAssetID} isClosed={this.state.collapsible} updateCollapsible={this.updateCollapsible} ledger={this.state.ledger} style={{ color: '#95c13e' }} updateSelectedAssetID={this.updateSelectedAssetID} />

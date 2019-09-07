@@ -84,7 +84,7 @@ class Product extends Component {
     render() {
         return (
             <Form>
-                <div className="form">
+                <div className="form" style={this.props.style}>
                     <div className="change">
                         <h3>Sell Asset</h3>
                         <FormGroup>
