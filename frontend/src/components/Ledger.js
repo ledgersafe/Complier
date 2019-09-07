@@ -10,11 +10,11 @@ class Ledger extends Component {
     }
 
     callForHistory(key) {
-        // if (this.props.isOpen) {
+        // if (this.props.isClosed) {
         //     this.props.updateCollapsible();
         // }
         // this.props.updateSelectedAssetID(key);
-        if (!this.props.isOpen) {
+        if (!this.props.isClosed) {
             if(this.props.selectedAssetID !== null && key === this.props.selectedAssetID){
                 this.props.updateCollapsible();
             }
@@ -30,7 +30,7 @@ class Ledger extends Component {
 
     render() {
         console.log("Ledger rendering")
-        console.log('isOpen status:', this.props.isOpen)
+        console.log('isClosed status:', this.props.isClosed)
         return (
             <div id="ledtable">
                 <h3 style={this.props.style}>All Assets</h3>

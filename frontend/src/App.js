@@ -163,7 +163,7 @@ class App extends Component {
                 {
                   this.state.history.length > 0 ? (
                     this.state.history.map((output, i) => {
-                      return <li><HistoryBlock key={i} isOpen={this.state.collapsible} i={this.state.history.length - i} timestamp={output.timestamp} amount={output.amount} holder={output.holder} txId={output.txId} /></li>
+                      return <li><HistoryBlock key={i} i={this.state.history.length - i} timestamp={output.timestamp} amount={output.amount} holder={output.holder} txId={output.txId} /></li>
                     })) : (
                       <CardGroup style={{ padding: '10px' }}>
                         <Card body inverse style={{ backgroundColor: '#2C2F33', color: "white" }}>
@@ -193,7 +193,7 @@ class App extends Component {
                       <Holder getAllCannabis={this.getAllCannabis} updateSelectedAssetID={this.updateSelectedAssetID} />
                     </div>
                     <div class='col-9'>
-                      <Ledger selectedAssetID={this.selectedAssetID} isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} ledger={this.state.ledger} style={{ color: '#95c13e' }} updateSelectedAssetID={this.updateSelectedAssetID} />
+                      <Ledger selectedAssetID={this.selectedAssetID} isClosed={this.state.collapsible} updateCollapsible={this.updateCollapsible} ledger={this.state.ledger} style={{ color: '#95c13e' }} updateSelectedAssetID={this.updateSelectedAssetID} />
                     </div>
                   </div>
                   <div class='row'>
@@ -201,7 +201,7 @@ class App extends Component {
                       <Product getAllCannabis={this.getAllCannabis} bizQuery={this.bizQuery} />
                     </div>
                     <div class='col-9'>
-                      <BizLedger selectedAssetID={this.selectedAssetID} isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} updateSelectedAssetID={this.updateSelectedAssetID} />
+                      <BizLedger selectedAssetID={this.selectedAssetID} isClosed={this.state.collapsible} updateCollapsible={this.updateCollapsible} bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} updateSelectedAssetID={this.updateSelectedAssetID} />
                     </div>
                   </div>
                 </div>
