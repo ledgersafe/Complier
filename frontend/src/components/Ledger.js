@@ -10,10 +10,10 @@ class Ledger extends Component {
     }
 
     callForHistory(key) {
-        this.props.updateSelectedAssetID(key);
         if (this.props.isOpen) {
             this.props.updateCollapsible();
         }
+        this.props.updateSelectedAssetID(key);
     }
 
     render() {

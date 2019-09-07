@@ -9,9 +9,21 @@ class BizLedger extends Component {
     }
 
     callForHistory(key) {
-        this.props.updateSelectedAssetID(key);
+        // if (this.props.isOpen) {
+        //     this.props.updateCollapsible();
+        // }
+        // this.props.updateSelectedAssetID(key);
         if (this.props.isOpen) {
+            if(key === this.props.selectedAssetID){
+                this.props.updateCollapsible();
+            }
+            else{
+                this.props.updateSelectedAssetID(key);
+            }
+        }
+        else {
             this.props.updateCollapsible();
+            this.props.updateSelectedAssetID(key);
         }
     }
 
