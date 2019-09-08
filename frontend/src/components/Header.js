@@ -13,13 +13,19 @@ class Header extends Component {
         this.logout = this.logout.bind(this)
     }
 
+    componentDidMount() {
+        const loginStatus = log.regLoggedIn || log.busLoggedIn;
+        this.setState({logStatus : loginStatus})
+    }
+
     logout() {
-        return (
-            <Redirect to="/"/>
-        )
+        console.log('logout')
+        log.busSignout()
+        log.regSignout()
     }
 
     render() {
+        console.log(log.regLoggedIn, log.busLoggedIn)
         return (
             <header className="App-header">
                 <img src={LS} alt='LedgerSafe' height='100' width='100' />
