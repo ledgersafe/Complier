@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import { Redirect } from "react-router-dom";
+import {withRouter} from "react-router";
 import { log } from '../App';
 import LS from '../static/LS.png'
 
@@ -22,6 +23,7 @@ class Header extends Component {
         console.log('logout')
         log.busSignout()
         log.regSignout()
+        this.props.history.push('/');
     }
 
     render() {
@@ -37,4 +39,4 @@ class Header extends Component {
         );
     }
 }
-export default Header;
+export default withRouter(Header);
