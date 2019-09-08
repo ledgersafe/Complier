@@ -41,8 +41,8 @@ class Login extends Component {
     }
 
     redirectAfterLogin() {
-        console.log('hello', log.loggedIn, this.name)
         if (this.state.businessLoginSuccess) {
+            log.authenticate();
             return (
                 <Redirect to={{
                     pathname: '/business',
@@ -51,6 +51,7 @@ class Login extends Component {
                 />);
         }
         else if (this.state.regulatorLoginSuccess) {
+            log.authenticate();
             return (
                 <Redirect to={{
                     pathname: '/regulator',

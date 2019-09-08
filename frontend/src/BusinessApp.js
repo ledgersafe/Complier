@@ -24,6 +24,7 @@ class App extends Component {
       name: this.props.location.state.name
     }
     this.selectedAssetID = null;
+    this.role = 'business'
     this.getAllCannabis = this.getAllCannabis.bind(this);
     this.updateLedger = this.updateLedger.bind(this);
     this.bizQuery = this.bizQuery.bind(this);
@@ -145,7 +146,7 @@ class App extends Component {
     console.log("App rendering")
     return (
       <div className="App">
-        <Header />
+        <Header role={this.role} />
         {/* <header className="App-header">
           <img src={LS} alt='LedgerSafe' height='100' width='100' />
           <div className="title">
@@ -166,7 +167,7 @@ class App extends Component {
                 {
                   this.state.history.length > 0 ? (
                     this.state.history.map((output, i) => {
-                      return <li><HistoryBlock key={i} isOpen={this.state.collapsible} i={this.state.history.length - i} timestamp={output.timestamp} amount={output.amount} holder={output.holder} txId={output.txId} /></li>
+                      return <li><HistoryBlock key={i} i={this.state.history.length - i} timestamp={output.timestamp} amount={output.amount} holder={output.holder} txId={output.txId} /></li>
                     })) : (
                       <CardGroup style={{ padding: '10px' }}>
                         <Card body inverse style={{ backgroundColor: '#2C2F33', color: "white" }}>
@@ -196,7 +197,7 @@ class App extends Component {
                       <Holder getAllCannabis={this.getAllCannabis} updateSelectedAssetID={this.updateSelectedAssetID} />
                     </div>
                     <div class='col-9'>
-                    <BizLedger selectedAssetID={this.selectedAssetID} isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} bid={this.state.name} ledger={this.state.ledger} style={{ color: '#69b5e5' }} updateSelectedAssetID={this.updateSelectedAssetID} />
+                    <BizLedger selectedAssetID={this.selectedAssetID} isClosed={this.state.collapsible} updateCollapsible={this.updateCollapsible} bid={this.state.name} ledger={this.state.ledger} style={{ color: '#69b5e5' }} updateSelectedAssetID={this.updateSelectedAssetID} />
                     </div>
                   </div>
                 </div>
