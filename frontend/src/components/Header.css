@@ -1,0 +1,14 @@
+button.logout { 
+    background:#3f454a;
+    border:none;
+    border-radius: 10px;
+    color:#85f032;
+    font-size: 20px;
+    position: absolute;
+    right: 10vw;
+  }
+
+  button.logout:hover  {
+    background:#626b73;
+    transition: all 0.3s;
+  }

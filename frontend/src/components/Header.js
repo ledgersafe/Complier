@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
+import './Header.css';
 import { Redirect } from "react-router-dom";
 import {withRouter} from "react-router";
 import { log } from '../App';
@@ -34,7 +35,7 @@ class Header extends Component {
                 <div className="title">
                 LedgerSafe Compliance Engine
                 </div>
-                <button onClick={()=>this.logout()}>Logout</button>
+                <button className='logout' onClick={()=>this.logout()}>Logout</button>
             </header>
         );
     }
