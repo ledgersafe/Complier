@@ -19,6 +19,28 @@ channel.addPeer(peer);
 // Helper Functions
 const routerTo_queryAll = require('./queryAll.js')()
 var sell = require('./b2bTransaction.js')
+const { MD5 } = require('./validation/account');
+
+var idArray = [
+    {hashedUsername: '309886b6e80f905aa127f6e8c1af083a', name: 'Miriam', role: 'business'}, //DeLorean
+    {hashedUsername: 'e77e95e1b8e878ea27dfc1baef6b0e8b', name: 'Ken', role: 'business'}, //CEO
+    {hashedUsername: 'a990a253429d67d4527e703ba5948d29', name: 'Rafa', role: 'business'}, //CookieMonster
+    {hashedUsername: '106d1011d4f591c64bc78385dba24764', name: 'Danny', role: 'regulator'}, //FinCEN
+    {hashedUsername: '0f67d2076c23827081cd280087d24bc7', name: 'Yuan', role: 'regulator'}, // MasterChef
+    {hashedUsername: 'bbd566556da8c5d2b3d30b3498431da0', name: 'Dave', role: 'regulator'} //King
+];
+
+var login = async function (req, res) {
+    var username = req.body.username;
+    console.log(MD5(username))
+    for(let i = 0; i < idArray.length; i++){
+        console.log(idArray[i])
+        if(idArray[i].hashedUsername == MD5(username)){
+            return { user: idArray[i].name, role: idArray[i].role }
+        }
+    }
+    return null;
+}
 
 var add_cannabis = async function (req, res) {
     try {
@@ -563,6 +585,17 @@ app.use('/getHistory', function (req, res) {
             res.status(200).json({ message: 'OK', history: history })
         } else {
             res.status(200).json({ message: 'NOK', history: history })
+        }
+    });
+});
+
+app.use('/login', function (req, res) {
+    login(req, res).then(function (response) {
+        console.log("info", response);
+        if (response) {
+            res.status(200).json({ message: 'OK', response: response })
+        } else {
+            res.status(200).json({ message: 'NOK', response: response })
         }
     });
 });
