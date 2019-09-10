@@ -57,7 +57,7 @@ class Product extends Component {
                 data: {
                     id: this.id,
                     holder: this.holder,
-                    amount: this.amount.toFixed(2)
+                    amount: parseFloat(this.amount).toFixed(2)
                 },
                 success: (data) => {
                     if (data.message === 'OK') {
