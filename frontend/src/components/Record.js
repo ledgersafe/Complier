@@ -11,9 +11,9 @@ class Record extends Component {
         return (
             <Form className="form">
                 <div className="record">
-                <h3>Create Cannabis Record</h3>
+                <h3>Create Asset Record</h3>
                     <FormGroup>
-                        <Label>Enter Cannabis ID</Label>
+                        <Label>Enter Asset ID</Label>
                         <Input id="id" placeholder="Ex. 3" />
                     </FormGroup>
                     <FormGroup>

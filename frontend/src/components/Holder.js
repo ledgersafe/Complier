@@ -18,7 +18,7 @@ class Product extends Component {
     }
 
     getAll() {
-        this.props.getAllCannabis();
+        this.props.getAllAsset();
     }
 
     updateHolder({ target }) {

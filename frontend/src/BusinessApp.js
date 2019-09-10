@@ -25,7 +25,7 @@ class App extends Component {
     }
     this.selectedAssetID = null;
     this.role = 'business'
-    this.getAllCannabis = this.getAllCannabis.bind(this);
+    this.getAllAsset = this.getAllAsset.bind(this);
     this.updateLedger = this.updateLedger.bind(this);
     this.bizQuery = this.bizQuery.bind(this);
     this.getHistory = this.getHistory.bind(this);
@@ -43,7 +43,7 @@ class App extends Component {
         _.updateCollapsible()
       }
     });
-    this.getAllCannabis();
+    this.getAllAsset();
     this.updateCollapsible();
   }
 
@@ -67,7 +67,7 @@ class App extends Component {
     this.getHistory();
   }
 
-  getAllCannabis() {
+  getAllAsset() {
     $.ajax({
       url: 'http://localhost:4000/queryAll',
       type: 'GET',
@@ -77,11 +77,11 @@ class App extends Component {
       xhrFields: { withCredentials: true },
       success: (data) => {
         if (data.message === 'OK') {
-          console.log('getAllCannabis success!')
+          console.log('getAllAsset success!')
           this.updateLedger(data.result);
         }
         else {
-          console.log('getAllCannabis ERROR');
+          console.log('getAllAsset ERROR');
         }
       }
     });
@@ -194,7 +194,7 @@ class App extends Component {
                 <div>
                   <div class='row'>
                     <div class='col-3' id='column'>
-                      <Holder getAllCannabis={this.getAllCannabis} updateSelectedAssetID={this.updateSelectedAssetID} />
+                      <Holder getAllAsset={this.getAllAsset} updateSelectedAssetID={this.updateSelectedAssetID} />
                     </div>
                     <div class='col-9'>
                     <BizLedger selectedAssetID={this.selectedAssetID} isClosed={this.state.collapsible} updateCollapsible={this.updateCollapsible} bid={this.state.name} ledger={this.state.ledger} style={{ color: '#69b5e5' }} updateSelectedAssetID={this.updateSelectedAssetID} />

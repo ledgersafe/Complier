@@ -42,11 +42,11 @@ var login = async function (req, res) {
     return null;
 }
 
-var add_cannabis = async function (req, res) {
+var add_asset = async function (req, res) {
     try {
-        console.log("submit recording of a cannabis catch: ");
+        console.log("submit recording of a asset: ");
 
-        var array = req.params.cannabis.split("-");
+        var array = req.params.asset.split("-");
         console.log("SHIT:", array);
 
         var key = array[0];
@@ -88,12 +88,12 @@ var add_cannabis = async function (req, res) {
         tx_id = fabric_client.newTransactionID();
         console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-        // recordCannabis - requires 5 args, ID, vessel, location, timestamp,holder, amount - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel', '100.00'],
+        // recordAsset - requires 5 args, ID, vessel, location, timestamp,holder, amount - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel', '100.00'],
         // send proposal to endorser
         const request = {
             //targets : --- letting this default to the peers assigned to the channel
             chaincodeId: "ledgersafe-app",
-            fcn: "recordCannabis",
+            fcn: "recordAsset",
             args: [key, grower, strain, thc, timestamp, holder, amount],
             chainId: "mychannel",
             txId: tx_id
@@ -261,11 +261,11 @@ var getBusiness = async function (req, res) {
             throw new Error("Failed to get user1.... run registerUser.js");
         }
 
-        // queryCannabis - requires 1 argument, ex: args: ['4'],
+        // queryAsset - requires 1 argument, ex: args: ['4'],
         const request = {
             chaincodeId: "ledgersafe-app",
             txId: tx_id,
-            fcn: "queryCannabis",
+            fcn: "queryAsset",
             args: [key]
         };
         console.log("Before CC Call")
@@ -359,7 +359,7 @@ var get_history = async function (req, res) {
 
 var change_holder = async function (req, res) {
     try {
-        console.log("changing holder of cannabis asset: ");
+        console.log("changing holder of asset asset: ");
 
         //var array = req.params.holder.split("-");
         var key = req.body.id;
@@ -397,12 +397,12 @@ var change_holder = async function (req, res) {
         tx_id = fabric_client.newTransactionID();
         console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-        // changeCannabisHolder - requires 3 args , ex: args: ['1', 'Barry', '100.00'],
+        // changeAssetHolder - requires 3 args , ex: args: ['1', 'Barry', '100.00'],
         // send proposal to endorser
         var request = {
             //targets : --- letting this default to the peers assigned to the channel
             chaincodeId: "ledgersafe-app",
-            fcn: "changeCannabisHolder",
+            fcn: "changeAssetHolder",
             args: [key, holder, amount],
             chainId: "mychannel",
             txId: tx_id
@@ -505,7 +505,7 @@ var change_holder = async function (req, res) {
             console.error(
                 "Failed to send Proposal or receive valid response. Response null or status is not 200. exiting..."
             );
-            res.send("Error: no cannabis catch found");
+            res.send("Error: no asset found");
             // throw new Error('Failed to send Proposal or receive valid response. Response null or status is not 200. exiting...');
         }
         console.log(
@@ -519,7 +519,7 @@ var change_holder = async function (req, res) {
             console.error(
                 "Failed to order the transaction. Error code: " + response.status
             );
-            res.send("Error: no cannabis catch found");
+            res.send("Error: no asset found");
         }
 
         if (results && results[1] && results[1].event_status === "VALID") {
@@ -536,7 +536,7 @@ var change_holder = async function (req, res) {
     }
     catch (err) {
         console.error("Failed to invoke successfully :: " + err);
-        res.send("Error: no cannabis catch found");
+        res.send("Error: no asset found");
     }
 }
 
@@ -553,7 +553,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/queryAll', routerTo_queryAll);
 
 app.use('/add', function (req, res) {
-    add_cannabis(req, res);
+    add_asset(req, res);
 });
 
 app.use('/querybusiness', function (req, res) {

@@ -18,7 +18,7 @@ channel.addPeer(peer);
 module.exports = function router() {
     var queryAll = async function (req, res) {
         try {
-            console.log("getting all cannabis from database: ");
+            console.log("getting all asset from database: ");
 
             //
             var member_user = null;
@@ -46,11 +46,11 @@ module.exports = function router() {
                 throw new Error("Failed to get user1.... run registerUser.js");
             }
 
-            // queryAllCannabis - requires no arguments , ex: args: [''],
+            // queryAllAsset - requires no arguments , ex: args: [''],
             const request = {
                 chaincodeId: "ledgersafe-app",
                 txId: tx_id,
-                fcn: "queryAllCannabis",
+                fcn: "queryAllAsset",
                 args: [""]
             };
 

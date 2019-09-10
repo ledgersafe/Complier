@@ -25,7 +25,7 @@ class RegulatorApp extends Component {
     }
     this.selectedAssetID = null;
     this.role = 'regulator';
-    this.getAllCannabis = this.getAllCannabis.bind(this);
+    this.getAllAsset = this.getAllAsset.bind(this);
     this.updateLedger = this.updateLedger.bind(this);
     this.bizQuery = this.bizQuery.bind(this);
     this.getHistory = this.getHistory.bind(this);
@@ -43,10 +43,10 @@ class RegulatorApp extends Component {
         _.updateCollapsible()
       }
     });
-    this.getAllCannabis();
+    this.getAllAsset();
     this.updateCollapsible();
     setInterval(function(){ 
-      _.getAllCannabis()
+      _.getAllAsset()
     }, 3000);
   }
 
@@ -70,7 +70,7 @@ class RegulatorApp extends Component {
     this.getHistory();
   }
 
-  getAllCannabis() {
+  getAllAsset() {
     $.ajax({
       url: 'http://localhost:4000/queryAll',
       type: 'GET',
@@ -80,11 +80,11 @@ class RegulatorApp extends Component {
       xhrFields: { withCredentials: true },
       success: (data) => {
         if (data.message === 'OK') {
-          console.log('getAllCannabis success!')
+          console.log('getAllAsset success!')
           this.updateLedger(data.result);
         }
         else {
-          console.log('getAllCannabis ERROR');
+          console.log('getAllAsset ERROR');
         }
       }
     });

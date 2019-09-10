@@ -28,10 +28,10 @@ import (
 type SmartContract struct {
 }
 
-/* Define Cannabis structure, with 4 properties.
+/* Define Asset structure, with 4 properties.
 Structure tags are used by encoding/json library
 */
-type Cannabis struct {
+type Asset struct {
 	Grower    string `json:"grower"`
 	Timestamp string `json:"timestamp"`
 	Location  string `json:"location"`
@@ -40,7 +40,7 @@ type Cannabis struct {
 
 /*
  * The Init method *
- called when the Smart Contract "cannabis-chaincode" is instantiated by the network
+ called when the Smart Contract "asset-chaincode" is instantiated by the network
  * Best practice is to have any Ledger initialization in separate function
  -- see initLedger()
 */
@@ -50,7 +50,7 @@ func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
 
 /*
  * The Invoke method *
- called when an application requests to run the Smart Contract "cannabis-chaincode"
+ called when an application requests to run the Smart Contract "asset-chaincode"
  The app also specifies the specific smart contract function to call with args
 */
 func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response {
@@ -117,7 +117,7 @@ func (s *SmartContract) queryFI(APIstub shim.ChaincodeStubInterface, args []stri
 
 /*
  * The queryAllTransactions method *
-allows for assessing all the records added to the ledger(all cannabis catches)
+allows for assessing all the records added to the ledger(all assetes)
 This method does not take any arguments. Returns JSON string containing results.
 */
 func (s *SmartContract) queryAllTransactions(APIstub shim.ChaincodeStubInterface) sc.Response {
@@ -174,27 +174,27 @@ func (s *SmartContract) b2cTransaction(APIstub shim.ChaincodeStubInterface, args
 		return shim.Error("Incorrect number of arguments. Expecting 3")
 	}
 
-	cannabisAsBytes, _ := APIstub.GetState(args[0])
-	if cannabisAsBytes == nil {
-		return shim.Error("Could not locate cannabis")
+	assetAsBytes, _ := APIstub.GetState(args[0])
+	if assetAsBytes == nil {
+		return shim.Error("Could not locate asset")
 	}
-	cannabis := Cannabis{}
+	asset := Asset{}
 
-	json.Unmarshal(cannabisAsBytes, &cannabis)
+	json.Unmarshal(assetAsBytes, &asset)
 
-	fmt.Printf("Current Holder:", cannabis.Holder)
+	fmt.Printf("Current Holder:", asset.Holder)
 	fmt.Printf("New Holder: ", args[1])
 	// **TODO**
 	// Check Owner of Current Assett
 	// Exchange Value from args[1] to Owner of Assett
 
-	//Instead of changing Hodler move cannabis object into a Customer List 
-	cannabis.Holder = args[1]
+	//Instead of changing Hodler move asset object into a Customer List 
+	asset.Holder = args[1]
 
-	cannabisAsBytes, _ = json.Marshal(cannabis)
-	err := APIstub.PutState(args[0], cannabisAsBytes)
+	assetAsBytes, _ = json.Marshal(asset)
+	err := APIstub.PutState(args[0], assetAsBytes)
 	if err != nil {
-		return shim.Error(fmt.Sprintf("Failed to change cannabis holder: %s", args[0]))
+		return shim.Error(fmt.Sprintf("Failed to change asset holder: %s", args[0]))
 	}
 
 	return shim.Success(nil)
@@ -209,25 +209,25 @@ func (s *SmartContract) b2bTransaction(APIstub shim.ChaincodeStubInterface, args
 		return shim.Error("Incorrect number of arguments. Expecting 3")
 	}
 
-	cannabisAsBytes, _ := APIstub.GetState(args[0])
-	if cannabisAsBytes == nil {
-		return shim.Error("Could not locate cannabis")
+	assetAsBytes, _ := APIstub.GetState(args[0])
+	if assetAsBytes == nil {
+		return shim.Error("Could not locate asset")
 	}
-	cannabis := Cannabis{}
+	asset := Asset{}
 
-	json.Unmarshal(cannabisAsBytes, &cannabis)
+	json.Unmarshal(assetAsBytes, &asset)
 
-	fmt.Printf("Current Holder:", cannabis.Holder)
+	fmt.Printf("Current Holder:", asset.Holder)
 	fmt.Printf("New Holder: ", args[1])
 	// **TODO**
 	// Check Owner of Current Assett
 	// Exchange Value from args[1] to Owner of Assett
-	cannabis.Holder = args[1]
+	asset.Holder = args[1]
 
-	cannabisAsBytes, _ = json.Marshal(cannabis)
-	err := APIstub.PutState(args[0], cannabisAsBytes)
+	assetAsBytes, _ = json.Marshal(asset)
+	err := APIstub.PutState(args[0], assetAsBytes)
 	if err != nil {
-		return shim.Error(fmt.Sprintf("Failed to change cannabis holder: %s", args[0]))
+		return shim.Error(fmt.Sprintf("Failed to change asset holder: %s", args[0]))
 	}
 
 	return shim.Success(nil)
@@ -252,10 +252,10 @@ func (s *SmartContract) deposit(APIstub shim.ChaincodeStubInterface, args []stri
 	// Check Owner of if Biz.balance > amount
 	// Exchange Value from Biz to FI
 
-	//cannabisAsBytes, _ = json.Marshal(cannabis)
+	//assetAsBytes, _ = json.Marshal(asset)
 	err := APIstub.PutState(args[0], amount)
 	if err != nil {
-		return shim.Error(fmt.Sprintf("Failed to change cannabis holder: %s", args[0]))
+		return shim.Error(fmt.Sprintf("Failed to change asset holder: %s", args[0]))
 	}
 
 	return shim.Success(nil)
@@ -280,10 +280,10 @@ func (s *SmartContract) withdrawal(APIstub shim.ChaincodeStubInterface, args []s
 	// Check FI to see if the account associated with the business has > amount
 	// Exchange Value from FI to Business
 
-	//cannabisAsBytes, _ = json.Marshal(cannabis)
+	//assetAsBytes, _ = json.Marshal(asset)
 	err := APIstub.PutState(args[0], amount)
 	if err != nil {
-		return shim.Error(fmt.Sprintf("Failed to change cannabis holder: %s", args[0]))
+		return shim.Error(fmt.Sprintf("Failed to change asset holder: %s", args[0]))
 	}
 
 	return shim.Success(nil)
@@ -291,28 +291,28 @@ func (s *SmartContract) withdrawal(APIstub shim.ChaincodeStubInterface, args []s
 
 /*
  * The initLedger method *
-Will add test data (10 cannabis catches)to our network
+Will add test data (10 assetes)to our network
 */
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
-	cannabis := []Cannabis{
-		Cannabis{Grower: "Farm 1", Strain: "67.0006", THC: "-70.5476", Timestamp: "1504054225", Holder: "Miriam"},
-		Cannabis{Grower: "SF Farm", Strain: "62.0006", THC: "-70.5476", Timestamp: "1504057825", Holder: "Dave"},
-		Cannabis{Grower: "Farm 3", Strain: "63.0006", THC: "-70.5476", Timestamp: "1493517025", Holder: "Igor"},
-		Cannabis{Grower: "Humbolt County Farms", Strain: "64.0006", THC: "-30.5476", Timestamp: "1496105425", Holder: "Amalea"},
-		Cannabis{Grower: "Denver Growers", Strain: "65.0006", THC: "-20.5476", Timestamp: "1493512301", Holder: "Rafa"},
-		Cannabis{Grower: "BC Farms", Strain: "66.0006", THC: "-10.5476", Timestamp: "1494117101", Holder: "Shen"},
-		Cannabis{Grower: "Organic Herb Farms", Strain: "68.0006", THC: "-60.5476", Timestamp: "1496104301", Holder: "Leila"},
-		Cannabis{Grower: "Hannabis Farms", Strain: "67.0006", THC: "-70.5476", Timestamp: "1485066691", Holder: "Yuan"},
-		Cannabis{Grower: "CannaFarms", Strain: "69.0006", THC: "-50.5476", Timestamp: "1485153091", Holder: "Carlo"},
-		Cannabis{Grower: "MedMen", Strain: "89.0006", THC: "-40.5476", Timestamp: "1487745091", Holder: "Fatima"},
+	asset := []Asset{
+		Asset{Grower: "Farm 1", Strain: "67.0006", THC: "-70.5476", Timestamp: "1504054225", Holder: "Miriam"},
+		Asset{Grower: "SF Farm", Strain: "62.0006", THC: "-70.5476", Timestamp: "1504057825", Holder: "Dave"},
+		Asset{Grower: "Farm 3", Strain: "63.0006", THC: "-70.5476", Timestamp: "1493517025", Holder: "Igor"},
+		Asset{Grower: "Humbolt County Farms", Strain: "64.0006", THC: "-30.5476", Timestamp: "1496105425", Holder: "Amalea"},
+		Asset{Grower: "Denver Growers", Strain: "65.0006", THC: "-20.5476", Timestamp: "1493512301", Holder: "Rafa"},
+		Asset{Grower: "BC Farms", Strain: "66.0006", THC: "-10.5476", Timestamp: "1494117101", Holder: "Shen"},
+		Asset{Grower: "Organic Herb Farms", Strain: "68.0006", THC: "-60.5476", Timestamp: "1496104301", Holder: "Leila"},
+		Asset{Grower: "Hannabis Farms", Strain: "67.0006", THC: "-70.5476", Timestamp: "1485066691", Holder: "Yuan"},
+		Asset{Grower: "CannaFarms", Strain: "69.0006", THC: "-50.5476", Timestamp: "1485153091", Holder: "Carlo"},
+		Asset{Grower: "MedMen", Strain: "89.0006", THC: "-40.5476", Timestamp: "1487745091", Holder: "Fatima"},
 	}
 
 	i := 0
-	for i < len(cannabis) {
+	for i < len(asset) {
 		fmt.Println("i is ", i)
-		cannabisAsBytes, _ := json.Marshal(cannabis[i])
-		APIstub.PutState(strconv.Itoa(i+1), cannabisAsBytes)
-		fmt.Println("Added", cannabis[i])
+		assetAsBytes, _ := json.Marshal(asset[i])
+		APIstub.PutState(strconv.Itoa(i+1), assetAsBytes)
+		fmt.Println("Added", asset[i])
 		i = i + 1
 	}
 

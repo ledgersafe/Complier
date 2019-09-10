@@ -16,7 +16,7 @@ channel.addPeer(peer);
 
 var dummy_change_holder = async function (req, res) {
     try {
-    console.log("changing holder of cannabis catch: ");
+    console.log("changing holder of asset: ");
 
     //var array = req.params.holder.split("-");
     var key = req.body.id;
@@ -56,12 +56,12 @@ var dummy_change_holder = async function (req, res) {
     tx_id = fabric_client.newTransactionID();
     console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-    // changeCannabisHolder - requires 2 args , ex: args: ['1', 'Barry'],
+    // changeAssetHolder - requires 2 args , ex: args: ['1', 'Barry'],
     // send proposal to endorser
     var request = {
         //targets : --- letting this default to the peers assigned to the channel
         chaincodeId: "ledgersafe-app",
-        fcn: "changeCannabisHolder",
+        fcn: "changeAssetHolder",
         args: [key, holder],
         chainId: "mychannel",
         txId: tx_id
@@ -162,7 +162,7 @@ var dummy_change_holder = async function (req, res) {
             console.error(
                 "Failed to send Proposal or receive valid response. Response null or status is not 200. exiting..."
             );
-            res.send("Error: no cannabis catch found");
+            res.send("Error: no asset found");
             // throw new Error('Failed to send Proposal or receive valid response. Response null or status is not 200. exiting...');
         }
             console.log(
@@ -176,7 +176,7 @@ var dummy_change_holder = async function (req, res) {
                 console.error(
                     "Failed to order the transaction. Error code: " + response.status
                 );
-                res.send("Error: no cannabis catch found");
+                res.send("Error: no asset found");
             }
 
             if (results && results[1] && results[1].event_status === "VALID") {
@@ -193,6 +193,6 @@ var dummy_change_holder = async function (req, res) {
         }
         catch(err) {
             console.error("Failed to invoke successfully :: " + err);
-            res.send("Error: no cannabis catch found");
+            res.send("Error: no asset found");
         }
 }
