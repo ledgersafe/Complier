@@ -30,15 +30,19 @@ class Product extends Component {
     }
 
     updateAmount({ target }) {
-        this.amount = target.value
+        this.amount = target.value;
     }
 
     sellAssets(e) {
         e.preventDefault();
         ReactDOM.findDOMNode(this.refs.sold).style.height = "80px";
-        if(!this.id || !this.holder){
+        if(!this.id || !this.holder || !this.amount){
         ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Please fill in all fields.</p>";
         ReactDOM.findDOMNode(this.refs.sold).style.color = "#7a7a7a";
+        }
+        else if(isNaN(this.amount)){
+            ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Please enter valid amount.</p>";
+            ReactDOM.findDOMNode(this.refs.sold).style.color = "#7a7a7a";
         }
         else{
             ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Selling Assets, please wait...</p>";
@@ -53,7 +57,7 @@ class Product extends Component {
                 data: {
                     id: this.id,
                     holder: this.holder,
-                    amount: this.amount
+                    amount: this.amount.toFixed(2)
                 },
                 success: (data) => {
                     if (data.message === 'OK') {
