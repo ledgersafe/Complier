@@ -45,6 +45,7 @@ class Product extends Component {
             ReactDOM.findDOMNode(this.refs.sold).style.color = "#7a7a7a";
         }
         else{
+            this.amount = Number.parseFloat(this.amount).toFixed(2);
             ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Selling Assets, please wait...</p>";
             ReactDOM.findDOMNode(this.refs.sold).style.color = "#7a7a7a";
             $.ajax({
@@ -57,7 +58,7 @@ class Product extends Component {
                 data: {
                     id: this.id,
                     holder: this.holder,
-                    amount: this.amount.toFixed(2)
+                    amount: this.amount
                 },
                 success: (data) => {
                     if (data.message === 'OK') {
@@ -89,7 +90,7 @@ class Product extends Component {
         return (
             <Form>
                 <div className="form">
-                    <div className="change">
+                    <div className="change" style={this.props.style}>
                         <h3>Sell Asset</h3>
                         <FormGroup>
                             <Label>Enter Asset ID</Label>
