@@ -38,25 +38,12 @@ type Asset struct {
 	ObjectType string `json:"docType"` //docType is used to distinguish the various types of objects in state database
 	Key        string `json:"key"`
 	Grower     string `json:"grower"`
-	Timestamp  string `json:"timestamp"`
-	Holder     string `json:"holder"`
+	Timestamp  string `json:"timestamp"` // Date --> BSA SAR
+	Holder     string `json:"holder"`    // SubjectName --> BSA SAR
 	Strain     string `json:"strain"`
 	THC        string `json:"thc"`
-	Amount     string `json:"amount"`
-}
-
-// newAsset ...
-type newAsset struct {
-	Grower      string `json:"grower"`
-	Timestamp   string `json:"timestamp"`
-	Holder      string `json:"holder"`
-	Strain      string `json:"strain"`
-	THC         string `json:"thc"`
-	SubjectName string `json:"subjectname"`
-	PartyID     string `json:"partyid"`
-	Amount      string `json:"amount"`
-	Currency    string `json:"currency"`
-	Date        string `json:"date"`
+	Amount     string `json:"amount"` // Amount --> BSA SAR ... Currency Always USD
+	// PartyID will be a hash of the name and time created ?
 }
 
 /*
@@ -92,6 +79,8 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.changeAssetHolder(APIstub, args)
 	} else if function == "getHistory" {
 		return s.getHistory(APIstub, args)
+	} else if function == "addAsset" {
+		return s.addAsset(APIstub, args)
 	}
 
 	return shim.Error("Invalid Smart Contract function name.")
@@ -204,26 +193,24 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 	return shim.Success(nil)
 }
 
-/*
- * The newInitLedger method *
-Will add test data (10 assetes)to our network
-*/
-func (s *SmartContract) newInitLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
-	newasset := []newAsset{
-		newAsset{Grower: "Farm 1", Strain: "67.0006", THC: "-70.5476", Timestamp: "1504054225",
-			Holder: "Miriam", SubjectName: "Miriam", PartyID: "MM", Amount: "1000.00", Currency: "USD",
-			Date: "10152019"},
-	}
+func (s *SmartContract) addAsset(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+	fmt.Println("Initializing Ledger!")
 
-	i := 0
-	for i < len(newasset) {
-		fmt.Println("i is ", i)
-		assetAsBytes, _ := json.Marshal(newasset[i])
-		APIstub.PutState(strconv.Itoa(i+1), assetAsBytes)
-		fmt.Println("Added", newasset[i])
-		i = i + 1
-	}
+	key := args[0]
+	grower := args[1]
+	strain := args[2]
+	thc := args[3]
+	timestamp := time.Now().Format("2006-01-02 15:04:05")
+	holder := args[4]
+	amount := "0.00"
 
+	newAsset := Asset{Key: key, Grower: grower, Strain: strain, THC: thc, Timestamp: timestamp, Holder: holder, Amount: amount}
+
+	assetAsBytes, _ := json.Marshal(newAsset)
+	var err = APIstub.PutState(key, assetAsBytes)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
 	return shim.Success(nil)
 }
 
