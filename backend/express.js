@@ -48,7 +48,6 @@ var add_cannabis = async function (req, res) {
         console.log("submit recording of a cannabis catch: ");
 
         var array = req.params.cannabis.split("-");
-        console.log("SHIT:", array);
 
         var key = array[0];
         var strain = array[1];
@@ -540,7 +539,6 @@ var change_holder = async function (req, res) {
         res.send("Error: no cannabis catch found");
     }
 }
-
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
