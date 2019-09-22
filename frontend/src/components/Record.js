@@ -1,10 +1,101 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import ReactDOM from 'react-dom'
 import './Record.css'
+import $ from 'jquery'
 
 class Record extends Component {
     constructor(props) {
         super(props);
+        this.id = null;
+        this.manu = null;
+        this.type = null;
+        this.quantity = null;
+        this.timestamp = null;
+        this.holder = null;
+        this.getAll = this.getAll.bind(this);
+        this.updateHolder = this.updateHolder.bind(this);
+        this.updateId = this.updateId.bind(this);
+        this.updateQuanity = this.updateAmount.bind(this);
+        this.updateManuf = this.updateHolder.bind(this);
+        this.updateTimestamp = this.updateId.bind(this);
+        this.updateType = this.updateAmount.bind(this);
+    }
+
+    updateHolder({ target }) {
+        this.holder = target.value
+    }
+
+    updateId({ target }) {
+        this.id = target.value
+    }
+
+    updateQuanity({ target }) {
+        this.quantity = target.value;
+    }
+
+    updateManuf({ target }) {
+        this.manuf = target.value
+    }
+
+    updateTimestamp({ target }) {
+        this.timestamp = target.value
+    }
+
+    updateType({ target }) {
+        this.type = target.value;
+    }
+
+    getAll() {
+        this.props.getAllAsset();
+    }
+
+    addAsset(){
+        this.amount = Number.parseFloat(this.amount).toFixed(2);
+            ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Creating Asset, please wait...</p>";
+            ReactDOM.findDOMNode(this.refs.sold).style.color = "#7a7a7a";
+        $.ajax({
+            url: 'http://localhost:4000/add',
+            type: 'POST',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            crossDomain: true,
+            dataType: 'json',
+            xhrFields: { withCredentials: true },
+            data: {
+                key: this.id,
+                assetType: this.type,
+                quantity: this.quantity,
+                timestamp: this.timestamp,
+                holder: this.holder,
+                manufacturer: this.manuf
+            },
+            success: (data) => {
+                if (data.message === 'OK') {
+                    console.log('change_holder success!')
+                    console.log(data)
+                    ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Asset created!</p>";
+                    ReactDOM.findDOMNode(this.refs.sold).style.color = "#acd854";
+                    this.id = null;
+                    this.manu = null;
+                    this.type = null;
+                    this.quantity = null;
+                    this.timestamp = null;
+                    this.holder = null;
+                    $('#id').val('');
+                    $('#holder').val('');
+                    $('#quantity').val('');
+                    $('#manufacturer').val('');
+                    $('#type').val('');
+                    $('#timestamp').val('');
+                    this.getAll()
+                }
+                else {
+                    ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>An error has occurred.</p>";
+                    ReactDOM.findDOMNode(this.refs.sold).style.color = "#7a7a7a";
+                    console.log('ERROR');
+                }
+            }
+        });
     }
 
     render() {
@@ -14,27 +105,27 @@ class Record extends Component {
                 <h3>Create Asset Record</h3>
                     <FormGroup>
                         <Label>Enter Asset ID</Label>
-                        <Input id="id" placeholder="Ex. 3" />
+                        <Input id="id" placeholder="Ex. 3" onChange={this.updateHolder}/>
                     </FormGroup>
                     <FormGroup>
                         <Label>Enter Name of Manufacturer</Label>
-                        <Input id="manufacturer" placeholder="Ex. 0239L" />
+                        <Input id="manufacturer" placeholder="Ex. 0239L" onChange={this.updateManuf}/>
                     </FormGroup>
                     <FormGroup>
                         <Label>Enter Type</Label>
-                        <Input id="type" placeholder="Ex. 28.012" />
+                        <Input id="type" placeholder="Ex. 28.012" onChange={this.updateType}/>
                     </FormGroup>
                     <FormGroup>
                         <Label>Enter Quantity</Label>
-                        <Input id="quantity" placeholder="Ex. 150.405" />
+                        <Input id="quantity" placeholder="Ex. 150.405" onChange={this.updateQuanity}/>
                     </FormGroup>
                     <FormGroup>
                         <Label>Enter Timestamp</Label>
-                        <Input id="timestamp" placeholder="Ex. 4982342301" />
+                        <Input id="timestamp" placeholder="Ex. 4982342301" onChange={this.updateTimestamp}/>
                     </FormGroup>
                     <FormGroup>
                         <Label>Enter Name of Holder</Label>
-                        <Input id="holder" placeholder="Ex. Hansel" />
+                        <Input id="holder" placeholder="Ex. Hansel" onChange={this.updateHolder}/>
                     </FormGroup>
                 </div>
                 <div class="col text-center">

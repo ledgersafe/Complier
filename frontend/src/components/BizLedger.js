@@ -32,7 +32,7 @@ class BizLedger extends Component {
         if (queriedBid !== '') {
             for (let i = 0; i < this.props.ledger.length; i++) {
                 if (this.props.ledger[i].holder.toString().toLowerCase().includes(queriedBid.toString().toLowerCase())) {
-                    queriedLedger.push({ info: this.props.ledger[i], index: i })
+                    queriedLedger.push({ info: this.props.ledger[i] })
                 }
             }
         }
@@ -57,12 +57,13 @@ class BizLedger extends Component {
                             {this.props.ledger.length > 0 ? (
                                 queriedLedger.map((output, i) => {
                                     return <tr key={i} style={{ backgroundColor: '#ffffff' }}>
-                                        <th className="b-id" scope="row" row={i}>{output.index + 1}</th>
+                                        <th className="b-id" scope="row" row={i}>{output.info.key}</th>
                                         <td>{<Button color="info" onClick={() => this.callForHistory(output.info.key)}><span role="img"
                                             aria-label={this.props.label ? this.props.label : ""}
                                             aria-hidden={this.props.label ? "false" : "true"}>
                                             🔍
-                                      </span></Button>}</td>                                        <td>{output.info.holder.charAt(0).toUpperCase() + output.info.holder.slice(1).toLowerCase()}</td>
+                                      </span></Button>}</td>                                        
+                                      <td>{output.info.holder.charAt(0).toUpperCase() + output.info.holder.slice(1).toLowerCase()}</td>
                                         <td>{output.info.assetType}</td>
                                         <td>{output.info.quantity}</td>
                                         <td>{output.info.manufacturer}</td>

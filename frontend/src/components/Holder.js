@@ -7,6 +7,7 @@ import './Holder.css'
 class Product extends Component {
     constructor(props) {
         super(props);
+        this.myAssets = [];
         this.id = '';
         this.holder = '';
         this.amount = '';
@@ -33,12 +34,27 @@ class Product extends Component {
         this.amount = target.value;
     }
 
+    checkOwnership(){
+        for(let i = 0; i < this.myAssets; i++){
+            if(this.id === this.myAssets[i]){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+
     sellAssets(e) {
         e.preventDefault();
         ReactDOM.findDOMNode(this.refs.sold).style.height = "80px";
         if(!this.id || !this.holder || !this.amount){
         ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Please fill in all fields.</p>";
         ReactDOM.findDOMNode(this.refs.sold).style.color = "#7a7a7a";
+        }
+        else if(!this.checkOwnership()){
+            ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>You do not own this asset.</p>";
+            ReactDOM.findDOMNode(this.refs.sold).style.color = "#7a7a7a";
         }
         else if(isNaN(this.amount)){
             ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Please enter valid amount.</p>";
@@ -87,6 +103,16 @@ class Product extends Component {
     }
 
     render() {
+        if (this.props.name !== '') {
+            let list = [];
+            for (let i = 0; i < this.props.ledger.length; i++) {
+                if (this.props.ledger[i].holder.toString().toLowerCase().includes(this.props.name.toString().toLowerCase())) {
+                    list.push(this.props.ledger[i].key)
+                }
+            }
+            this.myAssets = list;
+            console.log('what is this', this.myAssets)
+        }
         return (
             <Form>
                 <div className="form" style={this.props.style}>
