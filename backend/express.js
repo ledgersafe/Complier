@@ -8,6 +8,7 @@ var path = require("path");
 var util = require("util");
 var os = require("os");
 var port = 4000
+require('dotenv').config()
 // setup the fabric network
 var fabric_client = new Fabric_Client();
 var channel = fabric_client.newChannel("mychannel");
@@ -22,12 +23,12 @@ var sell = require('./b2bTransaction.js')
 const { MD5 } = require('./validation/account');
 
 var idArray = [
-    {hashedUsername: '309886b6e80f905aa127f6e8c1af083a', name: 'Miriam', role: 'business'}, //DeLorean
-    {hashedUsername: 'e77e95e1b8e878ea27dfc1baef6b0e8b', name: 'Ken', role: 'business'}, //CEO
-    {hashedUsername: 'a990a253429d67d4527e703ba5948d29', name: 'Rafa', role: 'business'}, //CookieMonster
-    {hashedUsername: '106d1011d4f591c64bc78385dba24764', name: 'Danny', role: 'regulator'}, //FinCEN
-    {hashedUsername: '0f67d2076c23827081cd280087d24bc7', name: 'Yuan', role: 'regulator'}, // MasterChef
-    {hashedUsername: 'bbd566556da8c5d2b3d30b3498431da0', name: 'Dave', role: 'regulator'} //King
+    {username: process.env.E_BUS1, name: 'Miriam', role: 'business'}, //DeLorean
+    {username: process.env.E_BUS2, name: 'Ken', role: 'business'}, //CEO
+    {username: process.env.E_BUS3, name: 'Rafa', role: 'business'}, //CookieMonster
+    {username: process.env.E_REG1, name: 'Danny', role: 'regulator'}, //FinCEN
+    {username: process.env.E_REG2, name: 'Yuan', role: 'regulator'}, // MasterChef
+    {username: process.env.E_REG3, name: 'Dave', role: 'regulator'} //King
 ];
 
 var login = async function (req, res) {
@@ -35,7 +36,7 @@ var login = async function (req, res) {
     console.log(MD5(username))
     for(let i = 0; i < idArray.length; i++){
         console.log(idArray[i])
-        if(idArray[i].hashedUsername == MD5(username)){
+        if(idArray[i].username == username){
             return { user: idArray[i].name, role: idArray[i].role }
         }
     }
@@ -46,8 +47,7 @@ var add_asset = async function (req, res) {
     try {
         console.log("submit recording of a asset: ");
 
-        var array = req.params.asset.split("-");
-        console.log("SHIT:", array);
+        var array = req.params.cannabis.split("-");
 
         var key = array[0];
         var strain = array[1];
@@ -539,7 +539,6 @@ var change_holder = async function (req, res) {
         res.send("Error: no asset found");
     }
 }
-
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'http://localhost:3000');

@@ -39,7 +39,7 @@ class BizLedger extends Component {
         return (
 
             <div id="ledtable">
-                <h3 style={this.props.style}>All Queried Assets</h3>
+                <h3 style={this.props.style}>{this.props.title}</h3>
                 <div class="table-wrapper-scroll-y my-custom-scrollbar">
                     <Table responsive bordered style={this.props.style}>
                         <thead style={{ backgroundColor: '#ffffff' }}>

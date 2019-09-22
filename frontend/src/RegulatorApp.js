@@ -203,7 +203,7 @@ class RegulatorApp extends Component {
                       <Product bizQuery={this.bizQuery} />
                     </div>
                     <div class='col-9'>
-                      <BizLedger selectedAssetID={this.selectedAssetID} isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} updateSelectedAssetID={this.updateSelectedAssetID} />
+                      <BizLedger title={'Queried Assets'} selectedAssetID={this.selectedAssetID} isOpen={this.state.collapsible} updateCollapsible={this.updateCollapsible} bid={this.state.bid} ledger={this.state.ledger} style={{ color: '#69b5e5' }} updateSelectedAssetID={this.updateSelectedAssetID} />
                     </div>
                   </div>
                 </div>
