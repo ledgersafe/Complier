@@ -47,9 +47,9 @@ class BizLedger extends Component {
                                 <th>ID</th>
                                 <th>History</th>
                                 <th>Business</th>
-                                <th>Strain</th>
+                                <th>Type</th>
                                 <th>Thc %</th>
-                                <th>Grower</th>
+                                <th>Manufacturer</th>
                                 <th>Amount</th>
                             </tr>
                         </thead>
@@ -63,9 +63,9 @@ class BizLedger extends Component {
                                             aria-hidden={this.props.label ? "false" : "true"}>
                                             🔍
                                       </span></Button>}</td>                                        <td>{output.info.holder.charAt(0).toUpperCase() + output.info.holder.slice(1).toLowerCase()}</td>
-                                        <td>{output.info.strain}</td>
-                                        <td>{output.info.thc}</td>
-                                        <td>{output.info.grower}</td>
+                                        <td>{output.info.assetType}</td>
+                                        <td>{output.info.quantity}</td>
+                                        <td>{output.info.manufacturer}</td>
                                         <td>{output.info.amount}</td>
                                     </tr>
                                 })

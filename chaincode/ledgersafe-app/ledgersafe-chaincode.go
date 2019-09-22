@@ -35,14 +35,14 @@ Structure tags are used by encoding/json library
 
 // Asset ...
 type Asset struct {
-	ObjectType string `json:"docType"` //docType is used to distinguish the various types of objects in state database
-	Key        string `json:"key"`
-	Grower     string `json:"grower"`
-	Timestamp  string `json:"timestamp"` // Date --> BSA SAR
-	Holder     string `json:"holder"`    // SubjectName --> BSA SAR
-	Strain     string `json:"strain"`
-	THC        string `json:"thc"`
-	Amount     string `json:"amount"` // Amount --> BSA SAR ... Currency Always USD
+	ObjectType   string `json:"docType"` //docType is used to distinguish the various types of objects in state database
+	Key          string `json:"key"`
+	Manufacturer string `json:"manufacturer"`
+	Timestamp    string `json:"timestamp"` // Date --> BSA SAR
+	Holder       string `json:"holder"`    // SubjectName --> BSA SAR
+	AssetType    string `json:"assetType"`
+	Quantity     string `json:"quantity"`
+	Amount       string `json:"amount"` // Amount --> BSA SAR ... Currency Always USD
 	// PartyID will be a hash of the name and time created ?
 }
 
@@ -165,16 +165,16 @@ Will add test data (10 assetes)to our network
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	fmt.Println("Initializing Ledger!")
 	asset := []Asset{
-		Asset{Key: "1", Grower: "Farm 1", Strain: "67.0006", THC: "-70.5476", Timestamp: "1504054225", Holder: "Miriam", Amount: "3000.00"},
-		Asset{Key: "2", Grower: "SF Farm", Strain: "62.0006", THC: "-70.5476", Timestamp: "1504057825", Holder: "Dave", Amount: "1000.00"},
-		Asset{Key: "3", Grower: "Farm 3", Strain: "63.0006", THC: "-70.5476", Timestamp: "1493517025", Holder: "Igor", Amount: "9000.00"},
-		Asset{Key: "4", Grower: "Humbolt County Farms", Strain: "64.0006", THC: "-30.5476", Timestamp: "1496105425", Holder: "Amalea", Amount: "7000.00"},
-		Asset{Key: "5", Grower: "Denver Growers", Strain: "65.0006", THC: "-20.5476", Timestamp: "1493512301", Holder: "Rafa", Amount: "100.00"},
-		Asset{Key: "6", Grower: "BC Farms", Strain: "66.0006", THC: "-10.5476", Timestamp: "1494117101", Holder: "Shen", Amount: "700.00"},
-		Asset{Key: "7", Grower: "Organic Herb Farms", Strain: "68.0006", THC: "-60.5476", Timestamp: "1496104301", Holder: "Leila", Amount: "200.00"},
-		Asset{Key: "8", Grower: "Hannabis Farms", Strain: "67.0006", THC: "-70.5476", Timestamp: "1485066691", Holder: "Yuan", Amount: "800.00"},
-		Asset{Key: "9", Grower: "CannaFarms", Strain: "69.0006", THC: "-50.5476", Timestamp: "1485153091", Holder: "Carlo", Amount: "4500.00"},
-		Asset{Key: "10", Grower: "MedMen", Strain: "89.0006", THC: "-40.5476", Timestamp: "1487745091", Holder: "Fatima", Amount: "1500.00"},
+		Asset{Key: "1", Manufacturer: "Farm 1", AssetType: "67.0006", Quantity: "-70.5476", Timestamp: "1504054225", Holder: "Miriam", Amount: "3000.00"},
+		Asset{Key: "2", Manufacturer: "SF Farm", AssetType: "62.0006", Quantity: "-70.5476", Timestamp: "1504057825", Holder: "Dave", Amount: "1000.00"},
+		Asset{Key: "3", Manufacturer: "Farm 3", AssetType: "63.0006", Quantity: "-70.5476", Timestamp: "1493517025", Holder: "Igor", Amount: "9000.00"},
+		Asset{Key: "4", Manufacturer: "Humbolt County Farms", AssetType: "64.0006", Quantity: "-30.5476", Timestamp: "1496105425", Holder: "Amalea", Amount: "7000.00"},
+		Asset{Key: "5", Manufacturer: "Denver Manufacturers", AssetType: "65.0006", Quantity: "-20.5476", Timestamp: "1493512301", Holder: "Rafa", Amount: "100.00"},
+		Asset{Key: "6", Manufacturer: "BC Farms", AssetType: "66.0006", Quantity: "-10.5476", Timestamp: "1494117101", Holder: "Shen", Amount: "700.00"},
+		Asset{Key: "7", Manufacturer: "Organic Herb Farms", AssetType: "68.0006", Quantity: "-60.5476", Timestamp: "1496104301", Holder: "Leila", Amount: "200.00"},
+		Asset{Key: "8", Manufacturer: "Hannabis Farms", AssetType: "67.0006", Quantity: "-70.5476", Timestamp: "1485066691", Holder: "Yuan", Amount: "800.00"},
+		Asset{Key: "9", Manufacturer: "CannaFarms", AssetType: "69.0006", Quantity: "-50.5476", Timestamp: "1485153091", Holder: "Carlo", Amount: "4500.00"},
+		Asset{Key: "10", Manufacturer: "MedMen", AssetType: "89.0006", Quantity: "-40.5476", Timestamp: "1487745091", Holder: "Fatima", Amount: "1500.00"},
 	}
 
 	i := 0
@@ -197,14 +197,14 @@ func (s *SmartContract) addAsset(APIstub shim.ChaincodeStubInterface, args []str
 	fmt.Println("Initializing Ledger!")
 
 	key := args[0]
-	grower := args[1]
-	strain := args[2]
-	thc := args[3]
+	manufacturer := args[1]
+	assetType := args[2]
+	quantity := args[3]
 	timestamp := time.Now().Format("2006-01-02 15:04:05")
 	holder := args[4]
 	amount := "0.00"
 
-	newAsset := Asset{Key: key, Grower: grower, Strain: strain, THC: thc, Timestamp: timestamp, Holder: holder, Amount: amount}
+	newAsset := Asset{Key: key, Manufacturer: manufacturer, AssetType: assetType, Quantity: quantity, Timestamp: timestamp, Holder: holder, Amount: amount}
 
 	assetAsBytes, _ := json.Marshal(newAsset)
 	var err = APIstub.PutState(key, assetAsBytes)
@@ -225,7 +225,7 @@ func (s *SmartContract) recordAsset(APIstub shim.ChaincodeStubInterface, args []
 		return shim.Error("Incorrect number of arguments. Expecting 7")
 	}
 
-	var asset = Asset{Grower: args[1], Strain: args[2], THC: args[3], Timestamp: args[4], Holder: args[5], Amount: args[6]}
+	var asset = Asset{Manufacturer: args[1], AssetType: args[2], Quantity: args[3], Timestamp: args[4], Holder: args[5], Amount: args[6]}
 
 	assetAsBytes, _ := json.Marshal(asset)
 	err := APIstub.PutState(args[0], assetAsBytes)

@@ -37,9 +37,9 @@ class Ledger extends Component {
                                 <th>ID</th>
                                 <th>History</th>
                                 <th>Business</th>
-                                <th>Strain</th>
-                                <th>Thc %</th>
-                                <th>Grower</th>
+                                <th>Type</th>
+                                <th>Quantity</th>
+                                <th>Manufacturer</th>
                                 <th>Amount</th>
                             </tr>
                         </thead>
@@ -54,9 +54,9 @@ class Ledger extends Component {
                                             🔍
                                       </span></Button>}</td>
                                         <td>{output.holder.charAt(0).toUpperCase() + output.holder.slice(1).toLowerCase()}</td>
-                                        <td>{output.strain}</td>
-                                        <td>{output.thc}</td>
-                                        <td>{output.grower}</td>
+                                        <td>{output.assetType}</td>
+                                        <td>{output.quantity}</td>
+                                        <td>{output.manufacturer}</td>
                                         <td>{output.amount}</td>
                                     </tr>
                                 })

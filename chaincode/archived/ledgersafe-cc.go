@@ -32,7 +32,7 @@ type SmartContract struct {
 Structure tags are used by encoding/json library
 */
 type Asset struct {
-	Grower    string `json:"grower"`
+	Manufacturer    string `json:"manufacturer"`
 	Timestamp string `json:"timestamp"`
 	Location  string `json:"location"`
 	Holder    string `json:"holder"`
@@ -295,16 +295,16 @@ Will add test data (10 assetes)to our network
 */
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	asset := []Asset{
-		Asset{Grower: "Farm 1", Strain: "67.0006", THC: "-70.5476", Timestamp: "1504054225", Holder: "Miriam"},
-		Asset{Grower: "SF Farm", Strain: "62.0006", THC: "-70.5476", Timestamp: "1504057825", Holder: "Dave"},
-		Asset{Grower: "Farm 3", Strain: "63.0006", THC: "-70.5476", Timestamp: "1493517025", Holder: "Igor"},
-		Asset{Grower: "Humbolt County Farms", Strain: "64.0006", THC: "-30.5476", Timestamp: "1496105425", Holder: "Amalea"},
-		Asset{Grower: "Denver Growers", Strain: "65.0006", THC: "-20.5476", Timestamp: "1493512301", Holder: "Rafa"},
-		Asset{Grower: "BC Farms", Strain: "66.0006", THC: "-10.5476", Timestamp: "1494117101", Holder: "Shen"},
-		Asset{Grower: "Organic Herb Farms", Strain: "68.0006", THC: "-60.5476", Timestamp: "1496104301", Holder: "Leila"},
-		Asset{Grower: "Hannabis Farms", Strain: "67.0006", THC: "-70.5476", Timestamp: "1485066691", Holder: "Yuan"},
-		Asset{Grower: "CannaFarms", Strain: "69.0006", THC: "-50.5476", Timestamp: "1485153091", Holder: "Carlo"},
-		Asset{Grower: "MedMen", Strain: "89.0006", THC: "-40.5476", Timestamp: "1487745091", Holder: "Fatima"},
+		Asset{Manufacturer: "Farm 1", Type: "67.0006", Quantity: "-70.5476", Timestamp: "1504054225", Holder: "Miriam"},
+		Asset{Manufacturer: "SF Farm", Type: "62.0006", Quantity: "-70.5476", Timestamp: "1504057825", Holder: "Dave"},
+		Asset{Manufacturer: "Farm 3", Type: "63.0006", Quantity: "-70.5476", Timestamp: "1493517025", Holder: "Igor"},
+		Asset{Manufacturer: "Humbolt County Farms", Type: "64.0006", Quantity: "-30.5476", Timestamp: "1496105425", Holder: "Amalea"},
+		Asset{Manufacturer: "Denver Manufacturers", Type: "65.0006", Quantity: "-20.5476", Timestamp: "1493512301", Holder: "Rafa"},
+		Asset{Manufacturer: "BC Farms", Type: "66.0006", Quantity: "-10.5476", Timestamp: "1494117101", Holder: "Shen"},
+		Asset{Manufacturer: "Organic Herb Farms", Type: "68.0006", Quantity: "-60.5476", Timestamp: "1496104301", Holder: "Leila"},
+		Asset{Manufacturer: "Hannabis Farms", Type: "67.0006", Quantity: "-70.5476", Timestamp: "1485066691", Holder: "Yuan"},
+		Asset{Manufacturer: "CannaFarms", Type: "69.0006", Quantity: "-50.5476", Timestamp: "1485153091", Holder: "Carlo"},
+		Asset{Manufacturer: "MedMen", Type: "89.0006", Quantity: "-40.5476", Timestamp: "1487745091", Holder: "Fatima"},
 	}
 
 	i := 0

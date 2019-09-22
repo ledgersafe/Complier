@@ -17,16 +17,16 @@ class Record extends Component {
                         <Input id="id" placeholder="Ex. 3" />
                     </FormGroup>
                     <FormGroup>
-                        <Label>Enter Name of Grower</Label>
-                        <Input id="grower" placeholder="Ex. 0239L" />
+                        <Label>Enter Name of Manufacturer</Label>
+                        <Input id="manufacturer" placeholder="Ex. 0239L" />
                     </FormGroup>
                     <FormGroup>
-                        <Label>Enter Strain</Label>
-                        <Input id="strain" placeholder="Ex. 28.012" />
+                        <Label>Enter Type</Label>
+                        <Input id="type" placeholder="Ex. 28.012" />
                     </FormGroup>
                     <FormGroup>
-                        <Label>Enter THC</Label>
-                        <Input id="thc" placeholder="Ex. 150.405" />
+                        <Label>Enter Quantity</Label>
+                        <Input id="quantity" placeholder="Ex. 150.405" />
                     </FormGroup>
                     <FormGroup>
                         <Label>Enter Timestamp</Label>
