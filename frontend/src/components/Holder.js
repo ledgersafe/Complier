@@ -35,7 +35,8 @@ class Product extends Component {
     }
 
     checkOwnership(){
-        for(let i = 0; i < this.myAssets; i++){
+        for(let i = 0; i < this.myAssets.length; i++){
+            console.log(typeof this.id, typeof this.myAssets[i])
             if(this.id === this.myAssets[i]){
                 return true;
             }
@@ -110,8 +111,8 @@ class Product extends Component {
                     list.push(this.props.ledger[i].key)
                 }
             }
+            console.log('retrieval of list', list)
             this.myAssets = list;
-            console.log('what is this', this.myAssets)
         }
         return (
             <Form>

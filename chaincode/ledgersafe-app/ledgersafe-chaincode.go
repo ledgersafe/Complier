@@ -225,7 +225,7 @@ func (s *SmartContract) recordAsset(APIstub shim.ChaincodeStubInterface, args []
 		return shim.Error("Incorrect number of arguments. Expecting 7")
 	}
 
-	var asset = Asset{Manufacturer: args[1], AssetType: args[2], Quantity: args[3], Timestamp: args[4], Holder: args[5], Amount: args[6]}
+	var asset = Asset{Key: args[0], Manufacturer: args[1], AssetType: args[2], Quantity: args[3], Timestamp: args[4], Holder: args[5], Amount: args[6]}
 
 	assetAsBytes, _ := json.Marshal(asset)
 	err := APIstub.PutState(args[0], assetAsBytes)

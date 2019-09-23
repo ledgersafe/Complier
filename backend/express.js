@@ -46,16 +46,15 @@ var login = async function (req, res) {
 var add_asset = async function (req, res) {
     try {
         console.log("submit recording of a asset: ");
-
-        var array = req.params.asset.split("-");
-
-        var key = array[0];
-        var assetType = array[1];
-        var quantity = array[2];
-        var timestamp = array[3];
-        var holder = array[4];
-        var manufacturer = array[5];
-
+        // var array = req.params.asset.split("-");
+        console.log('what is req.body', req.body)
+        var key = req.body.key;
+        var assetType = req.body.assetType;
+        var quantity = req.body.quantity;
+        var timestamp = req.body.timestamp;
+        var holder = req.body.holder;
+        var manufacturer = req.body.manufacturer;
+        var amount = req.body.amount;
 
         var member_user = null;
         var store_path = path.join(os.homedir(), ".hfc-key-store");
@@ -552,7 +551,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/queryAll', routerTo_queryAll);
 
 app.use('/add', function (req, res) {
-    add_asset(req, res);
+    add_asset(req, res).then(function (results) {
+        if (results) {
+            res.status(200).json({ message: 'OK', results: results })
+        } else {
+            res.status(200).json({ message: 'NOK', results: results })
+        }
+    });;
 });
 
 app.use('/querybusiness', function (req, res) {

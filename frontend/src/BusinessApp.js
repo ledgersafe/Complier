@@ -196,13 +196,15 @@ class App extends Component {
                     <div class='col-3' id='column'>
                       <Holder getAllAsset={this.getAllAsset} updateSelectedAssetID={this.updateSelectedAssetID} name={this.state.name} ledger={this.state.ledger}/>
                     </div>
-                    <div class='col-9'>
+                    <div class='col-3' id='column'>
+                    <Record getAllAsset={this.getAllAsset} />
+                    </div>
+                    <div class='col-6'>
                     <BizLedger title={'My Assets'} selectedAssetID={this.selectedAssetID} isClosed={this.state.collapsible} updateCollapsible={this.updateCollapsible} bid={this.state.name} ledger={this.state.ledger} style={{ color: '#95c13e' }} updateSelectedAssetID={this.updateSelectedAssetID} />
                     </div>
                   </div>
-                  <div class='row'>
-                  <Record getAllAsset={this.getAllAsset} />
-                </div>
+                  {/* <div class='row'>
+                </div> */}
                 </div>
               </div>
             </div>
