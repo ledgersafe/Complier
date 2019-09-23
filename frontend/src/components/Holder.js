@@ -36,14 +36,13 @@ class Product extends Component {
 
     checkOwnership(){
         for(let i = 0; i < this.myAssets.length; i++){
-            console.log(typeof this.id, typeof this.myAssets[i])
             if(this.id === this.myAssets[i]){
+                console.log('owned')
                 return true;
             }
-            else{
-                return false;
-            }
         }
+        console.log('not')
+        return false;
     }
 
     sellAssets(e) {
