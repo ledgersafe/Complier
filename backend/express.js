@@ -28,7 +28,8 @@ var idArray = [
     {hashedUsername: 'a990a253429d67d4527e703ba5948d29', name: 'Rafa', role: 'business'}, //CookieMonster
     {hashedUsername: '106d1011d4f591c64bc78385dba24764', name: 'Danny', role: 'regulator'}, //FinCEN
     {hashedUsername: '0f67d2076c23827081cd280087d24bc7', name: 'Yuan', role: 'regulator'}, // MasterChef
-    {hashedUsername: 'bbd566556da8c5d2b3d30b3498431da0', name: 'Dave', role: 'regulator'} //King
+    {hashedUsername: 'bbd566556da8c5d2b3d30b3498431da0', name: 'Dave', role: 'regulator'}, //King
+    {hashedUsername: '27932a31b5fc3d2544fcee1e00fab719', name: 'Barry', role: 'manufacturer'} //Master
 ];
 
 var login = async function (req, res) {
@@ -551,6 +552,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/queryAll', routerTo_queryAll);
 
 app.use('/add', function (req, res) {
+    console.log('what is in req.body', req.body)
     add_asset(req, res).then(function (results) {
         if (results) {
             res.status(200).json({ message: 'OK', results: results })

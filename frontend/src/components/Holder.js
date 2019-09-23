@@ -87,7 +87,7 @@ class Product extends Component {
                         // console.log(data)
                         ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Sold!</p>";
                         ReactDOM.findDOMNode(this.refs.sold).style.color = "#acd854";
-                        // var tempId = this.id;
+                        var tempId = this.id;
                         this.id = '';
                         this.holder = '';
                         this.amount = '';
@@ -95,10 +95,7 @@ class Product extends Component {
                         $('#holder').val('');
                         $('#amount').val('');
                         this.getAll()
-                        // console.log('transaction history id', this.transactionHistoryID);
-                        // if(this.transactionHistoryID === tempId){
-                            this.props.updateSelectedAssetID(null);
-                        // }
+                        this.props.clearTransactionHistory(tempId);
                     }
                     else {
                         ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>An error has occurred.</p>";

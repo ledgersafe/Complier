@@ -12,7 +12,8 @@ class Login extends Component {
         super(props);
         this.state = {
             businessLoginSuccess: false,
-            regulatorLoginSuccess: false
+            regulatorLoginSuccess: false,
+            manufacturerLoginSuccess: false
         };
         this.name = null;
         this.username = null;
@@ -59,6 +60,15 @@ class Login extends Component {
                 }}
                 />);
         }
+        else if (this.state.manufacturerLoginSuccess) {
+            log.manAuthenticate();
+            return (
+                <Redirect to={{
+                    pathname: '/manufacturer',
+                    state: { name: this.name }
+                }}
+                />);
+        }
     }
 
     onFormSubmit = async (e) => {
@@ -80,6 +90,8 @@ class Login extends Component {
                         this.setState({ regulatorLoginSuccess: true })
                     } else if (data.response.role === 'business') {
                         this.setState({ businessLoginSuccess: true })
+                    } else if (data.response.role === 'manufacturer') {
+                        this.setState({ manufacturerLoginSuccess: true })
                     }
                 }
                 else {

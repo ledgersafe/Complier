@@ -8,20 +8,18 @@ class Record extends Component {
     constructor(props) {
         super(props);
         this.id = null;
-        this.manu = null;
+        this.name = this.props.name;
         this.type = null;
         this.quantity = null;
         this.timestamp = null;
         this.holder = null;
         this.amount = null;
         this.getAll = this.getAll.bind(this);
-        this.updateHolder = this.updateHolder.bind(this);
-        this.updateId = this.updateId.bind(this);
         this.updateQuanity = this.updateQuanity.bind(this);
-        this.updateManuf = this.updateManuf.bind(this);
         this.updateTimestamp = this.updateTimestamp.bind(this);
         this.updateType = this.updateType.bind(this);
         this.updateAmount = this.updateAmount.bind(this);
+        this.randomStr = this.randomStr.bind(this)
     }
 
     cancellation(){
@@ -33,24 +31,12 @@ class Record extends Component {
         this.props.toggle();
     }
 
-    updateHolder({ target }) {
-        this.holder = target.value
-    }
-
     updateAmount({ target }) {
         this.amount = target.value
     }
 
-    updateId({ target }) {
-        this.id = target.value
-    }
-
     updateQuanity({ target }) {
         this.quantity = target.value;
-    }
-
-    updateManuf({ target }) {
-        this.manuf = target.value
     }
 
     updateTimestamp({ target }) {
@@ -64,20 +50,28 @@ class Record extends Component {
     getAll() {
         this.props.getAllAsset();
     }
+    
+    randomStr(len, arr) { 
+        var ans = ''; 
+        for (var i = len; i > 0; i--) { 
+            ans +=  
+              arr[Math.floor(Math.random() * arr.length)]; 
+        } 
+        return ans;
+    } 
 
     addAsset() {
         this.props.addAsset_creating();
-        console.log(this.id, this.type, this.quantity, this.holder, this.manuf, this.amount)
-        if (!this.id ||
-            !this.type ||
+        console.log(this.type, this.quantity, this.amount, this.timestamp)
+        if (!this.type ||
             !this.quantity ||
             !this.timestamp ||
-            !this.holder ||
-            !this.manuf ||
             !this.amount) {
                 this.props.addAsset_fill();
         }
         else {
+            this.id = (parseInt(this.props.parentkey)+1).toString()
+            console.log('what is the id', this.id)
             $.ajax({
                 url: 'http://localhost:4000/add',
                 type: 'POST',
@@ -90,28 +84,22 @@ class Record extends Component {
                     assetType: this.type,
                     quantity: this.quantity,
                     timestamp: this.timestamp,
-                    holder: this.holder,
-                    manufacturer: this.manuf,
+                    holder: this.name,
+                    manufacturer: this.name,
                     amount: this.amount
                 },
                 success: (data) => {
                     if (data.message === 'OK') {
                         console.log('add_asset success!')
                         this.props.addAsset_created();
-                        // this.id = null;
-                        // this.manu = null;
-                        // this.type = null;
-                        // this.quantity = null;
-                        // this.timestamp = null;
-                        // this.holder = null;
-                        // this.amount = null;
-                        // $('#id').val('');
-                        // $('#amount').val('');
-                        // $('#holder').val('');
-                        // $('#quantity').val('');
-                        // $('#manufacturer').val('');
-                        // $('#type').val('');
-                        // $('#timestamp').val('');
+                        this.type = null;
+                        this.quantity = null;
+                        this.timestamp = null;
+                        this.amount = null;
+                        $('#amount').val('');
+                        $('#quantity').val('');
+                        $('#type').val('');
+                        $('#timestamp').val('');
                         this.getAll()
                     }
                     else {
@@ -129,14 +117,14 @@ class Record extends Component {
                 <ModalHeader className="record" toggle={this.props.toggle}>Create Asset</ModalHeader>
                 <ModalBody>
                     <Form className="form">
-                        <FormGroup>
+                        {/* <FormGroup>
                             <Label>Enter Asset ID</Label>
                             <Input id="id" placeholder="Ex. 3" onChange={this.updateId} />
-                        </FormGroup>
-                        <FormGroup>
+                        </FormGroup> */}
+                        {/* <FormGroup>
                             <Label>Enter Name of Manufacturer</Label>
                             <Input id="manufacturer" placeholder="Ex. 0239L" onChange={this.updateManuf} />
-                        </FormGroup>
+                        </FormGroup> */}
                         <FormGroup>
                             <Label>Enter Type</Label>
                             <Input id="type" placeholder="Ex. 28.012" onChange={this.updateType} />
@@ -153,16 +141,16 @@ class Record extends Component {
                             <Label>Enter Amount</Label>
                             <Input id="amount" placeholder="Ex. 4" onChange={this.updateAmount} />
                         </FormGroup>
-                        <FormGroup>
+                        {/* <FormGroup>
                             <Label>Enter Name of Holder</Label>
                             <Input id="holder" placeholder="Ex. Hansel" onChange={this.updateHolder} />
-                        </FormGroup>
+                        </FormGroup> */}
                     </Form>
                 </ModalBody>
                 <ModalFooter>
                     {/* <div class="col text-center"> */}
-                        <Button color="success" block onClick={(e) => this.confirmation(e)}>Create</Button>
-                        <Button color="danger" block onClick={(e) => this.cancellation(e)}>Cancel</Button>
+                        <Button color="success" onClick={(e) => this.confirmation(e)}>Create</Button>
+                        <Button color="danger" onClick={(e) => this.cancellation(e)}>Cancel</Button>
                     {/* </div> */}
                 </ModalFooter>
             </Modal>

@@ -13,7 +13,7 @@ import HistoryBlock from './components/HistoryBlock'
 import './components/Sidebar.css'
 import ReactDOM from 'react-dom'
 
-class BusinessApp extends Component {
+class ManufacturerApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +27,8 @@ class BusinessApp extends Component {
     }
     // this.child = React.createRef();
     this.selectedAssetID = null;
-    this.role = 'business'
+    this.role = 'manufacturer'
+    this.parentkey = null;
     this.getAllAsset = this.getAllAsset.bind(this);
     this.updateLedger = this.updateLedger.bind(this);
     this.bizQuery = this.bizQuery.bind(this);
@@ -168,6 +169,7 @@ class BusinessApp extends Component {
       return parseFloat(a.Key) - parseFloat(b.Key);
     });
     console.log("ARRAY: ", array)
+    this.parentkey = array[array.length - 1].key
     this.setState({ ledger: array });
   }
 
@@ -240,14 +242,17 @@ class BusinessApp extends Component {
                   <div class='row'>
                     <div class='col-3' id='column' style={{textAlign: 'center'}}>
                       <Holder getAllAsset={this.getAllAsset} updateSelectedAssetID={this.updateSelectedAssetID} name={this.state.name} ledger={this.state.ledger} clearTransactionHistory={this.clearTransactionHistory} />
-                      {/* <Button color="warning" block onClick={this.toggle}>Create Asset</Button>
+                      <Button color="warning" block onClick={this.toggle}>Create Asset</Button>
                       <div ref="made" className="expandable" id="nav"></div>
-                      <Record modal={this.state.modal} 
+                      <Record modal={this.state.modal}
+                              parentkey={this.parentkey}
+                              getAllAsset={this.getAllAsset}
+                              name={this.state.name}
                               toggle={this.toggle} 
                               addAsset_creating={this.addAsset_creating}
                               addAsset_fill={this.addAsset_fill}
                               addAsset_created={this.addAsset_created}
-                              addAsset_error={this.addAsset_error} /> */}
+                              addAsset_error={this.addAsset_error} />
                     </div>
                     {/* <div class='col-3' id='column'>
                     </div> */}
@@ -267,4 +272,4 @@ class BusinessApp extends Component {
   }
 }
 
-export default BusinessApp;
+export default ManufacturerApp;
