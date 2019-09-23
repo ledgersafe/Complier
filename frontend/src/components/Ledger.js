@@ -26,7 +26,7 @@ class Ledger extends Component {
 
     render() {
         console.log("Ledger rendering")
-        console.log('isClosed status:', this.props.isClosed)
+        // console.log('isClosed status:', this.props.isClosed)
         return (
             <div id="ledtable">
                 <h3 style={this.props.style}>All Assets</h3>

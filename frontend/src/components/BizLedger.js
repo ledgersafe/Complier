@@ -21,7 +21,6 @@ class BizLedger extends Component {
         else {
             this.props.updateSelectedAssetID(key);
             this.props.updateCollapsible();
-
         }
     }
 

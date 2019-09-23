@@ -37,7 +37,7 @@ class RegulatorApp extends Component {
   // componentDidMount always executes first before everything else
   componentDidMount() {
     var _ = this;
-    console.log('component did mount', this.state.collapsible)
+    // console.log('component did mount', this.state.collapsible)
     $(window).keydown(function (e) {
       if (e.which === 27) {
         _.updateCollapsible()
@@ -54,19 +54,19 @@ class RegulatorApp extends Component {
     let list = []
     for (let x in history) {
       var tx = history[x]
-      console.log("Transaction: ", tx)
+      // console.log("Transaction: ", tx)
       // var theDate = new Date(tx.Value.timestamp * 1000);
       // var t = theDate.toUTCString();
       list.unshift({ txId: tx.TxId, holder: tx.Value.holder, amount: tx.Value.amount, timestamp: tx.Timestamp.split('.')[0] })
     }
-    console.log("history", list)
+    // console.log("history", list)
     this.setState({ history: list })
-    console.log("sidebar history", this.state.history);
+    // console.log("sidebar history", this.state.history);
   }
 
   updateSelectedAssetID(value) {
     this.selectedAssetID = value;
-    console.log(value)
+    // console.log(value)
     this.getHistory();
   }
 
@@ -92,7 +92,7 @@ class RegulatorApp extends Component {
 
   getHistory() {
     let assetId = this.selectedAssetID;
-    console.log('calling getHistory ajax', assetId)
+    // console.log('calling getHistory ajax', assetId)
     $.ajax({
       url: 'http://localhost:4000/getHistory',
       type: 'POST',
@@ -104,7 +104,7 @@ class RegulatorApp extends Component {
       success: (data) => {
         if (data.message === 'OK') {
           console.log('getHistory success!')
-          console.log(data.history);
+          // console.log(data.history);
           this.updateSidebarHistory(data.history);
         }
         else {
@@ -130,7 +130,7 @@ class RegulatorApp extends Component {
   }
 
   bizQuery(data) {
-    console.log('calling bizQuery')
+    // console.log('calling bizQuery')
     this.setState({ bid: data })
   }
 

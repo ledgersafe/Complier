@@ -21,14 +21,14 @@ class Header extends Component {
     }
 
     logout() {
-        console.log('logout')
+        // console.log('logout')
         log.busSignout()
         log.regSignout()
         this.props.history.push('/');
     }
 
     render() {
-        console.log(log.regLoggedIn, log.busLoggedIn)
+        // console.log(log.regLoggedIn, log.busLoggedIn)
         return (
             <header className="App-header">
                 <img src={LS} alt='LedgerSafe' height='100' width='100' />

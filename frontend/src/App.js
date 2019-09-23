@@ -28,7 +28,7 @@ export const log = {
 
   export default class App extends Component{
     render() {
-      console.log(log.regLoggedIn, log.busLoggedIn);
+      // console.log(log.regLoggedIn, log.busLoggedIn);
       console.log(localStorage.getItem('busLoggedIn'), localStorage.getItem('regLoggedIn'));
       return (
         <BrowserRouter>

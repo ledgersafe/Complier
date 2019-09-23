@@ -16,6 +16,11 @@ class Product extends Component {
         this.updateId = this.updateId.bind(this);
         this.updateAmount = this.updateAmount.bind(this);
         this.getAll = this.getAll.bind(this);
+        this.transactionHistoryID = this.props.selectedAssetID
+    }
+
+    updateTransactionHistoryID(id){
+        this.transactionHistoryID = id;
     }
 
     getAll() {
@@ -79,10 +84,10 @@ class Product extends Component {
                 success: (data) => {
                     if (data.message === 'OK') {
                         console.log('change_holder success!')
-                        console.log(data)
+                        // console.log(data)
                         ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>Sold!</p>";
                         ReactDOM.findDOMNode(this.refs.sold).style.color = "#acd854";
-                        var tempId = this.id;
+                        // var tempId = this.id;
                         this.id = '';
                         this.holder = '';
                         this.amount = '';
@@ -90,7 +95,10 @@ class Product extends Component {
                         $('#holder').val('');
                         $('#amount').val('');
                         this.getAll()
-                        this.props.updateSelectedAssetID(tempId);
+                        // console.log('transaction history id', this.transactionHistoryID);
+                        // if(this.transactionHistoryID === tempId){
+                            this.props.updateSelectedAssetID(null);
+                        // }
                     }
                     else {
                         ReactDOM.findDOMNode(this.refs.sold).innerHTML = "<p>An error has occurred.</p>";
@@ -103,6 +111,7 @@ class Product extends Component {
     }
 
     render() {
+        // console.log('what is history id', this.transactionHistoryID)
         if (this.props.name !== '') {
             let list = [];
             for (let i = 0; i < this.props.ledger.length; i++) {
@@ -110,7 +119,7 @@ class Product extends Component {
                     list.push(this.props.ledger[i].key)
                 }
             }
-            console.log('retrieval of list', list)
+            // console.log('retrieval of list', list)
             this.myAssets = list;
         }
         return (
@@ -131,9 +140,9 @@ class Product extends Component {
                             <Input id="amount" placeholder="Ex. 500" onChange={this.updateAmount} />
                         </FormGroup>
                     </div>
-                    <div className="col text-center">
+                    {/* <div className="col text-center"> */}
                         <Button color="success" block onClick={(e) => this.sellAssets(e)}>Sell</Button>{' '}
-                    </div>
+                    {/* </div> */}
                     <div ref="sold" className="expandable" id="nav">
                     </div>
                 </div>

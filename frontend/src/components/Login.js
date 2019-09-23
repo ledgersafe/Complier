@@ -75,7 +75,7 @@ class Login extends Component {
                 if (data.message === 'OK') {
                     console.log('Success', data.response)
                     this.name = data.response.user;
-                    console.log(this.name)
+                    // console.log(this.name)
                     if (data.response.role === 'regulator') {
                         this.setState({ regulatorLoginSuccess: true })
                     } else if (data.response.role === 'business') {
