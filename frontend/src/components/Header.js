@@ -16,7 +16,7 @@ class Header extends Component {
     }
 
     componentDidMount() {
-        const loginStatus = log.regLoggedIn || log.busLoggedIn;
+        const loginStatus = log.regLoggedIn || log.busLoggedIn || log.manLoggedIn;
         this.setState({logStatus : loginStatus})
     }
 
@@ -24,6 +24,7 @@ class Header extends Component {
         // console.log('logout')
         log.busSignout()
         log.regSignout()
+        log.manSignout()
         this.props.history.push('/');
     }
 
