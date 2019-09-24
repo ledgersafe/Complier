@@ -18,30 +18,89 @@ var peer = fabric_client.newPeer("grpc://localhost:7051");
 channel.addPeer(peer);
 
 // Helper Functions
-const routerTo_queryAll = require('./queryAll.js')()
+// const routerTo_queryAll = require('./queryAll.js')()
 var sell = require('./b2bTransaction.js')
 const { MD5 } = require('./validation/account');
 
 var idArray = [
-    {hashedUsername: '309886b6e80f905aa127f6e8c1af083a', name: 'Miriam', role: 'business'}, //DeLorean
-    {hashedUsername: 'e77e95e1b8e878ea27dfc1baef6b0e8b', name: 'Ken', role: 'business'}, //CEO
-    {hashedUsername: 'a990a253429d67d4527e703ba5948d29', name: 'Rafa', role: 'business'}, //CookieMonster
-    {hashedUsername: '106d1011d4f591c64bc78385dba24764', name: 'Danny', role: 'regulator'}, //FinCEN
-    {hashedUsername: '0f67d2076c23827081cd280087d24bc7', name: 'Yuan', role: 'regulator'}, // MasterChef
-    {hashedUsername: 'bbd566556da8c5d2b3d30b3498431da0', name: 'Dave', role: 'regulator'}, //King
-    {hashedUsername: '27932a31b5fc3d2544fcee1e00fab719', name: 'Barry', role: 'manufacturer'} //Master
+    { hashedUsername: '309886b6e80f905aa127f6e8c1af083a', name: 'Miriam', role: 'business' }, //DeLorean
+    { hashedUsername: 'e77e95e1b8e878ea27dfc1baef6b0e8b', name: 'Ken', role: 'business' }, //CEO
+    { hashedUsername: 'a990a253429d67d4527e703ba5948d29', name: 'Rafa', role: 'business' }, //CookieMonster
+    { hashedUsername: '106d1011d4f591c64bc78385dba24764', name: 'Danny', role: 'regulator' }, //FinCEN
+    { hashedUsername: '0f67d2076c23827081cd280087d24bc7', name: 'Yuan', role: 'regulator' }, // MasterChef
+    { hashedUsername: 'bbd566556da8c5d2b3d30b3498431da0', name: 'Dave', role: 'regulator' }, //King
+    { hashedUsername: '27932a31b5fc3d2544fcee1e00fab719', name: 'Barry', role: 'manufacturer' } //Master
 ];
 
 var login = async function (req, res) {
     var username = req.body.username;
     console.log(MD5(username))
-    for(let i = 0; i < idArray.length; i++){
+    for (let i = 0; i < idArray.length; i++) {
         console.log(idArray[i])
-        if(idArray[i].hashedUsername == MD5(username)){
+        if (idArray[i].hashedUsername == MD5(username)) {
             return { user: idArray[i].name, role: idArray[i].role }
         }
     }
     return null;
+}
+
+var queryAll = async function (req, res) {
+    try {
+        console.log("getting all asset from database: ");
+
+        //
+        var member_user = null;
+        var store_path = path.join(os.homedir(), ".hfc-key-store");
+        console.log("Store path:" + store_path);
+        var tx_id = null;
+
+        const state_store = await Fabric_Client.newDefaultKeyValueStore({ path: store_path });
+        // assign the store to the fabric client
+        fabric_client.setStateStore(state_store);
+        var crypto_suite = Fabric_Client.newCryptoSuite();
+        // use the same location for the state store (where the users' certificate are kept)
+        // and the crypto store (where the users' keys are kept)
+        var crypto_store = Fabric_Client.newCryptoKeyStore({
+            path: store_path
+        });
+        crypto_suite.setCryptoKeyStore(crypto_store);
+        fabric_client.setCryptoSuite(crypto_suite);
+
+        const user_from_store = await fabric_client.getUserContext("user1", true);
+        if (user_from_store && user_from_store.isEnrolled()) {
+            console.log("Successfully loaded user1 from persistence");
+            member_user = user_from_store;
+        } else {
+            throw new Error("Failed to get user1.... run registerUser.js");
+        }
+
+        // queryAllAsset - requires no arguments , ex: args: [''],
+        const request = {
+            chaincodeId: "ledgersafe-app",
+            txId: tx_id,
+            fcn: "queryAllAsset",
+            args: [""]
+        };
+
+        const query_responses = await channel.queryByChaincode(request);
+        console.log("Query has completed, checking results in queryAll.js");
+        // query_responses could have more than one  results if there multiple peers were used as targets
+        if (query_responses && query_responses.length == 1) {
+            if (query_responses[0] instanceof Error) {
+                console.error("error from query = ", query_responses[0]);
+            } else {
+                console.log("Response is ", query_responses[0].toString());
+                // res.json(JSON.parse(query_responses[0].toString()));
+                return JSON.parse(query_responses[0].toString());
+            }
+        } else {
+            console.log("No payloads were returned from query");
+        }
+    }
+    catch (error) {
+        console.error('query failed, ', error);
+        process.exit(1);
+    }
 }
 
 var add_asset = async function (req, res) {
@@ -332,26 +391,26 @@ var get_history = async function (req, res) {
             chaincodeId: "ledgersafe-app",
             fcn: "getHistory",
             chainId: "mychannel",
-            args: [assetID],   
+            args: [assetID],
             txId: tx_id
         }
         console.log("Before GetHistory Call")
         const query_responses = await channel.queryByChaincode(request);
-            console.log("Query has completed, checking results for getHistory");
-            // query_responses could have more than one  results if there multiple peers were used as targets
-            if (query_responses && query_responses.length == 1) {
-                if (query_responses[0] instanceof Error) {
-                    console.error("error from query = ", query_responses[0]);
-                } else {
-                    console.log("Response is ", query_responses[0].toString());
-                    // res.json(JSON.parse(query_responses[0].toString()));
-                    return JSON.parse(query_responses[0].toString());
-                }
+        console.log("Query has completed, checking results for getHistory");
+        // query_responses could have more than one  results if there multiple peers were used as targets
+        if (query_responses && query_responses.length == 1) {
+            if (query_responses[0] instanceof Error) {
+                console.error("error from query = ", query_responses[0]);
             } else {
-                console.log("No payloads were returned from query");
+                console.log("Response is ", query_responses[0].toString());
+                // res.json(JSON.parse(query_responses[0].toString()));
+                return JSON.parse(query_responses[0].toString());
             }
+        } else {
+            console.log("No payloads were returned from query");
+        }
     }
-    catch(error) {
+    catch (error) {
         console.error('get history failed, ', error);
         process.exit(1);
     }
@@ -549,7 +608,17 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/queryAll', routerTo_queryAll);
+// app.use('/queryAll', routerTo_queryAll);
+
+app.use('/queryAll', function (req, res) {
+    queryAll(req, res).then(function (result) {
+        if (result) {
+            res.status(200).json({ message: 'OK', result: result })
+        } else {
+            res.status(200).json({ message: 'NOK', result: result })
+        }
+    });
+});
 
 app.use('/add', function (req, res) {
     console.log('what is in req.body', req.body)

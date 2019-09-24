@@ -19,7 +19,7 @@ class Record extends Component {
         this.updateTimestamp = this.updateTimestamp.bind(this);
         this.updateType = this.updateType.bind(this);
         this.updateAmount = this.updateAmount.bind(this);
-        this.randomStr = this.randomStr.bind(this)
+        // this.randomStr = this.randomStr.bind(this)
     }
 
     cancellation(){
@@ -51,14 +51,14 @@ class Record extends Component {
         this.props.getAllAsset();
     }
     
-    randomStr(len, arr) { 
-        var ans = ''; 
-        for (var i = len; i > 0; i--) { 
-            ans +=  
-              arr[Math.floor(Math.random() * arr.length)]; 
-        } 
-        return ans;
-    } 
+    // randomStr(len, arr) { 
+    //     var ans = ''; 
+    //     for (var i = len; i > 0; i--) { 
+    //         ans +=  
+    //           arr[Math.floor(Math.random() * arr.length)]; 
+    //     } 
+    //     return ans;
+    // } 
 
     addAsset() {
         this.props.addAsset_creating();
