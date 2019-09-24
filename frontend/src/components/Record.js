@@ -16,7 +16,7 @@ class Record extends Component {
         this.amount = null;
         this.getAll = this.getAll.bind(this);
         this.updateQuanity = this.updateQuanity.bind(this);
-        this.updateTimestamp = this.updateTimestamp.bind(this);
+        // this.updateTimestamp = this.updateTimestamp.bind(this);
         this.updateType = this.updateType.bind(this);
         this.updateAmount = this.updateAmount.bind(this);
         // this.randomStr = this.randomStr.bind(this)
@@ -39,10 +39,6 @@ class Record extends Component {
         this.quantity = target.value;
     }
 
-    updateTimestamp({ target }) {
-        this.timestamp = target.value
-    }
-
     updateType({ target }) {
         this.type = target.value;
     }
@@ -61,11 +57,11 @@ class Record extends Component {
     // } 
 
     addAsset() {
+        this.timestamp = Date.now();
         this.props.addAsset_creating();
         console.log(this.type, this.quantity, this.amount, this.timestamp)
         if (!this.type ||
             !this.quantity ||
-            !this.timestamp ||
             !this.amount) {
                 this.props.addAsset_fill();
         }
@@ -99,7 +95,6 @@ class Record extends Component {
                         $('#amount').val('');
                         $('#quantity').val('');
                         $('#type').val('');
-                        $('#timestamp').val('');
                         this.getAll()
                     }
                     else {
@@ -132,10 +127,6 @@ class Record extends Component {
                         <FormGroup>
                             <Label>Enter Quantity</Label>
                             <Input id="quantity" placeholder="Ex. 150.405" onChange={this.updateQuanity} />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label>Enter Timestamp</Label>
-                            <Input id="timestamp" placeholder="Ex. 4982342301" onChange={this.updateTimestamp} />
                         </FormGroup>
                         <FormGroup>
                             <Label>Enter Amount</Label>
