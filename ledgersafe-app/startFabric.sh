@@ -35,16 +35,16 @@ sleep 10
 
 echo Invoking Chaincode ... 
 docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp" cli peer chaincode invoke -o orderer.example.com:7050 -C mychannel -n ledgersafe-app -c '{"function":"initLedger","Args":[""]}'
-docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp" cli peer chaincode invoke -o orderer.example.com:7050 -C mychannel -n ledgersafe-app -c '{"function":"addAsset","Args":["11","Ken Farms", "Bang Bang", "24.32", "Ken"]}'
+docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp" cli peer chaincode invoke -o orderer.example.com:7050 -C mychannel -n ledgersafe-app -c '{"function":"addAsset","Args":["11","Kens MCT Oil", "Medium Chain Triglycerides", "16.04 oz", "Ken"]}'
 
 
 
 printf "\nTotal execution time : $(($(date +%s) - starttime)) secs ...\n\n"
 # printf "\nStart with the registerAdmin.js, then enrollUser.js, then server.js\n\n"
 
-#rm -r $HOME/.hfc-key-store
-#echo Registering Admin ... 
-#cd ..
-#node ./ledgersafe-app/registerAdmin.js
-#echo enrolling User ... 
-#node ./ledgersafe-app/enrollUser.js
+rm -r $HOME/.hfc-key-store
+echo Registering Admin ... 
+cd ..
+node ./ledgersafe-app/registerAdmin.js
+echo enrolling User ... 
+node ./ledgersafe-app/enrollUser.js
