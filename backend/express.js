@@ -18,7 +18,7 @@ var peer = fabric_client.newPeer("grpc://localhost:7051");
 channel.addPeer(peer);
 
 // Helper Functions
-// const routerTo_queryAll = require('./queryAll.js')()
+const routerTo_queryAll = require('./queryAll.js')()
 var sell = require('./b2bTransaction.js')
 const { MD5 } = require('./validation/account');
 
@@ -549,7 +549,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// app.use('/queryAll', routerTo_queryAll);
+app.use('/queryAll', routerTo_queryAll);
 
 app.use('/add', function (req, res) {
     console.log('what is in req.body', req.body)
