@@ -165,16 +165,16 @@ Will add test data (10 assetes)to our network
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	fmt.Println("Initializing Ledger!")
 	asset := []Asset{
-		Asset{Key: "1", Manufacturer: "Farm 1", AssetType: "67.0006", Quantity: "-70.5476", Timestamp: "1504054225", Holder: "Miriam", Amount: "3000.00"},
-		Asset{Key: "2", Manufacturer: "SF Farm", AssetType: "62.0006", Quantity: "-70.5476", Timestamp: "1504057825", Holder: "Dave", Amount: "1000.00"},
-		Asset{Key: "3", Manufacturer: "Farm 3", AssetType: "63.0006", Quantity: "-70.5476", Timestamp: "1493517025", Holder: "Igor", Amount: "9000.00"},
-		Asset{Key: "4", Manufacturer: "Humbolt County Farms", AssetType: "64.0006", Quantity: "-30.5476", Timestamp: "1496105425", Holder: "Amalea", Amount: "7000.00"},
-		Asset{Key: "5", Manufacturer: "Denver Manufacturers", AssetType: "65.0006", Quantity: "-20.5476", Timestamp: "1493512301", Holder: "Rafa", Amount: "100.00"},
-		Asset{Key: "6", Manufacturer: "BC Farms", AssetType: "66.0006", Quantity: "-10.5476", Timestamp: "1494117101", Holder: "Shen", Amount: "700.00"},
-		Asset{Key: "7", Manufacturer: "Organic Herb Farms", AssetType: "68.0006", Quantity: "-60.5476", Timestamp: "1496104301", Holder: "Leila", Amount: "200.00"},
-		Asset{Key: "8", Manufacturer: "Hannabis Farms", AssetType: "67.0006", Quantity: "-70.5476", Timestamp: "1485066691", Holder: "Yuan", Amount: "800.00"},
-		Asset{Key: "9", Manufacturer: "CannaFarms", AssetType: "69.0006", Quantity: "-50.5476", Timestamp: "1485153091", Holder: "Carlo", Amount: "4500.00"},
-		Asset{Key: "10", Manufacturer: "MedMen", AssetType: "89.0006", Quantity: "-40.5476", Timestamp: "1487745091", Holder: "Fatima", Amount: "1500.00"},
+		Asset{Key: "1", Manufacturer: "Farm 1", AssetType: "Plants", Quantity: "10", Timestamp: "1504054225", Holder: "Miriam", Amount: "3000.00"},
+		Asset{Key: "2", Manufacturer: "Farm 2", AssetType: "Plants", Quantity: "25", Timestamp: "1504057825", Holder: "Dave", Amount: "1000.00"},
+		Asset{Key: "3", Manufacturer: "San Diego Candles", AssetType: "Home Goods", Quantity: "3", Timestamp: "1493517025", Holder: "Igor", Amount: "9000.00"},
+		Asset{Key: "4", Manufacturer: "SD Pharamceuticals", AssetType: "Medicine", Quantity: "100 mg", Timestamp: "1496105425", Holder: "Amalea", Amount: "7000.00"},
+		Asset{Key: "5", Manufacturer: "Denver Manufacturers", AssetType: "Metals", Quantity: "24.5 lb", Timestamp: "1493512301", Holder: "Rafa", Amount: "100.00"},
+		Asset{Key: "6", Manufacturer: "Genetic Farm", AssetType: "Medicine", Quantity: "40 g", Timestamp: "1494117101", Holder: "Shen", Amount: "700.00"},
+		Asset{Key: "7", Manufacturer: "Organic Herb Farm", AssetType: "Plants", Quantity: "23", Timestamp: "1496104301", Holder: "Leila", Amount: "200.00"},
+		Asset{Key: "8", Manufacturer: "Mr. Plastic", AssetType: "Plastics", Quantity: "7.9 lb", Timestamp: "1485066691", Holder: "Yuan", Amount: "800.00"},
+		Asset{Key: "9", Manufacturer: "Pub n Sudz", AssetType: "Home Goods", Quantity: "5", Timestamp: "1485153091", Holder: "Carlo", Amount: "500.00"},
+		Asset{Key: "10", Manufacturer: "Danny Fung Rolls Royce", AssetType: "Automobiles", Quantity: "1", Timestamp: "1487745091", Holder: "Fatima", Amount: "400,000.00"},
 	}
 
 	i := 0
