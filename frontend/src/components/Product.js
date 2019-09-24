@@ -29,7 +29,7 @@ class Product extends Component {
                 <div className="query">
                     <h3>Query Business</h3>
                     <FormGroup>
-                        <Label>Enter Cannabis Business</Label>
+                        <Label>Enter Business</Label>
                         <Input id="bid" placeholder="Ex. Tegridy" onChange={this.queryBusiness} />
                     </FormGroup>
                 </div>

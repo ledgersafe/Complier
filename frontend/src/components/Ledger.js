@@ -10,14 +10,23 @@ class Ledger extends Component {
     }
 
     callForHistory(key) {
-        this.props.updateSelectedAssetID(key);
-        if (this.props.isOpen) {
+        if (!this.props.isClosed) {
+            if(this.props.selectedAssetID !== null && key === this.props.selectedAssetID){
+                this.props.updateCollapsible();
+            }
+            else{
+                this.props.updateSelectedAssetID(key);
+            }
+        }
+        else {
+            this.props.updateSelectedAssetID(key);
             this.props.updateCollapsible();
         }
     }
 
     render() {
         console.log("Ledger rendering")
+        // console.log('isClosed status:', this.props.isClosed)
         return (
             <div id="ledtable">
                 <h3 style={this.props.style}>All Assets</h3>
@@ -28,9 +37,9 @@ class Ledger extends Component {
                                 <th>ID</th>
                                 <th>History</th>
                                 <th>Business</th>
-                                <th>Strain</th>
-                                <th>Thc %</th>
-                                <th>Grower</th>
+                                <th>Type</th>
+                                <th>Quantity</th>
+                                <th>Manufacturer</th>
                                 <th>Amount</th>
                             </tr>
                         </thead>
@@ -45,9 +54,9 @@ class Ledger extends Component {
                                             🔍
                                       </span></Button>}</td>
                                         <td>{output.holder.charAt(0).toUpperCase() + output.holder.slice(1).toLowerCase()}</td>
-                                        <td>{output.strain}</td>
-                                        <td>{output.thc}</td>
-                                        <td>{output.grower}</td>
+                                        <td>{output.assetType}</td>
+                                        <td>{output.quantity}</td>
+                                        <td>{output.manufacturer}</td>
                                         <td>{output.amount}</td>
                                     </tr>
                                 })

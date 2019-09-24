@@ -25,6 +25,9 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "concurrently": "^4.1.0",
-    "fabric-client": "^1.4.4"
+    "dotenv": "^8.1.0",
+    "fabric-client": "^1.4.4",
+    "react-dom": "^16.9.0",
+    "react-router-dom": "^5.0.1"
   }
 }

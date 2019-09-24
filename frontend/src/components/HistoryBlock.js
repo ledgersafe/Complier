@@ -15,7 +15,7 @@ class HistoryBlock extends Component {
         copyhelper.className = 'copyhelper'
         document.body.appendChild(copyhelper);
         copyhelper.value = this.props.txId;
-        console.log(this.props.txId)
+        // console.log(this.props.txId)
         copyhelper.select();
         document.execCommand("copy");
         document.body.removeChild(copyhelper);

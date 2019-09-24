@@ -8,6 +8,7 @@ var path = require("path");
 var util = require("util");
 var os = require("os");
 var port = 4000
+require('dotenv').config()
 // setup the fabric network
 var fabric_client = new Fabric_Client();
 var channel = fabric_client.newChannel("mychannel");
@@ -19,80 +20,42 @@ channel.addPeer(peer);
 // Helper Functions
 // const routerTo_queryAll = require('./queryAll.js')()
 var sell = require('./b2bTransaction.js')
+const { MD5 } = require('./validation/account');
 
-var queryAll = async function (req, res) {
-    try {
-        console.log("getting all cannabis from database: ");
+var idArray = [
+    {hashedUsername: '309886b6e80f905aa127f6e8c1af083a', name: 'Miriam', role: 'business'}, //DeLorean
+    {hashedUsername: 'e77e95e1b8e878ea27dfc1baef6b0e8b', name: 'Ken', role: 'business'}, //CEO
+    {hashedUsername: 'a990a253429d67d4527e703ba5948d29', name: 'Rafa', role: 'business'}, //CookieMonster
+    {hashedUsername: '106d1011d4f591c64bc78385dba24764', name: 'Danny', role: 'regulator'}, //FinCEN
+    {hashedUsername: '0f67d2076c23827081cd280087d24bc7', name: 'Yuan', role: 'regulator'}, // MasterChef
+    {hashedUsername: 'bbd566556da8c5d2b3d30b3498431da0', name: 'Dave', role: 'regulator'}, //King
+    {hashedUsername: '27932a31b5fc3d2544fcee1e00fab719', name: 'Barry', role: 'manufacturer'} //Master
+];
 
-        //
-        var member_user = null;
-        var store_path = path.join(os.homedir(), ".hfc-key-store");
-        console.log("Store path:" + store_path);
-        var tx_id = null;
-
-        const state_store = await Fabric_Client.newDefaultKeyValueStore({ path: store_path });
-        // assign the store to the fabric client
-        fabric_client.setStateStore(state_store);
-        var crypto_suite = Fabric_Client.newCryptoSuite();
-        // use the same location for the state store (where the users' certificate are kept)
-        // and the crypto store (where the users' keys are kept)
-        var crypto_store = Fabric_Client.newCryptoKeyStore({
-            path: store_path
-        });
-        crypto_suite.setCryptoKeyStore(crypto_store);
-        fabric_client.setCryptoSuite(crypto_suite);
-
-        const user_from_store = await fabric_client.getUserContext("user1", true);
-        if (user_from_store && user_from_store.isEnrolled()) {
-            console.log("Successfully loaded user1 from persistence");
-            member_user = user_from_store;
-        } else {
-            throw new Error("Failed to get user1.... run registerUser.js");
-        }
-
-        // queryAllCannabis - requires no arguments , ex: args: [''],
-        const request = {
-            chaincodeId: "ledgersafe-app",
-            txId: tx_id,
-            fcn: "queryAllCannabis",
-            args: [""]
-        };
-
-        const query_responses = await channel.queryByChaincode(request);
-        console.log("Query has completed, checking results in queryAll.js");
-        // query_responses could have more than one  results if there multiple peers were used as targets
-        if (query_responses && query_responses.length == 1) {
-            if (query_responses[0] instanceof Error) {
-                console.error("error from query = ", query_responses[0]);
-            } else {
-                console.log("Response is ", query_responses[0].toString());
-                // res.json(JSON.parse(query_responses[0].toString()));
-                return JSON.parse(query_responses[0].toString());
-            }
-        } else {
-            console.log("No payloads were returned from query");
+var login = async function (req, res) {
+    var username = req.body.username;
+    console.log(MD5(username))
+    for(let i = 0; i < idArray.length; i++){
+        console.log(idArray[i])
+        if(idArray[i].hashedUsername == MD5(username)){
+            return { user: idArray[i].name, role: idArray[i].role }
         }
     }
-    catch (error) {
-        console.error('query failed, ', error);
-        process.exit(1);
-    }
+    return null;
 }
 
-var add_cannabis = async function (req, res) {
+var add_asset = async function (req, res) {
     try {
-        console.log("submit recording of a cannabis catch: ");
-
-        var array = req.params.cannabis.split("-");
-        console.log("SHIT:", array);
-
-        var key = array[0];
-        var strain = array[1];
-        var thc = array[2];
-        var timestamp = array[3];
-        var holder = array[4];
-        var grower = array[5];
-
+        console.log("submit recording of a asset: ");
+        // var array = req.params.asset.split("-");
+        console.log('what is req.body', req.body)
+        var key = req.body.key;
+        var assetType = req.body.assetType;
+        var quantity = req.body.quantity;
+        var timestamp = req.body.timestamp;
+        var holder = req.body.holder;
+        var manufacturer = req.body.manufacturer;
+        var amount = req.body.amount;
 
         var member_user = null;
         var store_path = path.join(os.homedir(), ".hfc-key-store");
@@ -125,13 +88,13 @@ var add_cannabis = async function (req, res) {
         tx_id = fabric_client.newTransactionID();
         console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-        // recordCannabis - requires 5 args, ID, vessel, location, timestamp,holder, amount - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel', '100.00'],
+        // recordAsset - requires 5 args, ID, vessel, location, timestamp,holder, amount - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel', '100.00'],
         // send proposal to endorser
         const request = {
             //targets : --- letting this default to the peers assigned to the channel
             chaincodeId: "ledgersafe-app",
-            fcn: "recordCannabis",
-            args: [key, grower, strain, thc, timestamp, holder, amount],
+            fcn: "recordAsset",
+            args: [key, manufacturer, assetType, quantity, timestamp, holder, amount],
             chainId: "mychannel",
             txId: tx_id
         };
@@ -298,11 +261,11 @@ var getBusiness = async function (req, res) {
             throw new Error("Failed to get user1.... run registerUser.js");
         }
 
-        // queryCannabis - requires 1 argument, ex: args: ['4'],
+        // queryAsset - requires 1 argument, ex: args: ['4'],
         const request = {
             chaincodeId: "ledgersafe-app",
             txId: tx_id,
-            fcn: "queryCannabis",
+            fcn: "queryAsset",
             args: [key]
         };
         console.log("Before CC Call")
@@ -396,7 +359,7 @@ var get_history = async function (req, res) {
 
 var change_holder = async function (req, res) {
     try {
-        console.log("changing holder of cannabis asset: ");
+        console.log("changing holder of asset asset: ");
 
         //var array = req.params.holder.split("-");
         var key = req.body.id;
@@ -434,12 +397,12 @@ var change_holder = async function (req, res) {
         tx_id = fabric_client.newTransactionID();
         console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-        // changeCannabisHolder - requires 3 args , ex: args: ['1', 'Barry', '100.00'],
+        // changeAssetHolder - requires 3 args , ex: args: ['1', 'Barry', '100.00'],
         // send proposal to endorser
         var request = {
             //targets : --- letting this default to the peers assigned to the channel
             chaincodeId: "ledgersafe-app",
-            fcn: "changeCannabisHolder",
+            fcn: "changeAssetHolder",
             args: [key, holder, amount],
             chainId: "mychannel",
             txId: tx_id
@@ -542,7 +505,7 @@ var change_holder = async function (req, res) {
             console.error(
                 "Failed to send Proposal or receive valid response. Response null or status is not 200. exiting..."
             );
-            res.send("Error: no cannabis catch found");
+            res.send("Error: no asset found");
             // throw new Error('Failed to send Proposal or receive valid response. Response null or status is not 200. exiting...');
         }
         console.log(
@@ -556,7 +519,7 @@ var change_holder = async function (req, res) {
             console.error(
                 "Failed to order the transaction. Error code: " + response.status
             );
-            res.send("Error: no cannabis catch found");
+            res.send("Error: no asset found");
         }
 
         if (results && results[1] && results[1].event_status === "VALID") {
@@ -573,10 +536,9 @@ var change_holder = async function (req, res) {
     }
     catch (err) {
         console.error("Failed to invoke successfully :: " + err);
-        res.send("Error: no cannabis catch found");
+        res.send("Error: no asset found");
     }
 }
-
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'http://13.82.210.187:3000');
@@ -590,7 +552,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // app.use('/queryAll', routerTo_queryAll);
 
 app.use('/add', function (req, res) {
-    add_cannabis(req, res);
+    console.log('what is in req.body', req.body)
+    add_asset(req, res).then(function (results) {
+        if (results) {
+            res.status(200).json({ message: 'OK', results: results })
+        } else {
+            res.status(200).json({ message: 'NOK', results: results })
+        }
+    });;
 });
 
 app.use('/querybusiness', function (req, res) {
@@ -626,12 +595,13 @@ app.use('/getHistory', function (req, res) {
     });
 });
 
-app.use('/queryAll', function(req, res) {
-    queryAll(req, res).then(function (result) {
-        if (result) {
-            res.status(200).json({ message: 'OK', result: result })
+app.use('/login', function (req, res) {
+    login(req, res).then(function (response) {
+        console.log("info", response);
+        if (response) {
+            res.status(200).json({ message: 'OK', response: response })
         } else {
-            res.status(200).json({ message: 'NOK', result: result })
+            res.status(200).json({ message: 'NOK', response: response })
         }
     });
 });
